@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import PasswordUpdate from "../pages/PasswordUpdated";
 import Stores from "../pages/Stores";
+import UserDetail from "../pages/UserDetail";
 import Users from "../pages/Users";
 import VerifyEmail from "../pages/VerifyEmail";
 import VerifyOtp from "../pages/VerifyOtp";
@@ -49,6 +50,11 @@ export const normalRoutes = [
     name: "Users",
     url: "/users",
     page: <Users />,
+  },
+  {
+    name: "User Details",
+    url: "/users/:id",
+    page: <UserDetail />,
   },
   {
     name: "Stores",

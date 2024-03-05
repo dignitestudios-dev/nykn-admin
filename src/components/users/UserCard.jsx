@@ -3,39 +3,40 @@ import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import BtnLoader from "../global/BtnLoader";
+import { Link } from "react-router-dom";
 
 const UserCard = ({ user, setReload }) => {
   const { palette, baseUrl, theme } = useContext(GlobalContext);
 
   const [loading, setLoading] = useState(false);
 
-  const blockOrUnblockUser = () => {
-    const token = Cookies.get("token");
+  // const blockOrUnblockUser = () => {
+  //   const token = Cookies.get("token");
 
-    if (token) {
-      setLoading(true);
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": true,
-      };
-      axios.get(`${baseUrl}/admin/users/${user?.id}/block`, { headers }).then(
-        (response) => {
-          setReload((prev) => !prev);
-          setLoading(false);
-          console.log(response);
-        },
-        (error) => {
-          if (error?.response?.status == 401) {
-            Cookies.remove("token");
-            Cookies.remove("isLoggedIn");
-            navigate("/login");
-          }
-          setLoading(false);
-          console.log(error);
-        }
-      );
-    }
-  };
+  //   if (token) {
+  //     setLoading(true);
+  //     const headers = {
+  //       Authorization: `Bearer ${token}`,
+  //       "ngrok-skip-browser-warning": true,
+  //     };
+  //     axios.get(`${baseUrl}/admin/users/${user?.id}/block`, { headers }).then(
+  //       (response) => {
+  //         setReload((prev) => !prev);
+  //         setLoading(false);
+  //         console.log(response);
+  //       },
+  //       (error) => {
+  //         if (error?.response?.status == 401) {
+  //           Cookies.remove("token");
+  //           Cookies.remove("isLoggedIn");
+  //           navigate("/login");
+  //         }
+  //         setLoading(false);
+  //         console.log(error);
+  //       }
+  //     );
+  //   }
+  // };
   return (
     <div
       className="w-full md:w-[49%] lg:w-[32.5%] xl:w-[24.5%]  h-auto p-2 md:p-4 flex flex-col gap-6 justify-between items-start rounded-md "
@@ -65,14 +66,15 @@ const UserCard = ({ user, setReload }) => {
 
       <div className="w-full h-auto flex flex-row justify-end items-center gap-2">
         <div className="w-full h-auto flex justify-start items-center gap-2">
-          <button
-            onClick={blockOrUnblockUser}
-            className={` ${
-              user?.is_blocked ? "bg-green-500" : "bg-gray-700"
-            } text-white text-sm w-full h-8 rounded-md transition-all duration-200 hover:opacity-90 font-medium  flex items-center justify-center`}
+          <Link
+            to={`/users/${user?.id}`}
+            className={`  text-white text-sm w-full h-8 rounded-md transition-all duration-200 hover:opacity-90 font-medium  flex items-center justify-center`}
+            style={{
+              background: palette?.brand,
+            }}
           >
-            {loading ? <BtnLoader /> : user?.is_blocked ? "Unblock" : "Block"}
-          </button>
+            View More
+          </Link>
         </div>
       </div>
     </div>
