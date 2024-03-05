@@ -27,9 +27,9 @@ const AuthTemplate = ({ page }) => {
             {page}
           </div>
           <div className="w-full lg:w-1/2 py-14 h-full  rounded-[23px] lg:rounded-r-[23px] flex flex-col gap-10 items-center justify-center">
-            <img src="/auth-banner.png" className="h-52 md:h-60 lg:h-auto " />
+            <img src="/logo.svg" className="h-52 md:h-60 lg:h-auto " />
 
-            <div className="w-[70%] h-auto flex gap-3 justify-center items-center">
+            {/* <div className="w-[70%] h-auto flex gap-3 justify-center items-center">
               <button className="w-auto h-auto">
                 <img src="/app-store-btn.png" />
               </button>
@@ -37,7 +37,7 @@ const AuthTemplate = ({ page }) => {
               <button className="w-auto h-auto">
                 <img src="/play-store-btn.png" />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
