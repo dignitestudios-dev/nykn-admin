@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/" element={<Splash />} /> */}
+        <Route path="/" element={<Splash />} />
 
         {loginRoutes?.map((route, key) => {
           return (
