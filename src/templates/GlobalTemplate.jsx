@@ -10,6 +10,7 @@ import Sidebar from "../components/global/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { IoSearch } from "react-icons/io5";
 
 const GlobalTemplate = ({ page, name }) => {
   const {

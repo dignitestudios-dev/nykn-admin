@@ -1,12 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../../context/GlobalContext";
+import UpdateUserModal from "./UpdateUserModal";
 
 const UserInfo = () => {
   const { palette } = useContext(GlobalContext);
+  const [isUserUpdateOpen, setIsUserUpdateOpen] = useState(false);
   return (
-    <div className="w-full h-auto flex justify-start items-center gap-3 ">
+    <div
+      className="w-full h-auto flex justify-start items-center p-3 rounded-xl gap-3 "
+      style={{
+        background: palette?.dark_contrast_background,
+      }}
+    >
       <span
-        className="rounded-full w-20 h-20 p-1 flex justify-center items-center"
+        className="rounded-full w-16 h-16 p-1 flex justify-center items-center"
         style={{
           background: palette?.brand,
         }}
@@ -33,6 +40,20 @@ const UserInfo = () => {
           Useremail@gmail.com
         </span>
       </div>
+
+      <button
+        onClick={() => setIsUserUpdateOpen(true)}
+        className="w-20 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center text-white"
+        style={{
+          background: palette?.brand,
+        }}
+      >
+        Edit
+      </button>
+      <UpdateUserModal
+        isOpen={isUserUpdateOpen}
+        setIsOpen={setIsUserUpdateOpen}
+      />
     </div>
   );
 };

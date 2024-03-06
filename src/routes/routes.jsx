@@ -14,6 +14,7 @@ import { LiaStoreSolid } from "react-icons/lia";
 import RegisterUser from "../pages/RegisterUser";
 import { BiCategoryAlt } from "react-icons/bi";
 import Categories from "../pages/Categories";
+import CategoryDetail from "../pages/CategoryDetail";
 
 export const loginRoutes = [
   {
@@ -69,6 +70,11 @@ export const normalRoutes = [
     name: "Categories",
     url: "/categories",
     page: <Categories />,
+  },
+  {
+    name: "Category Details",
+    url: "/categories/:id",
+    page: <CategoryDetail />,
   },
 ];
 

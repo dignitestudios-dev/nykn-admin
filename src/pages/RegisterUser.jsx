@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AuthInput from "../components/auth/AuthInput";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlineLock } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 import axios from "axios";
 import { GlobalContext } from "../context/GlobalContext";
 import SocialLogins from "../components/auth/SocialLogins";
@@ -34,49 +35,51 @@ const RegisterUser = () => {
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState(false);
 
-  const handleLogin = () => {
-    if (email == "") {
-      setEmailError("Email is required.");
-      setTimeout(() => {
-        setEmailError(false);
-      }, 3000);
-    } else if (!validateEmail(email)) {
-      setEmailError("Email not in correct format.");
-      setTimeout(() => {
-        setEmailError(false);
-      }, 3000);
-    } else if (password == "") {
-      setPasswordError("Password is required.");
-      setTimeout(() => {
-        setPasswordError(false);
-      }, 3000);
-    } else if (password.length < 6) {
-      setPasswordError("Minimum password length is 6.");
-      setTimeout(() => {
-        setPasswordError(false);
-      }, 3000);
-    } else {
-      setLoading(true);
-      axios
-        .post(`${baseUrl}/admin-login`, {
-          email: email,
-          password: password,
-        })
-        .then(
-          (response) => {
-            Cookies.set("token", response?.data?.data?.token, { expires: 7 });
-            Cookies.set("isLoggedIn", true, { expires: 7 });
-            if (response?.data?.data?.token) {
-              navigate("/discover/");
-            }
-            setLoading(false);
-          },
-          (error) => {
-            setLoading(false);
-            setFormError(error?.response?.data?.error);
-          }
-        );
-    }
+  const createUser = () => {
+    //   if (email == "") {
+    //     setEmailError("Email is required.");
+    //     setTimeout(() => {
+    //       setEmailError(false);
+    //     }, 3000);
+    //   } else if (!validateEmail(email)) {
+    //     setEmailError("Email not in correct format.");
+    //     setTimeout(() => {
+    //       setEmailError(false);
+    //     }, 3000);
+    //   } else if (password == "") {
+    //     setPasswordError("Password is required.");
+    //     setTimeout(() => {
+    //       setPasswordError(false);
+    //     }, 3000);
+    //   } else if (password.length < 6) {
+    //     setPasswordError("Minimum password length is 6.");
+    //     setTimeout(() => {
+    //       setPasswordError(false);
+    //     }, 3000);
+    //   } else {
+    //     setLoading(true);
+    //     axios
+    //       .post(`${baseUrl}/admin-login`, {
+    //         email: email,
+    //         password: password,
+    //       })
+    //       .then(
+    //         (response) => {
+    //           Cookies.set("token", response?.data?.data?.token, { expires: 7 });
+    //           Cookies.set("isLoggedIn", true, { expires: 7 });
+    //           if (response?.data?.data?.token) {
+    //             navigate("/discover/");
+    //           }
+    //           setLoading(false);
+    //         },
+    //         (error) => {
+    //           setLoading(false);
+    //           setFormError(error?.response?.data?.error);
+    //         }
+    //       );
+    //   }
+
+    console.log("Create Users");
   };
   return (
     <div
@@ -119,7 +122,7 @@ const RegisterUser = () => {
                 <div className="w-full h-auto flex flex-col gap-[2px]">
                   <AuthInput
                     text={"Full Name"}
-                    icon={<HiOutlineMail />}
+                    icon={<FaRegUser className="text-sm" />}
                     state={name}
                     setState={setName}
                     type={"text"}
@@ -161,9 +164,15 @@ const RegisterUser = () => {
                     </label>
                   )}
                 </div>
+                <div className="w-full h-10 flex justify-center items-center gap-1">
+                  <input type="checkbox" name="adminCheck" id="admin_check" />
+                  <span className="text-xs font-medium">
+                    Register as an admin.
+                  </span>
+                </div>
 
                 <AuthButton
-                  onClick={handleLogin}
+                  onClick={createUser}
                   text={"Create"}
                   loading={loading}
                 />
