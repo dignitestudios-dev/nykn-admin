@@ -24,19 +24,19 @@ const MainBanner = () => {
                 color: palette?.light_contrast_color,
               }}
             >
-              300 new store are registered on the store.
+              200 new users registered on the app.
               <br />
-              Checkout the newly onboarded stores and their statistics.
+              Checkout the newly onboarded users and their statistics.
             </p>
           </div>
           <Link
-            to="/stores/"
+            to="/users/"
             className="w-32 h-8 text-sm hover:opacity-85 font-medium text-white rounded-md flex items-center justify-center"
             style={{
               background: palette?.brand,
             }}
           >
-            Visit Stores
+            Visit Users
           </Link>
         </div>
         <div className="w-[30%]  h-full flex items-end justify-center relative">

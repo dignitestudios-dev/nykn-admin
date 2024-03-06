@@ -14,17 +14,17 @@ const SidebarLink = ({ icon, title, link, active }) => {
 
   return (
     <span
-      style={{
-        color: palette?.color,
-      }}
       onClick={() => navigateToLink(title, link)}
       className={`sidebar-link ${
-        activeLink == title && "bg-[#407BA7] text-white"
+        activeLink == title && "bg-[#407BA7]"
       } w-full h-10 rounded-r-full cursor-pointer flex items-center justify-start gap-3 ${
         active
           ? "px-5 flex items-center justify-start"
           : "flex items-center justify-center px-0"
       }  `}
+      style={{
+        color: activeLink == title ? "#ffffff" : palette?.color,
+      }}
     >
       {icon}
       <span

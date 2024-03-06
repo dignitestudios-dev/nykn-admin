@@ -1,3 +1,4 @@
+import { FaRegPlusSquare } from "react-icons/fa";
 import ChangePassword from "../pages/ChangePassword";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -10,6 +11,9 @@ import VerifyOtp from "../pages/VerifyOtp";
 import { BiHomeAlt } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
 import { LiaStoreSolid } from "react-icons/lia";
+import RegisterUser from "../pages/RegisterUser";
+import { BiCategoryAlt } from "react-icons/bi";
+import Categories from "../pages/Categories";
 
 export const loginRoutes = [
   {
@@ -42,6 +46,11 @@ export const loginRoutes = [
 
 export const normalRoutes = [
   {
+    name: "Create User",
+    url: "/create-user/",
+    page: <RegisterUser />,
+  },
+  {
     name: "Discover",
     url: "/discover",
     page: <Home />,
@@ -57,13 +66,18 @@ export const normalRoutes = [
     page: <UserDetail />,
   },
   {
-    name: "Stores",
-    url: "/stores",
-    page: <Stores />,
+    name: "Categories",
+    url: "/categories",
+    page: <Categories />,
   },
 ];
 
 export const sidebarArr = [
+  {
+    name: "Create user",
+    url: "/create-user/",
+    icon: <FaRegPlusSquare className="text-xl" />,
+  },
   {
     name: "Discover",
     url: "/discover",
@@ -74,6 +88,12 @@ export const sidebarArr = [
     url: "/users",
     icon: <FiUsers className="text-xl" />,
   },
+  {
+    name: "Categories",
+    url: "/categories",
+    icon: <BiCategoryAlt className="text-xl" />,
+  },
+
   // {
   //   name: "Stores",
   //   url: "/stores",

@@ -23,9 +23,9 @@ const UserCategoryCard = ({ category }) => {
         </div>
 
         {category?.isPaid && (
-          <button className="w-16 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-blue-400 text-white">
+          <span className="w-16 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-blue-400 text-white">
             Paid
-          </button>
+          </span>
         )}
 
         {!category?.isUnlocked && (

@@ -41,4 +41,5 @@
   transition: all;
   transition-duration: 150ms;
   background: #407BA7;
+  color: #ffffff !important;
 }

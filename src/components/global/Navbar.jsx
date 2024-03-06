@@ -8,7 +8,7 @@ import { HiOutlineChevronDoubleLeft } from "react-icons/hi";
 import UserBtnModal from "./UserBtnModal";
 import NotificationModal from "./NotificationModal";
 
-const Navbar = () => {
+const Navbar = ({ name }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const userBtnRef = useRef();
 
@@ -57,7 +57,7 @@ const Navbar = () => {
           className="hidden lg:block"
           onClick={() => setSidebarActive((prev) => !prev)}
           style={{
-            color: palette?.brand,
+            color: palette?.color,
           }}
         >
           {sidebarActive ? (
@@ -66,7 +66,7 @@ const Navbar = () => {
             <HiMenuAlt2 className="text-2xl" />
           )}
         </button>
-        <input
+        {/* <input
           type="text"
           className="w-40 md:w-52 h-10 rounded-full outline-none border-none px-4 text-sm"
           placeholder="Search"
@@ -80,7 +80,16 @@ const Navbar = () => {
           style={{ background: palette?.brand, color: palette?.color }}
         >
           <IoSearch className="text-white" />
-        </button>
+        </button> */}
+
+        <h1
+          className="text-lg md:text-xl font-bold"
+          style={{
+            color: palette?.color,
+          }}
+        >
+          {name}
+        </h1>
       </div>
 
       <div className="w-auto h-auto flex gap-3 justify-start items-center">

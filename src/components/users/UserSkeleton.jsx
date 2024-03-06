@@ -8,7 +8,7 @@ const UserSkeleton = () => {
     return (
       <div
         key={ar}
-        className="animate-pulse w-full md:w-[49%] lg:w-[32.5%] xl:w-[24.5%] 2xl:w-[19.5%] h-auto p-2 md:p-4 flex flex-col gap-6 justify-between items-start rounded-md "
+        className="animate-pulse w-full md:w-[49%] lg:w-[32.5%] xl:w-[24.5%] h-auto p-2 md:p-4 flex flex-col gap-6 justify-between items-start rounded-2xl "
         style={{
           background: `${palette?.dark_contrast_background}`,
           color: palette?.dark_contrast_color,
@@ -44,12 +44,12 @@ const UserSkeleton = () => {
           <div className="w-full h-auto flex justify-start items-center gap-2">
             <button
               disabled
-              className="  text-sm w-full h-8 rounded-md transition-all duration-200 hover:opacity-90 font-medium  flex items-center justify-center"
+              className="  text-sm w-full h-8 rounded-full transition-all duration-200 hover:opacity-90 font-medium  flex items-center justify-center"
               style={{
                 background: palette?.background,
               }}
             >
-              Block
+              View More
             </button>
           </div>
         </div>

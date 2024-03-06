@@ -30,7 +30,7 @@ const UsersCard = () => {
             <span>1.5k</span>
             <span className="text-green-500 text-sm">{"+"}10%</span>
           </span>
-          <button
+          {/* <button
             onClick={() => navigateToLink("/users/", "Users")}
             className="w-full text-white h-8 rounded-md flex items-center justify-center  text-xs font-medium"
             style={{
@@ -38,11 +38,11 @@ const UsersCard = () => {
             }}
           >
             View All
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="w-1/2 flex flex-col justify-center items-center">
-        <img src="/users.png" className="h-36" />
+        <img src="/users.png" className="h-auto min-h-32" />
       </div>
     </div>
   );

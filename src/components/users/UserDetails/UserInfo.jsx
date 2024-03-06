@@ -21,7 +21,14 @@ const UserInfo = () => {
       </span>
 
       <div className="w-auto flex flex-col justify-start items-start">
-        <h1 className="text-xl  font-extrabold ">User Name</h1>
+        <h1
+          className="text-xl  font-extrabold "
+          style={{
+            color: palette?.color,
+          }}
+        >
+          User Name
+        </h1>
         <span className="text-[#9b9c9b] text-wrap text-sm font-medium">
           Useremail@gmail.com
         </span>

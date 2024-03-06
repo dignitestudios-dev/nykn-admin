@@ -11,7 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const GlobalTemplate = ({ page }) => {
+const GlobalTemplate = ({ page, name }) => {
   const {
     sidebarActive,
     palette,
@@ -95,7 +95,7 @@ const GlobalTemplate = ({ page }) => {
             background: `${palette?.background}`,
           }}
         >
-          <Navbar />
+          <Navbar name={name} />
           <div className="w-full overflow-y-auto ">
             <Error />
             <Success />
