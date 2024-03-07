@@ -1,11 +1,41 @@
 import React from "react";
 import Footer from "../components/global/Footer";
 import AuthNavbar from "../components/auth/AuthNavbar";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const AuthTemplate = ({ page }) => {
-  const { palette, isLoggedIn } = useContext(GlobalContext);
+  const { palette, isLoggedIn, baseUrl, setIsLoggedIn } =
+    useContext(GlobalContext);
+  const navigate = useNavigate();
+  const validateToken = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "ngrok-skip-browser-warning": true,
+      };
+      axios.get(`${baseUrl}/validate`, { headers }).then(
+        (response) => {
+          setIsLoggedIn(response?.data?.data?.is_token_validate);
+          navigate("/discover");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    validateToken();
+  }, []);
   return (
     <div
       className="w-full h-auto  transition-all duration-200 overflow-x-hidden flex flex-col justify-center items-start relative"
