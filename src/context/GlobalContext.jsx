@@ -42,14 +42,14 @@ export const GlobalContextProvider = ({ children }) => {
   const [success, setSuccess] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [sidebarActive, setSidebarActive] = useState(false);
+  const [sidebarActive, setSidebarActive] = useState(true);
 
   // Theme Toggle
   const [theme, setTheme] = useState("light");
   const [palette, setPalette] = useState({
     brand: "#407BA7",
     background: "#fff",
-    dark_contrast_background: "#F5F5F5",
+    dark_contrast_background: "#eeeeee",
     light_contrast_background: "#F9F9F9",
     color: "#0E0E0E",
     dark_contrast_color: "#1C1C1C",
@@ -71,7 +71,7 @@ export const GlobalContextProvider = ({ children }) => {
       setPalette({
         brand: "#407BA7",
         background: "#fff",
-        dark_contrast_background: "#F5F5F5",
+        dark_contrast_background: "#eeeeee",
         light_contrast_background: "#F9F9F9",
         color: "#0E0E0E",
         dark_contrast_color: "#1C1C1C",

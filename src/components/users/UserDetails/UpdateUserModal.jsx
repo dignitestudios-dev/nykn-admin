@@ -30,7 +30,7 @@ const UpdateUserModal = ({ isOpen, setIsOpen }) => {
       <div
         ref={updateUserRef}
         className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
-        style={{ background: palette?.background }}
+        style={{ background: palette?.background, color: palette?.color }}
       >
         <span className="text-2xl font-bold">Update User</span>
         <div
@@ -56,19 +56,19 @@ const UpdateUserModal = ({ isOpen, setIsOpen }) => {
               background: palette?.dark_contrast_background,
             }}
             type="text"
-            placeholder="Category Name"
+            placeholder="User Name"
           />
         </div>
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-          <textarea
-            className="w-full h-32 resize-none rounded-xl text-sm  outline-none border-none py-2 px-4"
+          <input
+            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
             style={{
               background: palette?.dark_contrast_background,
             }}
             type="text"
-            placeholder="Category Description"
-          ></textarea>
+            placeholder="User Email"
+          />
         </div>
 
         <button

@@ -30,7 +30,7 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
       <div
         ref={updateCategoryRef}
         className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
-        style={{ background: palette?.background }}
+        style={{ background: palette?.background, color: palette?.color }}
       >
         <span className="text-2xl font-bold">Update Category</span>
         <div

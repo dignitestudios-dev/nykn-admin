@@ -21,13 +21,7 @@ const TransactionGraph = () => {
           </span>
 
           <div className="w-auto h-auto flex justify-start items-center gap-[2px]">
-            <div className="w-20 h-auto flex justify-start items-center gap-[2px]">
-              <span className="w-2 h-2 rounded-full bg-[#3DA2FF]" />
-
-              <span className="text-xs ">Pending</span>
-            </div>
-
-            <div className="w-24 h-auto flex justify-start items-center gap-[2px]">
+            <div className="w-auto h-auto flex justify-start items-center gap-[2px]">
               <span className="w-2 h-2 rounded-full bg-[#3FB743]" />
 
               <span className="text-xs ">Paid</span>

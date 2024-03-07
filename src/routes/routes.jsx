@@ -15,6 +15,8 @@ import RegisterUser from "../pages/RegisterUser";
 import { BiCategoryAlt } from "react-icons/bi";
 import Categories from "../pages/Categories";
 import CategoryDetail from "../pages/CategoryDetail";
+import CategoryAndAttractionCreation from "../pages/CategoryAndAttractionCreation";
+import EditAttraction from "../pages/EditAttraction";
 
 export const loginRoutes = [
   {
@@ -76,18 +78,28 @@ export const normalRoutes = [
     url: "/categories/:id",
     page: <CategoryDetail />,
   },
+  {
+    name: "Attraction Details",
+    url: "/attraction/:id",
+    page: <EditAttraction />,
+  },
+  {
+    name: "Create",
+    url: "/category/create",
+    page: <CategoryAndAttractionCreation />,
+  },
 ];
 
 export const sidebarArr = [
   {
-    name: "Create user",
-    url: "/create-user/",
-    icon: <FaRegPlusSquare className="text-xl" />,
-  },
-  {
     name: "Discover",
     url: "/discover",
     icon: <BiHomeAlt className="text-xl" />,
+  },
+  {
+    name: "Add Attraction",
+    url: "/category/create",
+    icon: <FaRegPlusSquare className="text-xl" />,
   },
   {
     name: "Users",

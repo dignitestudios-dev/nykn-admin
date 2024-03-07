@@ -164,12 +164,12 @@ const RegisterUser = () => {
                     </label>
                   )}
                 </div>
-                <div className="w-full h-10 flex justify-center items-center gap-1">
+                {/* <div className="w-full h-10 flex justify-center items-center gap-1">
                   <input type="checkbox" name="adminCheck" id="admin_check" />
                   <span className="text-xs font-medium">
                     Register as an admin.
                   </span>
-                </div>
+                </div> */}
 
                 <AuthButton
                   onClick={createUser}

@@ -5,8 +5,11 @@ import { Link } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { HiOutlineChevronDoubleLeft } from "react-icons/hi";
+import { RxCross2 } from "react-icons/rx";
 import UserBtnModal from "./UserBtnModal";
 import NotificationModal from "./NotificationModal";
+import { FaPlus } from "react-icons/fa";
+import { GoPlus } from "react-icons/go";
 
 const Navbar = ({ name }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -60,11 +63,7 @@ const Navbar = ({ name }) => {
             color: palette?.color,
           }}
         >
-          {sidebarActive ? (
-            <HiOutlineChevronDoubleLeft className="text-2xl" />
-          ) : (
-            <HiMenuAlt2 className="text-2xl" />
-          )}
+          <HiMenuAlt2 className="text-2xl" />
         </button>
         {/* <input
           type="text"
@@ -82,14 +81,27 @@ const Navbar = ({ name }) => {
           <IoSearch className="text-white" />
         </button> */}
 
-        <h1
+        {/* <h1
           className="text-lg md:text-xl font-bold"
           style={{
             color: palette?.color,
           }}
         >
           {name}
-        </h1>
+        </h1> */}
+
+        <Link
+          to="/create-user/"
+          className="group transition-all duration-150 w-auto px-2 h-7 rounded-lg flex items-center justify-center text-xs md:text-sm text-white focus-within:ring-2 focus-within:ring-blue-500 "
+          style={{
+            background: palette?.brand,
+          }}
+        >
+          <GoPlus className="group-hover:mr-1 text-lg" />
+          <span className="text-xs transition-all duration-150 group-hover:block hidden">
+            Create User
+          </span>
+        </Link>
       </div>
 
       <div className="w-auto h-auto flex gap-3 justify-start items-center">

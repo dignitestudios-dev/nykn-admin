@@ -44,7 +44,7 @@ const AttractionCard = ({ attraction }) => {
 
           <div className="w-full md:w-auto flex justify-start items-center gap-2">
             <Link
-              to={`/categories/${attraction?.id}`}
+              to={`/attraction/${attraction?.id}`}
               className="w-full md:w-24  h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center  text-white"
               style={{
                 background: palette?.brand,
