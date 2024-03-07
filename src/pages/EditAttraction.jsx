@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { LuImagePlus } from "react-icons/lu";
+import ConfirmDeleteAttraction from "../components/Attraction.jsx/ConfirmDeleteAttraction";
 
 const EditAttraction = () => {
   const { palette } = useContext(GlobalContext);
@@ -8,6 +9,8 @@ const EditAttraction = () => {
     const elem = document.getElementById("cat-image-update");
     elem.click();
   };
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   return (
     <div
       id="edit-attraction"
@@ -121,14 +124,27 @@ const EditAttraction = () => {
         />
       </div>
 
-      <button
-        style={{
-          background: palette?.brand,
-        }}
-        className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
-      >
-        Update
-      </button>
+      <div className="w-auto mt-2 flex gap-2 justify-start items-start">
+        <button
+          style={{
+            background: palette?.brand,
+          }}
+          className="w-28 h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+        >
+          Update
+        </button>
+        <button
+          onClick={() => setIsDeleteOpen(true)}
+          className="w-28 h-10 bg-red-500  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+        >
+          Delete
+        </button>
+
+        <ConfirmDeleteAttraction
+          isOpen={isDeleteOpen}
+          setIsOpen={setIsDeleteOpen}
+        />
+      </div>
     </div>
   );
 };

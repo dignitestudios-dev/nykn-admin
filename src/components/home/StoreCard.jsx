@@ -7,7 +7,7 @@ const StoreCard = () => {
   const { palette, navigateToLink } = useContext(GlobalContext);
   return (
     <div
-      className="w-[47.5%] md:w-[48.6%] lg:w-[24%] shadow xl:w-[18.5%] p-4 flex justify-start items-start h-auto xl:max-h-48 rounded-md"
+      className="w-[47.5%] md:w-[48.6%] lg:w-[24%] shadow xl:w-[21%] p-4 flex justify-start items-start h-auto xl:max-h-48 rounded-md"
       style={{
         background: palette?.dark_contrast_background,
         color: palette?.dark_contrast_color,
@@ -40,7 +40,7 @@ const StoreCard = () => {
         </div>
       </div>
       <div className="w-[35%] flex flex-col justify-center items-center">
-        <img src="/store.png" className="h-auto min-h-32" />
+        <img src="/store.png" className="h-32 w-32" />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const MainBanner = () => {
   const { palette, profile } = useContext(GlobalContext);
 
   return (
-    <div className="pt-10  w-full lg:w-[48.5%] xl:w-[60%] ">
+    <div className="pt-10  w-full lg:w-[48.5%] xl:w-[55%] ">
       <div
         style={{
           background: palette?.dark_contrast_background,
