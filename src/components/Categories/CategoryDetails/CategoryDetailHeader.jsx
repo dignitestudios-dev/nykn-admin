@@ -43,6 +43,12 @@ const CategoryDetailHeader = () => {
           <span className="text-[#9b9c9b] text-wrap text-sm font-medium">
             Category Description goes here
           </span>
+          <div className="flex text-sm justify-start items-start">
+            <span className="font-bold" style={{ color: palette?.brand }}>
+              $
+            </span>
+            <span className="font-bold">50</span>
+          </div>
         </div>
 
         <div className="w-auto flex flex-col ml-auto justify-start items-start gap-2">

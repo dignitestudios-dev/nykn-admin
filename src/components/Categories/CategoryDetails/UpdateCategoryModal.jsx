@@ -1,6 +1,7 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { GlobalContext } from "../../../context/GlobalContext";
 import { LuImagePlus } from "react-icons/lu";
+import { MdClose } from "react-icons/md";
 
 const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
   const updateCategoryRef = useRef();
@@ -13,8 +14,48 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
   };
 
   const handleImage = () => {
-    const elem = document.getElementById("cat-image-update");
-    elem.click();
+    if (images.length < 5) {
+      const elem = document.getElementById("cat-image-edit");
+      elem.click();
+    } else {
+      alert("You can only select 5 images");
+    }
+  };
+
+  const [images, setImages] = useState([]);
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const promises = files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const base64String = e.target.result.split(",")[1]; // Remove data:image/jpeg;base64,
+          resolve(base64String);
+        };
+
+        reader.onerror = (error) => {
+          reject(error);
+        };
+
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(promises)
+      .then((base64Strings) => {
+        setImages([...images, ...base64Strings]);
+      })
+      .catch((error) => {
+        console.error("Error reading files:", error);
+      });
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
   };
 
   return (
@@ -42,12 +83,32 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
           }}
         >
           <input
-            id="cat-image-update"
+            id="cat-image-edit"
             className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
             type="file"
             accept="/*png"
+            onChange={(e) => handleImageChange(e)}
           />
           <LuImagePlus className="text-xl font-medium" />
+        </div>
+        <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
+          {/* Image component */}
+          {images.map((image, key) => {
+            return (
+              <div className="relative w-[18%] h-16 bg-gray-200 rounded-md">
+                <img
+                  src={`data:image/webp;base64,${image && image}`}
+                  className="w-full h-full rounded-md object-cover"
+                />
+                <button
+                  onClick={() => handleRemoveImage(key)}
+                  className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
+                >
+                  <MdClose className="text-xs text-white" />
+                </button>
+              </div>
+            );
+          })}
         </div>
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <input
@@ -57,6 +118,16 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
             }}
             type="text"
             placeholder="Category Name"
+          />
+        </div>
+        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+          <input
+            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+            style={{
+              background: palette?.dark_contrast_background,
+            }}
+            type="text"
+            placeholder="Price"
           />
         </div>
 
