@@ -1,21 +1,19 @@
 import React, { useContext, useState } from "react";
-import { GlobalContext } from "../context/GlobalContext";
+import { GlobalContext } from "../../context/GlobalContext";
 import { LuImagePlus } from "react-icons/lu";
-import ConfirmDeleteAttraction from "../components/Attraction/ConfirmDeleteAttraction";
 import { MdClose } from "react-icons/md";
 
-const EditAttraction = () => {
+const AttractionContainer = () => {
   const { palette } = useContext(GlobalContext);
   const handleImage = () => {
     if (images.length < 5) {
-      const elem = document.getElementById("cat-image-update");
+      const elem = document.getElementById("attraction-image-add");
       elem.click();
     } else {
       alert("You can only select 5 images");
     }
   };
 
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [images, setImages] = useState([]);
 
   const handleImageChange = (e) => {
@@ -53,13 +51,14 @@ const EditAttraction = () => {
   };
   return (
     <div
-      id="edit-attraction"
-      className="w-full  h-auto flex  flex-col gap-2 justify-start rounded-3xl items-start  p-4"
+      id="add-new-attraction"
+      className="w-full lg:w-1/2  h-auto flex  flex-col gap-2 justify-start rounded-3xl items-center  p-4"
       style={{
         background: palette?.light_contrast_background,
         color: palette?.color,
       }}
     >
+      <span className="text-2xl font-bold">Add Attraction</span>
       <div
         onClick={handleImage}
         className="w-full h-16 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
@@ -69,7 +68,7 @@ const EditAttraction = () => {
         }}
       >
         <input
-          id="cat-image-update"
+          id="attraction-image-add"
           className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
           type="file"
           accept="/image*"
@@ -143,6 +142,16 @@ const EditAttraction = () => {
         ></textarea>
       </div>
 
+      <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+        <input
+          className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+          style={{
+            background: palette?.dark_contrast_background,
+          }}
+          type="text"
+          placeholder="Timings"
+        />
+      </div>
       <div className="w-full h-auto flex  gap-1 justify-start items-start">
         <select
           className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
@@ -163,17 +172,6 @@ const EditAttraction = () => {
             background: palette?.dark_contrast_background,
           }}
           type="text"
-          placeholder="Timings"
-        />
-      </div>
-
-      <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-        <input
-          className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-          style={{
-            background: palette?.dark_contrast_background,
-          }}
-          type="text"
           placeholder="Address"
         />
       </div>
@@ -184,29 +182,16 @@ const EditAttraction = () => {
         />
       </div>
 
-      <div className="w-auto mt-2 flex gap-2 justify-start items-start">
-        <button
-          style={{
-            background: palette?.brand,
-          }}
-          className="w-28 h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
-        >
-          Update
-        </button>
-        <button
-          onClick={() => setIsDeleteOpen(true)}
-          className="w-28 h-10 bg-red-500  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
-        >
-          Delete
-        </button>
-
-        <ConfirmDeleteAttraction
-          isOpen={isDeleteOpen}
-          setIsOpen={setIsDeleteOpen}
-        />
-      </div>
+      <button
+        style={{
+          background: palette?.brand,
+        }}
+        className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+      >
+        Add Attraction
+      </button>
     </div>
   );
 };
 
-export default EditAttraction;
+export default AttractionContainer;
