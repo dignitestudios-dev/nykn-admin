@@ -23,7 +23,7 @@ const AuthInput = ({ icon, state, setState, text, type, error }) => {
             ? `1px solid red`
             : `1px solid ${palette?.light_contrast_background}`,
           color: palette?.light_contrast_color,
-          background: palette?.light_contrast_background,
+          background: palette?.dark_contrast_background,
         }}
       >
         {icon}

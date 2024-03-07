@@ -47,7 +47,9 @@ const CategoryDetailHeader = () => {
             <span className="font-bold" style={{ color: palette?.brand }}>
               $
             </span>
-            <span className="font-bold">50</span>
+            <span className="font-bold" style={{ color: palette?.color }}>
+              50
+            </span>
           </div>
         </div>
 

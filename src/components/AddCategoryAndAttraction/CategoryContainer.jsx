@@ -127,6 +127,39 @@ const CategoryContainer = () => {
           placeholder="Category Description"
         ></textarea>
       </div>
+      <div className="w-full  flex h-auto justify-start items-start gap-2">
+        <div className="flex items-center ">
+          <input
+            id="free"
+            type="radio"
+            value="free"
+            name="audienceType"
+            className="w-4 h-4  accent-blue-400  "
+          />
+          <label
+            htmlFor="free"
+            className="w-full ms-1 text-md font-medium text-gray-900 rounded "
+          >
+            Free
+          </label>
+        </div>
+
+        <div className="flex items-center ">
+          <input
+            id="paid"
+            type="radio"
+            value="paid"
+            name="audienceType"
+            className="w-4 h-4  accent-blue-400  "
+          />
+          <label
+            htmlFor="paid"
+            className="w-full ms-1 text-md font-medium text-gray-900 rounded "
+          >
+            Paid
+          </label>
+        </div>
+      </div>
 
       <button
         style={{
