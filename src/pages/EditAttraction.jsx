@@ -5,7 +5,8 @@ import ConfirmDeleteAttraction from "../components/Attraction/ConfirmDeleteAttra
 import { MdClose } from "react-icons/md";
 import CategoryModal from "../components/AddCategoryAndAttraction/CategoryModal";
 import LabelModal from "../components/AddCategoryAndAttraction/LabelModal";
-
+import { Link } from "react-router-dom";
+import { IoMdArrowBack } from "react-icons/io";
 const EditAttraction = () => {
   const {
     palette,
@@ -16,6 +17,7 @@ const EditAttraction = () => {
     setIsLabelOpen,
     labelAddRef,
   } = useContext(GlobalContext);
+
   const handleImage = () => {
     if (images.length < 5) {
       const elem = document.getElementById("attraction-image-update");
@@ -69,7 +71,18 @@ const EditAttraction = () => {
         color: palette?.color,
       }}
     >
-      <span className="text-2xl font-bold">Edit Attraction</span>
+      <div className="w-full flex justify-center items-center">
+        <Link
+          to={-1}
+          style={{
+            background: palette?.brand,
+          }}
+          className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-8 h-8 hover:opacity-90 text-white"
+        >
+          <IoMdArrowBack />
+        </Link>
+        <span className="text-2xl font-bold mr-auto">Edit Attraction</span>
+      </div>
       <div
         onClick={handleImage}
         className="w-full h-16 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"

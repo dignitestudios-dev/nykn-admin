@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CategoryDetailHeader from "../components/Categories/CategoryDetails/CategoryDetailHeader";
 import { GlobalContext } from "../context/GlobalContext";
 import CategoryCard from "../components/Categories/CategoryCard";
@@ -8,6 +8,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { GoSortDesc } from "react-icons/go";
 import { CiFilter } from "react-icons/ci";
+import { IoMdArrowBack } from "react-icons/io";
 
 const CategoryDetail = () => {
   const { id } = useParams();
@@ -127,6 +128,15 @@ const CategoryDetail = () => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   return (
     <div className="w-full h-auto flex flex-col justify-start items-start gap-4">
+      <Link
+        to={-1}
+        style={{
+          background: palette?.brand,
+        }}
+        className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-8 h-8 hover:opacity-90 text-white"
+      >
+        <IoMdArrowBack />
+      </Link>
       <CategoryDetailHeader />
       <div className="w-full h-auto flex justify-start items-start flex-col gap-2">
         <div className="w-full flex justify-between items-center px-2">
