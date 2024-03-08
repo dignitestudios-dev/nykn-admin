@@ -89,19 +89,6 @@ const Navbar = ({ name }) => {
         >
           {name}
         </h1> */}
-
-        <Link
-          to="/create-user/"
-          className="group transition-all duration-150 w-auto px-2 h-7 rounded-lg flex items-center justify-center text-xs md:text-sm text-white focus-within:ring-2 focus-within:ring-blue-500 "
-          style={{
-            background: palette?.brand,
-          }}
-        >
-          <GoPlus className="group-hover:mr-1 text-lg" />
-          <span className="text-xs transition-all duration-150 group-hover:block hidden">
-            Create User
-          </span>
-        </Link>
       </div>
 
       <div className="w-auto h-auto flex gap-3 justify-start items-center">

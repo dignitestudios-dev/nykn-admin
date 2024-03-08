@@ -129,14 +129,17 @@ const CategoryDetail = () => {
     <div className="w-full h-auto flex flex-col justify-start items-start gap-4">
       <CategoryDetailHeader />
       <div className="w-full h-auto flex justify-start items-start flex-col gap-2">
-        <h1
-          className="text-2xl font-bold"
-          style={{
-            color: palette?.brand,
-          }}
-        >
-          Attractions
-        </h1>
+        <div className="w-full flex justify-between items-center px-2">
+          <h1
+            className="text-2xl font-bold"
+            style={{
+              color: palette?.brand,
+            }}
+          >
+            Attractions
+          </h1>
+        </div>
+
         <div className="w-full flex justify-start items-start gap-2">
           <div className="relative w-[70%] lg:w-[90%]">
             <input

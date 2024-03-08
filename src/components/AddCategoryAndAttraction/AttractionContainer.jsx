@@ -2,9 +2,19 @@ import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
+import CategoryModal from "./CategoryModal";
+import LabelModal from "./LabelModal";
 
 const AttractionContainer = () => {
-  const { palette } = useContext(GlobalContext);
+  const {
+    palette,
+    categoryAddRef,
+    isCategoryOpen,
+    setIsCategoryOpen,
+    isLabelOpen,
+    setIsLabelOpen,
+    labelAddRef,
+  } = useContext(GlobalContext);
   const handleImage = () => {
     if (images.length < 5) {
       const elem = document.getElementById("attraction-image-add");
@@ -49,12 +59,12 @@ const AttractionContainer = () => {
     updatedImages.splice(index, 1);
     setImages(updatedImages);
   };
+
   return (
     <div
       id="add-new-attraction"
-      className="w-full lg:w-1/2  h-auto flex  flex-col gap-2 justify-start rounded-3xl items-center  p-4"
+      className="w-full   h-auto flex  flex-col gap-2 justify-start rounded-3xl items-center "
       style={{
-        background: palette?.light_contrast_background,
         color: palette?.color,
       }}
     >
@@ -98,7 +108,7 @@ const AttractionContainer = () => {
 
       <div className="w-full h-auto flex  gap-1 justify-start items-start">
         <select
-          className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+          className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm  outline-none border-none px-4"
           style={{
             background: palette?.dark_contrast_background,
           }}
@@ -107,7 +117,23 @@ const AttractionContainer = () => {
         >
           <option value="">Select Category</option>
         </select>
+        <button
+          onClick={() => setIsCategoryOpen(true)}
+          style={{
+            background: palette?.brand,
+          }}
+          className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+        >
+          Add Category
+        </button>
       </div>
+
+      {/* Category Add Modal */}
+      <CategoryModal
+        isOpen={isCategoryOpen}
+        setIsOpen={setIsCategoryOpen}
+        categoryAddRef={categoryAddRef}
+      />
 
       <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
         <input
@@ -154,7 +180,7 @@ const AttractionContainer = () => {
       </div>
       <div className="w-full h-auto flex  gap-1 justify-start items-start">
         <select
-          className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+          className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm  outline-none border-none px-4"
           style={{
             background: palette?.dark_contrast_background,
           }}
@@ -163,7 +189,24 @@ const AttractionContainer = () => {
         >
           <option value="">Select Label</option>
         </select>
+
+        <button
+          onClick={() => setIsLabelOpen(true)}
+          style={{
+            background: palette?.brand,
+          }}
+          className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+        >
+          Add Label
+        </button>
       </div>
+
+      {/* Label Modal */}
+      <LabelModal
+        isOpen={isLabelOpen}
+        setIsOpen={setIsLabelOpen}
+        labelAddRef={labelAddRef}
+      />
 
       <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
         <input

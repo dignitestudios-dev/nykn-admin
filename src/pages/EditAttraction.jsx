@@ -3,12 +3,22 @@ import { GlobalContext } from "../context/GlobalContext";
 import { LuImagePlus } from "react-icons/lu";
 import ConfirmDeleteAttraction from "../components/Attraction/ConfirmDeleteAttraction";
 import { MdClose } from "react-icons/md";
+import CategoryModal from "../components/AddCategoryAndAttraction/CategoryModal";
+import LabelModal from "../components/AddCategoryAndAttraction/LabelModal";
 
 const EditAttraction = () => {
-  const { palette } = useContext(GlobalContext);
+  const {
+    palette,
+    isCategoryOpen,
+    setIsCategoryOpen,
+    categoryAddRef,
+    isLabelOpen,
+    setIsLabelOpen,
+    labelAddRef,
+  } = useContext(GlobalContext);
   const handleImage = () => {
     if (images.length < 5) {
-      const elem = document.getElementById("cat-image-update");
+      const elem = document.getElementById("attraction-image-update");
       elem.click();
     } else {
       alert("You can only select 5 images");
@@ -54,12 +64,12 @@ const EditAttraction = () => {
   return (
     <div
       id="edit-attraction"
-      className="w-full  h-auto flex  flex-col gap-2 justify-start rounded-3xl items-start  p-4"
+      className="w-full   h-auto flex  flex-col gap-2 justify-start rounded-3xl items-center "
       style={{
-        background: palette?.light_contrast_background,
         color: palette?.color,
       }}
     >
+      <span className="text-2xl font-bold">Edit Attraction</span>
       <div
         onClick={handleImage}
         className="w-full h-16 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
@@ -69,7 +79,7 @@ const EditAttraction = () => {
         }}
       >
         <input
-          id="cat-image-update"
+          id="attraction-image-update"
           className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
           type="file"
           accept="/image*"
@@ -99,7 +109,7 @@ const EditAttraction = () => {
 
       <div className="w-full h-auto flex  gap-1 justify-start items-start">
         <select
-          className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+          className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm  outline-none border-none px-4"
           style={{
             background: palette?.dark_contrast_background,
           }}
@@ -108,7 +118,23 @@ const EditAttraction = () => {
         >
           <option value="">Select Category</option>
         </select>
+        <button
+          onClick={() => setIsCategoryOpen(true)}
+          style={{
+            background: palette?.brand,
+          }}
+          className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+        >
+          Add Category
+        </button>
       </div>
+
+      {/* Category Add Modal */}
+      <CategoryModal
+        isOpen={isCategoryOpen}
+        setIsOpen={setIsCategoryOpen}
+        categoryAddRef={categoryAddRef}
+      />
 
       <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
         <input
@@ -143,19 +169,6 @@ const EditAttraction = () => {
         ></textarea>
       </div>
 
-      <div className="w-full h-auto flex  gap-1 justify-start items-start">
-        <select
-          className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-          style={{
-            background: palette?.dark_contrast_background,
-          }}
-          type="text"
-          placeholder="Label"
-        >
-          <option value="">Select Label</option>
-        </select>
-      </div>
-
       <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
         <input
           className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
@@ -166,6 +179,35 @@ const EditAttraction = () => {
           placeholder="Timings"
         />
       </div>
+      <div className="w-full h-auto flex  gap-1 justify-start items-start">
+        <select
+          className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm  outline-none border-none px-4"
+          style={{
+            background: palette?.dark_contrast_background,
+          }}
+          type="text"
+          placeholder="Label"
+        >
+          <option value="">Select Label</option>
+        </select>
+
+        <button
+          onClick={() => setIsLabelOpen(true)}
+          style={{
+            background: palette?.brand,
+          }}
+          className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+        >
+          Add Label
+        </button>
+      </div>
+
+      {/* Label Modal */}
+      <LabelModal
+        isOpen={isLabelOpen}
+        setIsOpen={setIsLabelOpen}
+        labelAddRef={labelAddRef}
+      />
 
       <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
         <input
@@ -184,7 +226,7 @@ const EditAttraction = () => {
         />
       </div>
 
-      <div className="w-auto mt-2 flex gap-2 justify-start items-start">
+      <div className="w-full mt-2 flex gap-2 justify-start items-start">
         <button
           style={{
             background: palette?.brand,

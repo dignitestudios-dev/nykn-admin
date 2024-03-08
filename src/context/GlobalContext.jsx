@@ -80,6 +80,12 @@ export const GlobalContextProvider = ({ children }) => {
     }
   }, [theme]);
 
+  // Category and Label Modal Container
+  const categoryAddRef = useRef(null);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const labelAddRef = useRef(null);
+  const [isLabelOpen, setIsLabelOpen] = useState(false);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -123,6 +129,14 @@ export const GlobalContextProvider = ({ children }) => {
         setIsTimerOn,
         startTimer,
         resetTimer,
+
+        // Category and Label Modal:
+        categoryAddRef,
+        isCategoryOpen,
+        setIsCategoryOpen,
+        labelAddRef,
+        isLabelOpen,
+        setIsLabelOpen,
       }}
     >
       <div>{children}</div>

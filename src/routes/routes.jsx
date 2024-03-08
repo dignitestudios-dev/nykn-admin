@@ -17,6 +17,7 @@ import Categories from "../pages/Categories";
 import CategoryDetail from "../pages/CategoryDetail";
 import CategoryAndAttractionCreation from "../pages/CategoryAndAttractionCreation";
 import EditAttraction from "../pages/EditAttraction";
+import { FiUserPlus } from "react-icons/fi";
 
 export const loginRoutes = [
   {
@@ -105,6 +106,11 @@ export const sidebarArr = [
     name: "Users",
     url: "/users",
     icon: <FiUsers className="text-xl" />,
+  },
+  {
+    name: "Create User",
+    url: "/create-user/",
+    icon: <FiUserPlus className="text-xl" />,
   },
   {
     name: "Categories",

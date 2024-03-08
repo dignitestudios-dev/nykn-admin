@@ -4,6 +4,7 @@ import { IoSearch } from "react-icons/io5";
 import { GlobalContext } from "../context/GlobalContext";
 import { CiFilter } from "react-icons/ci";
 import { GoSortDesc } from "react-icons/go";
+import CategoryModal from "../components/AddCategoryAndAttraction/CategoryModal";
 
 const Categories = () => {
   const arr = [
@@ -105,13 +106,41 @@ const Categories = () => {
     },
   ];
 
-  const { palette, theme } = useContext(GlobalContext);
+  const { palette, theme, isCategoryOpen, categoryAddRef, setIsCategoryOpen } =
+    useContext(GlobalContext);
 
   const [filter, setFilter] = useState("filter");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
     <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
+      <div className="w-full flex justify-between items-center px-2">
+        <h1
+          className="text-2xl font-bold"
+          style={{
+            color: palette?.brand,
+          }}
+        >
+          Categories
+        </h1>
+        <button
+          onClick={() => setIsCategoryOpen(true)}
+          style={{
+            background: palette?.brand,
+          }}
+          className="w-32 h-8  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full"
+        >
+          Add Category
+        </button>
+      </div>
+
+      {/* Category Add Modal */}
+      <CategoryModal
+        isOpen={isCategoryOpen}
+        setIsOpen={setIsCategoryOpen}
+        categoryAddRef={categoryAddRef}
+      />
+
       <div className="w-full flex justify-start items-start gap-2">
         <div className="relative w-[70%] lg:w-[90%]">
           <input
