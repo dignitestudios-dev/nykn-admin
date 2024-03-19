@@ -49,7 +49,7 @@ const ChangePassword = () => {
       const otp = localStorage.getItem("otp");
       setLoading(true);
       axios
-        .post(`${baseUrl}/users/update/forgotten-password`, {
+        .post(`${baseUrl}/auth/resetPasswordAdmin`, {
           otp: otp,
           new_password: password,
         })

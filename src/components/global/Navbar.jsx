@@ -92,7 +92,7 @@ const Navbar = ({ name }) => {
       </div>
 
       <div className="w-auto h-auto flex gap-3 justify-start items-center">
-        <span
+        {/* <span
           onClick={(e) => {
             e.stopPropagation();
             setIsNotificationOpen((prev) => !prev);
@@ -103,7 +103,7 @@ const Navbar = ({ name }) => {
             className="text-xl"
             style={{ color: palette?.light_contrast_color }}
           />
-        </span>
+        </span> */}
 
         <div className="flex justify-start items-center gap-2">
           <span

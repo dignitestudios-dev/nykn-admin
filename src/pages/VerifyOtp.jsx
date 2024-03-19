@@ -35,7 +35,7 @@ const VerifyOtp = () => {
   const handleSendAgain = () => {
     setHasClicked(true);
     axios
-      .post(`${baseUrl}/resend-otp`, {
+      .post(`${baseUrl}/auth/resendOtp`, {
         email: email,
       })
       .then(
@@ -56,15 +56,17 @@ const VerifyOtp = () => {
       setTimeout(() => {
         setOtpError(false);
       }, 3000);
-    } else if (otp.length < 6) {
-      setOtpError("*OTP cannot be less than 6 digits.");
+    } else if (otp.length < 4) {
+      setOtpError("*OTP cannot be less than 4 digits.");
       setTimeout(() => {
         setOtpError(false);
       }, 3000);
     } else {
       setLoading(true);
+      const email = localStorage.getItem("email");
       axios
-        .post(`${baseUrl}/verify-otp`, {
+        .post(`${baseUrl}/auth/verifyOtpAdmin`, {
+          email: email,
           otp: otp,
         })
         .then(
@@ -142,7 +144,7 @@ const VerifyOtp = () => {
           <button
             disabled={isTimerOn || hasClicked}
             onClick={handleSendAgain}
-            className="text-sm text-orange-500 font-semibold"
+            className="text-sm text-blue-500 font-semibold"
           >
             {isTimerOn ? <Timer /> : "Send Again"}
           </button>

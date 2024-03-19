@@ -72,7 +72,7 @@ const AuthTemplate = ({ page }) => {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

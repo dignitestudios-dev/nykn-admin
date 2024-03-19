@@ -25,9 +25,9 @@ const Users = () => {
         Authorization: `Bearer ${token}`,
         "ngrok-skip-browser-warning": true,
       };
-      axios.get(`${baseUrl}/users`, { headers }).then(
+      axios.get(`${baseUrl}/auth/getAllUser`, { headers }).then(
         (response) => {
-          setUsers(response?.data?.data?.users);
+          setUsers(response?.data);
           setUserLoading(false);
         },
         (error) => {

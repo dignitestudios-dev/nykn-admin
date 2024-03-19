@@ -56,15 +56,15 @@ const Login = () => {
     } else {
       setLoading(true);
       axios
-        .post(`${baseUrl}/admin-login`, {
+        .post(`${baseUrl}/auth/adminLogin`, {
           email: email,
           password: password,
         })
         .then(
           (response) => {
-            Cookies.set("token", response?.data?.data?.token, { expires: 7 });
+            Cookies.set("token", response?.data?.token, { expires: 7 });
             Cookies.set("isLoggedIn", true, { expires: 7 });
-            if (response?.data?.data?.token) {
+            if (response?.data?.token) {
               navigate("/discover/");
             }
             setLoading(false);

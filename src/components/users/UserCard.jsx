@@ -57,7 +57,7 @@ const UserCard = ({ user, setReload }) => {
         />
 
         <div className="w-auto flex flex-col justify-start items-start">
-          <h1 className="text-sm xl:text-lg font-bold ">{user?.name}</h1>
+          <h1 className="text-sm xl:text-lg font-bold ">{user?.full_name}</h1>
           <span className="text-[#9b9c9b] text-xs md:text-sm xl:text-sm font-medium">
             {user?.email}
           </span>

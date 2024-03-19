@@ -53,9 +53,9 @@ const GlobalTemplate = ({ page, name }) => {
     }
   };
 
-  useEffect(() => {
-    getAdminProfile();
-  }, []);
+  // useEffect(() => {
+  //   getAdminProfile();
+  // }, []);
 
   const validateToken = () => {
     const token = Cookies.get("token");
@@ -103,7 +103,7 @@ const GlobalTemplate = ({ page, name }) => {
             <div className="w-full min-h-[67vh] overflow-x-hidden h-auto p-2 md:p-4">
               {page}
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </div>
       </div>

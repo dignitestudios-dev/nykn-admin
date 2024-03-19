@@ -26,7 +26,7 @@ export const GlobalContextProvider = ({ children }) => {
   const [profileLoading, setProfileLoading] = useState(false);
 
   // API Base Url's
-  const baseUrl = "https://erdum.supertec.com/api";
+  const baseUrl = "http://localhost:3000/api";
   const imageUrl = "https://erdum.supertec.com/storage/";
 
   // Sidebar link toggle

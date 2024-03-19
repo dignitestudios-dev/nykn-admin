@@ -22,9 +22,9 @@ const UsersTable = () => {
         Authorization: `Bearer ${token}`,
         "ngrok-skip-browser-warning": true,
       };
-      axios.get(`${baseUrl}/users`, { headers }).then(
+      axios.get(`${baseUrl}/auth/getAllUser`, { headers }).then(
         (response) => {
-          setUsers(response?.data?.data?.users);
+          setUsers(response?.data);
           setUserLoading(false);
         },
         (error) => {
@@ -79,12 +79,6 @@ const UsersTable = () => {
                   >
                     Name
                   </th>
-                  <th
-                    scope="col"
-                    className="px-2 py-3 text-left text-xs font-medium  uppercase tracking-wider"
-                  >
-                    Type
-                  </th>
 
                   <th
                     scope="col"
@@ -119,12 +113,7 @@ const UsersTable = () => {
                       </td>
 
                       <td className="px-2 py-2 text-[10px] whitespace-nowrap">
-                        {user?.name}
-                      </td>
-                      <td className="px-2 py-2 text-[10px] whitespace-nowrap">
-                        <span className="min-w-14 w-auto h-5 rounded-full flex items-center justify-center font-medium text-[9.5px] text-blue-500 bg-blue-500/[0.05]">
-                          {user?.type}
-                        </span>
+                        {user?.full_name}
                       </td>
 
                       <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">

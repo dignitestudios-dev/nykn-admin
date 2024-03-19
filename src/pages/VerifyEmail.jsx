@@ -45,11 +45,12 @@ const VerifyEmail = () => {
       setLoading(true);
       localStorage?.setItem("email", email);
       axios
-        .post(`${baseUrl}/forget-password`, {
+        .post(`${baseUrl}/auth/forgotPasswordAdmin`, {
           email: email,
         })
         .then(
           (response) => {
+            localStorage.setItem("email", email);
             navigate("/verify-otp/");
             startTimer();
             setLoading(false);

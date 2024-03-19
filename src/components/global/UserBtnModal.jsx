@@ -13,31 +13,32 @@ const UserBtnModal = ({ isOpen, setIsOpen, userBtnRef }) => {
     const token = Cookies.get("token");
 
     if (token) {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": true,
-      };
-      axios.get(`${baseUrl}/logout`, { headers }).then(
-        (response) => {
-          setIsOpen(false);
-          Cookies.remove("token");
-          Cookies.remove("isLoggedIn");
-          navigate("/login");
-        },
-        (error) => {
-          if (error?.response?.status == 401) {
-            setIsOpen(false);
-            Cookies.remove("token");
-            Cookies.remove("isLoggedIn");
-            navigate("/login");
-          } else {
-            setIsOpen(false);
-            Cookies.remove("token");
-            Cookies.remove("isLoggedIn");
-            navigate("/login");
-          }
-        }
-      );
+      // const headers = {
+      //   Authorization: `Bearer ${token}`,
+      //   "ngrok-skip-browser-warning": true,
+      // };
+      // axios.get(`${baseUrl}/logout`, { headers }).then(
+      //   (response) => {
+      //     setIsOpen(false);
+      //     Cookies.remove("token");
+      //     Cookies.remove("isLoggedIn");
+      //     navigate("/login");
+      //   },
+      //   (error) => {
+      //     if (error?.response?.status == 401) {
+      //       setIsOpen(false);
+      //       Cookies.remove("token");
+      //       Cookies.remove("isLoggedIn");
+      //       navigate("/login");
+      //     } else {
+      //       setIsOpen(false);
+      //       Cookies.remove("token");
+      //       Cookies.remove("isLoggedIn");
+      //       navigate("/login");
+      //     }
+      //   }
+      // );
+      Cookies.remove("token");
     }
   };
 
