@@ -26,7 +26,8 @@ export const GlobalContextProvider = ({ children }) => {
   const [profileLoading, setProfileLoading] = useState(false);
 
   // API Base Url's
-  const baseUrl = "http://localhost:3000/api";
+  // const baseUrl = "http://localhost:3000/api";
+  const baseUrl = "https://backend.nowyouknownashville.com/api";
   const imageUrl = "https://erdum.supertec.com/storage/";
 
   // Sidebar link toggle
