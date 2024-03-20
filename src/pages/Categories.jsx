@@ -1,117 +1,64 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import CategoryCard from "../components/Categories/CategoryCard";
 import { IoSearch } from "react-icons/io5";
 import { GlobalContext } from "../context/GlobalContext";
 import { CiFilter } from "react-icons/ci";
 import { GoSortDesc } from "react-icons/go";
 import CategoryModal from "../components/AddCategoryAndAttraction/CategoryModal";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
-  const arr = [
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "free",
-    },
-    {
-      id: 2,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 3,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "free",
-    },
-    {
-      id: 4,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "free",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "free",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-    {
-      id: 1,
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      status: "paid",
-    },
-  ];
-
-  const { palette, theme, isCategoryOpen, categoryAddRef, setIsCategoryOpen } =
-    useContext(GlobalContext);
+  const navigate = useNavigate();
+  const {
+    palette,
+    theme,
+    isCategoryOpen,
+    categoryAddRef,
+    setIsCategoryOpen,
+    baseUrl,
+    setError,
+  } = useContext(GlobalContext);
 
   const [filter, setFilter] = useState("filter");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState([]);
+
+  const getData = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      setLoading(true);
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      axios
+        .get(`${baseUrl}/GetAllCategory`, { headers })
+        .then((response) => {
+          setResponse(response?.data);
+
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+          setError(error?.response?.data?.error);
+        });
+    } else {
+      setLoading(false);
+      navigate("/login/");
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
       <div className="w-full my-3 flex justify-between items-center px-2">
@@ -219,8 +166,8 @@ const Categories = () => {
         </div>
       </div>
 
-      {arr?.map((item) => {
-        return <CategoryCard category={item} key={item} />;
+      {response?.map((category) => {
+        return <CategoryCard category={category} key={category?._id} />;
       })}
     </div>
   );

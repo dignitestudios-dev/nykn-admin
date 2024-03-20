@@ -2,57 +2,105 @@ import React, { useContext, useRef, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
+import axios from "axios";
+import BtnLoader from "../global/BtnLoader";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
-  const { palette, theme } = useContext(GlobalContext);
-  const handleImage = () => {
-    if (images.length < 5) {
-      const elem = document.getElementById("cat-image-add");
-      elem.click();
-    } else {
-      alert("You can only select 5 images");
+  const navigate = useNavigate();
+  const { palette, theme, baseUrl, setError } = useContext(GlobalContext);
+  // Image:
+  const [image, setImage] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  const handleProfileImg = () => {
+    fileInputRef.current.click();
+  };
+  const handleProfileChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      try {
+        const base64String = await convertImageToBase64(file);
+        setImage(base64String);
+        updateProfile(base64String);
+
+        // console.log(base64String)
+      } catch (error) {
+        console.error("Error converting image to base64:", error.message);
+      }
     }
   };
 
-  const [images, setImages] = useState([]);
+  const convertImageToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    const promises = files.map((file) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result.split(",")[1]; // Get base64 string without data:image part
+        resolve(base64String);
+      };
 
-        reader.onload = (e) => {
-          const base64String = e.target.result.split(",")[1]; // Remove data:image/jpeg;base64,
-          resolve(base64String);
-        };
+      reader.onerror = (error) => {
+        reject(error);
+      };
 
-        reader.onerror = (error) => {
-          reject(error);
-        };
-
-        reader.readAsDataURL(file);
-      });
+      reader.readAsDataURL(file);
     });
-
-    Promise.all(promises)
-      .then((base64Strings) => {
-        setImages([...images, ...base64Strings]);
-      })
-      .catch((error) => {
-        console.error("Error reading files:", error);
-      });
-  };
-
-  const handleRemoveImage = (index) => {
-    const updatedImages = [...images];
-    updatedImages.splice(index, 1);
-    setImages(updatedImages);
   };
 
   const toggleModal = (e) => {
     if (!categoryAddRef.current.contains(e.target)) {
       setIsOpen(false);
+    }
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [isPaid, setIsPaid] = useState(true);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");
+    if (token) {
+      setLoading(true);
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .post(
+          `${baseUrl}/Addcategory`,
+          {
+            category_title: title,
+            category_description: description,
+            category_price: price,
+            isPaid: isPaid,
+            imageBase64Data: image,
+          },
+          { headers }
+        )
+        .then(
+          (response) => {
+            setLoading(false);
+            setImage(null);
+            setTitle("");
+            setDescription("");
+            setPrice("");
+            setIsOpen(false);
+          },
+          (error) => {
+            setError(error?.response?.data?.error);
+            console.log(error);
+            setLoading(false);
+          }
+        );
+    } else {
+      Cookies.remove("token");
+      navigate("/login");
     }
   };
 
@@ -66,50 +114,43 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
         isOpen ? "flex" : "hidden"
       } items-center justify-center`}
     >
-      <div
+      <form
+        onSubmit={handleSubmit}
         ref={categoryAddRef}
         className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
         style={{ background: palette?.background, color: palette?.color }}
       >
         <span className="text-2xl font-bold">Add Category</span>
         <div
-          onClick={handleImage}
-          className="w-full h-16 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
+          onClick={handleProfileImg}
+          className="w-full h-24 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
           style={{
             background: palette?.dark_contrast_background,
             color: palette?.light_contrast_color,
           }}
         >
           <input
+            ref={fileInputRef}
             id="cat-image-add"
             className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
             type="file"
             accept="/image*"
-            onChange={(e) => handleImageChange(e)}
+            onChange={(e) => handleProfileChange(e)}
           />
-          <LuImagePlus className="text-xl font-medium" />
+          {image ? (
+            <img
+              src={`data:image/webp;base64,${image && image}`}
+              className="w-full h-full rounded-xl object-scaledown"
+            />
+          ) : (
+            <LuImagePlus className="text-xl font-medium" />
+          )}
         </div>
-        <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
-          {/* Image component */}
-          {images.map((image, key) => {
-            return (
-              <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
-                <img
-                  src={`data:image/webp;base64,${image && image}`}
-                  className="w-full h-full rounded-md object-cover"
-                />
-                <button
-                  onClick={() => handleRemoveImage(key)}
-                  className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
-                >
-                  <MdClose className="text-xs text-white" />
-                </button>
-              </div>
-            );
-          })}
-        </div>
+
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
             style={{
               background: palette?.dark_contrast_background,
@@ -121,6 +162,8 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <input
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
             className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
             style={{
               background: palette?.dark_contrast_background,
@@ -132,6 +175,8 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full h-32 resize-none rounded-xl text-sm  outline-none border-none py-2 px-4"
             style={{
               background: palette?.dark_contrast_background,
@@ -145,7 +190,8 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
             <input
               id="free"
               type="radio"
-              value="free"
+              value={false}
+              onChange={() => setIsPaid(false)}
               name="audienceType"
               className="w-4 h-4  accent-blue-400  "
             />
@@ -159,9 +205,11 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
 
           <div className="flex items-center ">
             <input
+              checked
               id="paid"
               type="radio"
-              value="paid"
+              value={true}
+              onChange={() => setIsPaid(true)}
               name="audienceType"
               className="w-4 h-4  accent-blue-400  "
             />
@@ -175,14 +223,16 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
         </div>
 
         <button
+          type="submit"
+          disabled={loading}
           style={{
             background: palette?.brand,
           }}
-          className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+          className="w-full h-10 flex justify-center items-center  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
         >
-          Add Category
+          {loading ? <BtnLoader /> : "Add Category"}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

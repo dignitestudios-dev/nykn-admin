@@ -18,26 +18,28 @@ const CategoryCard = ({ category }) => {
           <div className="flex justify-start items-center gap-2">
             <img
               className="h-10 w-10 rounded-full"
-              src={category?.image}
+              src={`${category?.category_image}`}
               alt=""
             />
 
             <div className="w-auto flex flex-col justify-start items-start">
-              <h1 className="text-sm  font-bold ">{category?.name}</h1>
+              <h1 className="text-sm  font-bold ">
+                {category?.category_title}
+              </h1>
               <span className="text-[#9b9c9b] text-wrap text-xs font-medium">
-                {category?.description}
+                {category?.category_description.slice(0, 50)}
               </span>
             </div>
           </div>
 
           <div className="w-full md:w-auto flex justify-start items-center gap-2">
-            {category?.status == "free" && (
+            {category?.isPaid == false && (
               <button className="w-[49.5%] md:w-24 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-green-400 text-white">
                 Make it Paid!
               </button>
             )}
 
-            {category?.status == "paid" && (
+            {category?.isPaid == true && (
               <button className="w-[49.5%] md:w-24 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-red-400 text-white">
                 Make it Free!
               </button>

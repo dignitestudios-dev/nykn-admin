@@ -21,6 +21,7 @@ const GlobalTemplate = ({ page, name }) => {
     setIsLoggedIn,
     setProfile,
     setProfileLoading,
+    error,
   } = useContext(GlobalContext);
 
   const navigate = useNavigate();
@@ -98,7 +99,8 @@ const GlobalTemplate = ({ page, name }) => {
         >
           <Navbar name={name} />
           <div className="w-full overflow-y-auto ">
-            <Error />
+            {error && <Error />}
+
             <Success />
             <div className="w-full min-h-[67vh] overflow-x-hidden h-auto p-2 md:p-4">
               {page}
