@@ -2,6 +2,7 @@ module.exports = {
   apps: [
     {
       script: "npm run prod",
+      cwd: "/home/ubuntu/admin/source",
     },
   ],
 
