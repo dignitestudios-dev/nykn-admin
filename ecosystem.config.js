@@ -11,7 +11,7 @@ module.exports = {
       user: "ubuntu",
       host: "18.118.34.24",
       ref: "origin/main",
-      repo: "https://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@github.com/JackAnderson01/admin_nykn.git",
+      repo: "https://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@github.com/DigniteStudios/NYKN-Admin.git",
       path: "/home/ubuntu/admin",
       "pre-deploy-local": "",
       "post-deploy":
