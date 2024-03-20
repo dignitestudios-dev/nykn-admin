@@ -7,7 +7,7 @@ import BtnLoader from "../global/BtnLoader";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
+const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
   const navigate = useNavigate();
   const { palette, theme, baseUrl, setError } = useContext(GlobalContext);
   // Image:
@@ -86,6 +86,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef }) => {
         .then(
           (response) => {
             setLoading(false);
+            updateData((prev) => !prev);
             setImage(null);
             setTitle("");
             setDescription("");

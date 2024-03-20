@@ -8,6 +8,7 @@ import CategoryModal from "../components/AddCategoryAndAttraction/CategoryModal"
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import CategorySkeleton from "../components/Categories/CategorySkeleton";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Categories = () => {
 
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState([]);
+  const [updateData, setUpdateData] = useState(false);
 
   const getData = () => {
     const token = Cookies.get("token");
@@ -59,6 +61,12 @@ const Categories = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    getData();
+  }, [updateData]);
+
+  const skeleton = [1, 2, 3, 4, 5, 6, 7];
   return (
     <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
       <div className="w-full my-3 flex justify-between items-center px-2">
@@ -83,6 +91,7 @@ const Categories = () => {
 
       {/* Category Add Modal */}
       <CategoryModal
+        updateData={setUpdateData}
         isOpen={isCategoryOpen}
         setIsOpen={setIsCategoryOpen}
         categoryAddRef={categoryAddRef}
@@ -166,9 +175,13 @@ const Categories = () => {
         </div>
       </div>
 
-      {response?.map((category) => {
-        return <CategoryCard category={category} key={category?._id} />;
-      })}
+      {loading
+        ? skeleton?.map((item) => {
+            return <CategorySkeleton key={item} />;
+          })
+        : response?.map((category) => {
+            return <CategoryCard category={category} key={category?._id} />;
+          })}
     </div>
   );
 };
