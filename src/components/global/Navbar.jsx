@@ -120,16 +120,16 @@ const Navbar = ({ name }) => {
             />
           </span>
 
-          <UserBtnModal
+          {/* <UserBtnModal
             isOpen={isProfileOpen}
             setIsOpen={setIsProfileOpen}
             userBtnRef={userBtnRef}
-          />
-          <NotificationModal
+          /> */}
+          {/* <NotificationModal
             notificationRef={notificationRef}
             isOpen={isNotificationOpen}
             setIsOpen={setIsNotificationOpen}
-          />
+          /> */}
         </div>
       </div>
     </div>

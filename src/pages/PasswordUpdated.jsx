@@ -16,7 +16,10 @@ const PasswordUpdate = () => {
 
   return (
     <div className="w-full h-[20rem] flex flex-col gap-4 items-center justify-center">
-      <IoIosCheckmarkCircleOutline className="text-7xl lg:text-9xl text-orange-500 font-bold" />
+      <IoIosCheckmarkCircleOutline
+        className="text-7xl lg:text-9xl  font-bold"
+        style={{ color: palette.brand }}
+      />
       <h1
         className="text-2xl lg:text-4xl font-bold "
         style={{

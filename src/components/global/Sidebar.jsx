@@ -3,8 +3,12 @@ import { useContext } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import SidebarLink from "./SidebarLink";
 import { sidebarArr } from "../../routes/routes";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { BiLogOut } from "react-icons/bi";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const { palette, sidebarActive, theme, setTheme } = useContext(GlobalContext);
   const arr = [1];
   return (
@@ -18,7 +22,6 @@ const Sidebar = () => {
     >
       {sidebarActive ? (
         <button
-          onClick={() => setTheme(theme == "dark" ? "light" : "dark")}
           className="h-12 flex items-center justify-center w-full font-bold "
           style={{
             color: palette?.brand,
@@ -51,6 +54,30 @@ const Sidebar = () => {
           />
         );
       })}
+
+      <span
+        onClick={() => {
+          Cookies.remove("token");
+          navigate("/login");
+        }}
+        className={`sidebar-link w-full h-10 rounded-r-full cursor-pointer flex items-center justify-start gap-3 ${
+          sidebarActive
+            ? "px-5 flex items-center justify-start"
+            : "flex items-center justify-center px-0"
+        }  `}
+        style={{
+          color: palette?.color,
+        }}
+      >
+        <BiLogOut />
+        <span
+          className={` text-md font-medium ${
+            sidebarActive ? "hidden lg:block" : "hidden"
+          }`}
+        >
+          Logout
+        </span>
+      </span>
     </div>
   );
 };

@@ -5,7 +5,7 @@ const Timer = () => {
   const { palette, setIsTimerOn, isTimerOn, resetTimer } =
     useContext(GlobalContext);
   const [timeRemaining, setTimeRemaining] = useState(
-    localStorage.getItem("timerTimeRemaining") || 180
+    localStorage.getItem("timerTimeRemaining") || 60
   ); // 180 seconds = 3 minutes
 
   useEffect(() => {

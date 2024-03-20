@@ -32,10 +32,11 @@ const VerifyOtp = () => {
   // Form Error States
   const [otpError, setOtpError] = useState(false);
 
-  const handleSendAgain = () => {
+  const handleSendAgain = (e) => {
+    e.preventDefault();
     setHasClicked(true);
     axios
-      .post(`${baseUrl}/auth/resendOtp`, {
+      .post(`${baseUrl}/auth/resendOtpAdmin`, {
         email: email,
       })
       .then(
@@ -50,7 +51,8 @@ const VerifyOtp = () => {
       );
   };
 
-  const handleOtpVerification = () => {
+  const handleOtpVerification = (e) => {
+    e.preventDefault();
     if (otp == "") {
       setOtpError("*OTP cannot be left empty.");
       setTimeout(() => {
@@ -73,7 +75,7 @@ const VerifyOtp = () => {
           (response) => {
             console.log(response);
             // just for now
-            localStorage.setItem("otp", otp);
+            localStorage.setItem("token", response?.data?.token);
             resetTimer();
             navigate("/change-password/");
             setLoading(false);
@@ -112,29 +114,30 @@ const VerifyOtp = () => {
         </span>
       </div>
 
-      {formError && <FormError />}
+      <form
+        onSubmit={handleOtpVerification}
+        className="w-full h-auto flex flex-col justify-start items-center gap-3"
+      >
+        {formError && <FormError />}
 
-      <div className="w-full h-auto flex flex-col gap-[2px]">
-        <AuthInput
-          text={"OTP Code"}
-          icon={<MdOutlineNoEncryptionGmailerrorred />}
-          state={otp}
-          setState={setOtp}
-          type={"text"}
-          error={otpError}
-        />
-        {otpError && (
-          <label className="ml-3 text-xs font-medium capitalize text-red-500">
-            {otpError}
-          </label>
-        )}
-      </div>
+        <div className="w-full h-auto flex flex-col gap-[2px]">
+          <AuthInput
+            text={"OTP Code"}
+            icon={<MdOutlineNoEncryptionGmailerrorred />}
+            state={otp}
+            setState={setOtp}
+            type={"text"}
+            error={otpError}
+          />
+          {otpError && (
+            <label className="ml-3 text-xs font-medium capitalize text-red-500">
+              {otpError}
+            </label>
+          )}
+        </div>
 
-      <AuthButton
-        onClick={handleOtpVerification}
-        text={"Verify"}
-        loading={loading}
-      />
+        <AuthButton text={"Verify"} loading={loading} />
+      </form>
 
       <div className="w-[80%] mt-2 h-auto flex justify-center items-center">
         <div className="w-auto flex justify-center items-center gap-1">
@@ -144,7 +147,8 @@ const VerifyOtp = () => {
           <button
             disabled={isTimerOn || hasClicked}
             onClick={handleSendAgain}
-            className="text-sm text-blue-500 font-semibold"
+            className="text-sm  font-semibold"
+            style={{ color: palette.brand }}
           >
             {isTimerOn ? <Timer /> : "Send Again"}
           </button>

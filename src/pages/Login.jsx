@@ -32,7 +32,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     if (email == "") {
       setEmailError("Email is required.");
       setTimeout(() => {
@@ -98,7 +99,10 @@ const Login = () => {
         </span>
       </div>
 
-      <div className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start">
+      <form
+        onSubmit={handleLogin}
+        className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start"
+      >
         {formError && <FormError />}
         <div className="w-full h-auto flex flex-col gap-[2px]">
           <AuthInput
@@ -138,8 +142,8 @@ const Login = () => {
             Forgot Password?
           </Link>
         </div>
-        <AuthButton onClick={handleLogin} text={"Login"} loading={loading} />
-      </div>
+        <AuthButton text={"Login"} loading={loading} />
+      </form>
     </div>
   );
 };

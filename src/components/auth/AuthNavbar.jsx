@@ -15,7 +15,8 @@ const AuthNavbar = () => {
         color: palette?.color,
       }}
     >
-      <button onClick={() => setTheme(theme == "dark" ? "light" : "dark")}>
+      {/* <button onClick={() => setTheme(theme == "dark" ? "light" : "dark")}> */}
+      <button>
         {/* <img src="/logo.svg" className="w-40" /> */}
         <h1 className="text-2xl font-bold" style={{ color: palette?.brand }}>
           NYKN

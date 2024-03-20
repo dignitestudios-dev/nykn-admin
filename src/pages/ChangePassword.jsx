@@ -23,7 +23,8 @@ const ChangePassword = () => {
   const [passError, setPassError] = useState(false);
   const [rePassError, setRePassError] = useState(false);
 
-  const handleChangePass = () => {
+  const handleChangePass = (e) => {
+    e.preventDefault();
     if (password == "") {
       setPassError("*Password is required");
       setTimeout(() => {
@@ -46,13 +47,21 @@ const ChangePassword = () => {
       }, 3000);
     } else {
       // just for now
-      const otp = localStorage.getItem("otp");
+      const tokenTemp = localStorage.getItem("token");
       setLoading(true);
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenTemp}`,
+      };
       axios
-        .post(`${baseUrl}/auth/resetPasswordAdmin`, {
-          otp: otp,
-          new_password: password,
-        })
+        .post(
+          `${baseUrl}/auth/resetPasswordAdmin`,
+          {
+            newPassword: password,
+            confirmPassword: reEnterPass,
+          },
+          { headers }
+        )
         .then(
           (response) => {
             console.log(response);
@@ -84,7 +93,10 @@ const ChangePassword = () => {
         </span>
       </div>
 
-      <div className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start">
+      <form
+        onSubmit={handleChangePass}
+        className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start"
+      >
         {formError && <FormError />}
         <div className="w-full h-auto flex flex-col gap-[2px]">
           <AuthInput
@@ -118,12 +130,8 @@ const ChangePassword = () => {
           )}
         </div>
 
-        <AuthButton
-          onClick={handleChangePass}
-          text={"Save"}
-          loading={loading}
-        />
-      </div>
+        <AuthButton text={"Save"} loading={loading} />
+      </form>
     </div>
   );
 };

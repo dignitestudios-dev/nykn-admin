@@ -30,7 +30,8 @@ const VerifyEmail = () => {
   // Form Input States:
   const [email, setEmail] = useState("");
 
-  const handleEmailVerification = () => {
+  const handleEmailVerification = (e) => {
+    e.preventDefault();
     if (email == "") {
       setEmailError("*Email is required.");
       setTimeout(() => {
@@ -51,8 +52,8 @@ const VerifyEmail = () => {
         .then(
           (response) => {
             localStorage.setItem("email", email);
-            navigate("/verify-otp/");
             startTimer();
+            navigate("/verify-otp/");
             setLoading(false);
           },
           (error) => {
@@ -80,7 +81,10 @@ const VerifyEmail = () => {
         </span>
       </div>
 
-      <div className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start">
+      <form
+        onSubmit={handleEmailVerification}
+        className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start"
+      >
         {formError && <FormError />}
         <div className="w-full h-auto flex flex-col gap-[2px]">
           <AuthInput
@@ -97,12 +101,8 @@ const VerifyEmail = () => {
             </label>
           )}
         </div>
-        <AuthButton
-          onClick={handleEmailVerification}
-          text={"Next"}
-          loading={loading}
-        />
-      </div>
+        <AuthButton text={"Next"} loading={loading} />
+      </form>
     </div>
   );
 };
