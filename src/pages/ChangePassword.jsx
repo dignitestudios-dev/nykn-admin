@@ -47,7 +47,7 @@ const ChangePassword = () => {
       }, 3000);
     } else {
       // just for now
-      const tokenTemp = localStorage.getItem("token");
+      const tokenTemp = localStorage.getItem("tokenTemp");
       setLoading(true);
       const headers = {
         "Content-Type": "application/json",
@@ -65,6 +65,7 @@ const ChangePassword = () => {
         .then(
           (response) => {
             console.log(response);
+            localStorage.removeItem("tokenTemp");
             navigate("/password-updated/");
             setLoading(false);
           },

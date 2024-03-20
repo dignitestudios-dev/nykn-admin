@@ -75,7 +75,7 @@ const VerifyOtp = () => {
           (response) => {
             console.log(response);
             // just for now
-            localStorage.setItem("token", response?.data?.token);
+            localStorage.setItem("tokenTemp", response?.data?.token);
             resetTimer();
             navigate("/change-password/");
             setLoading(false);
