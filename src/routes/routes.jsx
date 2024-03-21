@@ -19,6 +19,7 @@ import CategoryAndAttractionCreation from "../pages/CategoryAndAttractionCreatio
 import EditAttraction from "../pages/EditAttraction";
 import { FiUserPlus } from "react-icons/fi";
 import Attractions from "../pages/Attractions";
+import { GoRocket } from "react-icons/go";
 
 export const loginRoutes = [
   {
@@ -126,7 +127,7 @@ export const sidebarArr = [
   {
     name: "Attractions",
     url: "/attractions",
-    icon: <BiCategoryAlt className="text-xl" />,
+    icon: <GoRocket className="text-xl" />,
   },
 
   // {

@@ -146,16 +146,18 @@ const CategoryDetail = () => {
       };
 
       axios
-        .post(`${baseUrl}/GetSubcategories`, { category_Id: id }, { headers })
+        .post(
+          `${baseUrl}/GetAllSubcategories`,
+          { category_Id: id },
+          { headers }
+        )
         .then((response) => {
-          setResponse(response?.data);
-          console.log(response?.data);
+          setResponse(response?.data?.subCategories);
 
           setLoading(false);
         })
         .catch((error) => {
           setLoading(false);
-          console.log(error);
           setError(error?.response?.data?.error);
         });
     } else {
@@ -290,7 +292,7 @@ const CategoryDetail = () => {
           {loading ? (
             <CategorySkeleton />
           ) : (
-            arr?.map((attraction) => {
+            response?.map((attraction) => {
               return <AttractionCard attraction={attraction} />;
             })
           )}

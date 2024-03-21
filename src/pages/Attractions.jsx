@@ -6,6 +6,7 @@ import { CiFilter } from "react-icons/ci";
 import { GoSortDesc } from "react-icons/go";
 import CategoryModal from "../components/AddCategoryAndAttraction/CategoryModal";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import CategorySkeleton from "../components/Categories/CategorySkeleton";
@@ -76,14 +77,14 @@ const Attractions = () => {
             color: palette?.brand,
           }}
         >
-          Categories
+          Attractions
         </h1>
         <Link
           to="/attraction/create"
           style={{
             background: palette?.brand,
           }}
-          className="w-32 h-8  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full"
+          className="w-32 h-8  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full flex justify-center items-center"
         >
           Add Attraction
         </Link>
@@ -144,78 +145,46 @@ const Attractions = () => {
                 } 0px 2px 8px 0px`,
               }}
             >
-              <div className="w-[30%] lg:w-[10%] relative">
-                <button
-                  onClick={() => setIsSortOpen((prev) => !prev)}
-                  className="w-full h-10 rounded-full text-sm pl-3 pr-1 flex justify-between items-center font-medium capitalize"
-                  style={{
-                    background: palette?.dark_contrast_background,
-                    color: palette?.color,
-                  }}
-                >
-                  {sort}
-                  <span
-                    style={{
-                      background: palette?.brand,
-                    }}
-                    className="w-8 h-8 text-white rounded-full flex items-center justify-center"
-                  >
-                    <GoSortDesc />
-                  </span>
-                </button>
-                {isSortOpen && (
-                  <div
-                    className="w-full h-auto flex flex-col justify-start items-start gap-2 shadow-md absolute top-12 p-2 rounded-3xl"
-                    style={{
-                      background: palette?.dark_contrast_background,
-                      boxShadow: `${
-                        theme == "dark" ? "#1e1e1e" : "rgba(99, 99, 99, 0.2)"
-                      } 0px 2px 8px 0px`,
-                    }}
-                  >
-                    <button
-                      onClick={() => {
-                        setSort("date");
-                        setIsSortOpen(false);
-                      }}
-                      className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-                      style={{
-                        background: palette?.light_contrast_background,
-                        color: palette?.color,
-                      }}
-                    >
-                      Date
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSort("name");
-                        setIsSortOpen(false);
-                      }}
-                      className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-                      style={{
-                        background: palette?.light_contrast_background,
-                        color: palette?.color,
-                      }}
-                    >
-                      Name
-                    </button>
+              <button
+                onClick={() => {
+                  setSort("date");
+                  setIsSortOpen(false);
+                }}
+                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                style={{
+                  background: palette?.light_contrast_background,
+                  color: palette?.color,
+                }}
+              >
+                Date
+              </button>
+              <button
+                onClick={() => {
+                  setSort("name");
+                  setIsSortOpen(false);
+                }}
+                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                style={{
+                  background: palette?.light_contrast_background,
+                  color: palette?.color,
+                }}
+              >
+                Name
+              </button>
 
-                    <button
-                      onClick={() => {
-                        setSort("likes");
-                        setIsSortOpen(false);
-                      }}
-                      className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-                      style={{
-                        background: palette?.light_contrast_background,
-                        color: palette?.color,
-                      }}
-                    >
-                      Likes
-                    </button>
-                  </div>
-                )}
-              </div>
+              <button
+                onClick={() => {
+                  setSort("likes");
+                  setIsSortOpen(false);
+                }}
+                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                style={{
+                  background: palette?.light_contrast_background,
+                  color: palette?.color,
+                }}
+              >
+                Likes
+              </button>
             </div>
           )}
         </div>
