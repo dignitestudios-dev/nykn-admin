@@ -9,6 +9,8 @@ import { GlobalContext } from "./context/GlobalContext";
 import { useState } from "react";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 function App() {
   const { isLoggedIn } = useContext(GlobalContext);
@@ -17,6 +19,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Splash />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
 
         {loginRoutes?.map((route, key) => {
           return (
