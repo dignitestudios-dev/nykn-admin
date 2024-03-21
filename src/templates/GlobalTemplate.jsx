@@ -88,11 +88,7 @@ const GlobalTemplate = ({ page, name }) => {
       <div className="flex w-full h-auto relative  justify-start items-start">
         <Sidebar />
         <div
-          className={` absolute top-0 right-0  transition-all duration-150   ${
-            sidebarActive
-              ? "w-[calc(100%-3rem)] lg:w-[calc(100%-18rem)]"
-              : "w-[calc(100%-3rem)] lg:w-[calc(100%-3rem)]"
-          } h-auto flex flex-col justify-start items-start`}
+          className={` absolute top-0 right-0  transition-all duration-150 w-full xl:w-[calc(100%-18rem)] h-auto flex flex-col justify-start items-start`}
           style={{
             background: `${palette?.background}`,
           }}

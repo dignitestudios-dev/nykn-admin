@@ -17,23 +17,15 @@ const SidebarLink = ({ icon, title, link, active }) => {
       onClick={() => navigateToLink(title, link)}
       className={`sidebar-link ${
         activeLink == title && "bg-[#407BA7]"
-      } w-full h-10 rounded-r-full cursor-pointer flex items-center justify-start gap-3 ${
-        active
-          ? "px-5 flex items-center justify-start"
-          : "flex items-center justify-center px-0"
-      }  `}
+      } w-full h-10 rounded-r-full cursor-pointer  gap-3 
+          px-5 flex items-center justify-start
+       `}
       style={{
         color: activeLink == title ? "#ffffff" : palette?.color,
       }}
     >
       {icon}
-      <span
-        className={` text-md font-medium ${
-          active ? "hidden lg:block" : "hidden"
-        }`}
-      >
-        {title}
-      </span>
+      <span className={` text-md font-medium `}>{title}</span>
     </span>
   );
 };

@@ -1,12 +1,54 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../../context/GlobalContext";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 import ConfirmCategoryDeleteModal from "./ConfirmCategoryDeleteModal";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const CategoryDetailHeader = () => {
-  const { palette } = useContext(GlobalContext);
+  const { id } = useParams();
+  const { palette, baseUrl } = useContext(GlobalContext);
   const [isCategoryUpdateOpen, setIsCategoryUpdateOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState([]);
+  const [updateData, setUpdateData] = useState(false);
+
+  const getData = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      setLoading(true);
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      axios
+        .post(`${baseUrl}/GetCategorybyId`, { category_Id: id }, { headers })
+        .then((response) => {
+          setResponse(response?.data);
+          console.log(response?.data);
+
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+          setError(error?.response?.data?.error);
+        });
+    } else {
+      setLoading(false);
+      navigate("/login/");
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div
@@ -55,12 +97,6 @@ const CategoryDetailHeader = () => {
 
         <div className="w-auto flex flex-col ml-auto justify-start items-start gap-2">
           <button
-            onClick={() => setIsDeleteOpen(true)}
-            className="w-20 h-7 text-xs  font-medium rounded-full flex items-center justify-center bg-red-500 text-white"
-          >
-            Delete
-          </button>
-          <button
             onClick={() => setIsCategoryUpdateOpen(true)}
             className="w-20 h-7 text-xs font-medium rounded-full flex items-center justify-center text-white"
             style={{
@@ -74,10 +110,6 @@ const CategoryDetailHeader = () => {
         <UpdateCategoryModal
           isOpen={isCategoryUpdateOpen}
           setIsOpen={setIsCategoryUpdateOpen}
-        />
-        <ConfirmCategoryDeleteModal
-          isOpen={isDeleteOpen}
-          setIsOpen={setIsDeleteOpen}
         />
       </div>
     </div>

@@ -19,30 +19,32 @@ const AttractionCard = ({ attraction }) => {
           <div className="flex justify-start items-start gap-2">
             <img
               className="h-12 w-12 rounded-full"
-              src={attraction?.image}
+              src={attraction?.cover_image}
               alt=""
             />
 
             <div className="w-auto flex flex-col justify-start items-start">
-              <h1 className="text-sm  font-bold ">{attraction?.name}</h1>
+              <h1 className="text-sm  font-bold ">
+                {attraction?.subCategory_title}
+              </h1>
               <span className="text-[#9b9c9b] text-wrap text-xs font-medium">
                 {attraction?.description?.slice(0, 50)}...
-              </span>
-              <span
-                className="flex gap-1 justify-start items-center text-xs font-medium"
-                style={{
-                  color: palette?.color,
-                }}
-              >
-                <span>
-                  <FaHeart className="text-red-600" />
-                </span>
-                5
               </span>
             </div>
           </div>
 
           <div className="w-full md:w-auto flex justify-start items-center gap-2">
+            <span
+              className="flex gap-1 justify-start items-center text-xs font-medium"
+              style={{
+                color: palette?.color,
+              }}
+            >
+              <span>
+                <FaHeart className="text-red-600" />
+              </span>
+              5
+            </span>
             <Link
               to={`/attraction/${attraction?.id}`}
               className="w-full md:w-24  h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center  text-white"

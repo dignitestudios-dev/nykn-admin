@@ -57,7 +57,7 @@ const Navbar = ({ name }) => {
     >
       <div className="w-auto relative flex justify-start items-center gap-2">
         <button
-          className="hidden lg:block"
+          className="block xl:hidden"
           onClick={() => setSidebarActive((prev) => !prev)}
           style={{
             color: palette?.color,
