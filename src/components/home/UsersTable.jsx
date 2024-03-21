@@ -5,6 +5,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import StoreSkeleton from "../stores/StoreSkeleton";
+import { MdPaid } from "react-icons/md";
+import { FaHeart } from "react-icons/fa";
 
 const UsersTable = () => {
   const { palette, theme, baseUrl, setIsLoggedIn } = useContext(GlobalContext);
@@ -86,6 +88,18 @@ const UsersTable = () => {
                   >
                     Email
                   </th>
+                  <th
+                    scope="col"
+                    className="px-2 py-3 text-left text-xs font-medium  uppercase tracking-wider"
+                  >
+                    Categories Bought
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-2 py-3 text-left text-xs font-medium  uppercase tracking-wider"
+                  >
+                    Attractions Liked
+                  </th>
                 </tr>
               </thead>
               <tbody
@@ -104,20 +118,30 @@ const UsersTable = () => {
                         <img
                           className="h-10 w-10 rounded-full"
                           src={
-                            user?.avatar !== null
-                              ? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                              : "https://img.freepik.com/free-vector/3d-cartoon-young-woman-smiling-circle-frame-character-illustration-vector-design_40876-3100.jpg?w=740&t=st=1708694529~exp=1708695129~hmac=4816499f663fccaf89c3383e1ae7986e2baa830c38d19858d5723d900bd9a4ed"
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7GhCyNdACcNjy7_Y2r7CP6bxSXo2yM0yEfQ&usqp=CAU"
                           }
                           alt=""
                         />
                       </td>
 
-                      <td className="px-2 py-2 text-[10px] whitespace-nowrap">
+                      <td className="px-2 py-2 text-[10px] lg:text-[12px] whitespace-nowrap">
                         {user?.full_name}
                       </td>
 
-                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
+                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] lg:text-[12px] font-medium">
                         {user?.email}
+                      </td>
+                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
+                        <span className="w-auto flex justify-start items-center gap-1">
+                          <span className="text-lg">0</span>
+                          <MdPaid className="text-blue-500 text-lg" />
+                        </span>
+                      </td>
+                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
+                        <span className="w-auto flex justify-start items-center gap-1">
+                          <span className="text-lg">0</span>
+                          <FaHeart className="text-red-500 text-lg" />
+                        </span>
                       </td>
                     </tr>
                   );

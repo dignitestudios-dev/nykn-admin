@@ -7,7 +7,6 @@ import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlineLock } from "react-icons/md";
 import axios from "axios";
 import { GlobalContext } from "../context/GlobalContext";
-import SocialLogins from "../components/auth/SocialLogins";
 import FormError from "../components/global/FormError";
 import Cookies from "js-cookie";
 import { validateEmail } from "../utils/validators";

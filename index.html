@@ -1,14 +1,30 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NYKN | Admin</title>
 
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NYKN | Admin</title>
+  <script>
+    const scrollNavbar = () => {
+      // Target elements
+      const navBar = document.getElementById("navBar");
+
+      if (document.documentElement.scrollTop > 100) {
+        navBar.classList.add("pa-fixed-header");
+      } else {
+        navBar.classList.remove("pa-fixed-header");
+      }
+    };
+
+    document.body.addEventListener("scroll", scrollNavbar());
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

@@ -18,6 +18,7 @@ import CategoryDetail from "../pages/CategoryDetail";
 import CategoryAndAttractionCreation from "../pages/CategoryAndAttractionCreation";
 import EditAttraction from "../pages/EditAttraction";
 import { FiUserPlus } from "react-icons/fi";
+import Attractions from "../pages/Attractions";
 
 export const loginRoutes = [
   {
@@ -75,6 +76,11 @@ export const normalRoutes = [
     page: <Categories />,
   },
   {
+    name: "Attractions",
+    url: "/attractions",
+    page: <Attractions />,
+  },
+  {
     name: "Category Details",
     url: "/categories/:id",
     page: <CategoryDetail />,
@@ -86,7 +92,7 @@ export const normalRoutes = [
   },
   {
     name: "Create",
-    url: "/category/create",
+    url: "/attraction/create",
     page: <CategoryAndAttractionCreation />,
   },
 ];
@@ -99,7 +105,7 @@ export const sidebarArr = [
   },
   {
     name: "Add Attraction",
-    url: "/category/create",
+    url: "/attraction/create",
     icon: <FaRegPlusSquare className="text-xl" />,
   },
   {
@@ -115,6 +121,11 @@ export const sidebarArr = [
   {
     name: "Categories",
     url: "/categories",
+    icon: <BiCategoryAlt className="text-xl" />,
+  },
+  {
+    name: "Attractions",
+    url: "/attractions",
     icon: <BiCategoryAlt className="text-xl" />,
   },
 

@@ -45,7 +45,7 @@ const CategoryCard = ({ category }) => {
               </button>
             )}
             <Link
-              to={`/categories/${category?.id}`}
+              to={`/categories/${category?._id}`}
               className="w-[49.5%] md:w-24  h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center  text-white"
               style={{
                 background: palette?.brand,

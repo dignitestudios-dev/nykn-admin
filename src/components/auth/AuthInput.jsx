@@ -54,6 +54,7 @@ const AuthInput = ({ icon, state, setState, text, type, error }) => {
           onChange={(e) => setState(e.target.value)}
         />
         <button
+          type="button"
           tabIndex={-1}
           onClick={() => setIsPassVisible((prev) => !prev)}
           className="absolute top-[0.74rem] right-2"
