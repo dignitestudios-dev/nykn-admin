@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CategoryDetailHeader from "../components/Categories/CategoryDetails/CategoryDetailHeader";
 import { GlobalContext } from "../context/GlobalContext";
@@ -9,10 +9,13 @@ import { IoSearch } from "react-icons/io5";
 import { GoSortDesc } from "react-icons/go";
 import { CiFilter } from "react-icons/ci";
 import { IoMdArrowBack } from "react-icons/io";
+import axios from "axios";
+import Cookies from "js-cookie";
+import CategorySkeleton from "../components/Categories/CategorySkeleton";
 
 const CategoryDetail = () => {
   const { id } = useParams();
-  const { palette, theme } = useContext(GlobalContext);
+  const { palette, theme, baseUrl } = useContext(GlobalContext);
   const arr = [
     {
       id: 1,
@@ -126,6 +129,48 @@ const CategoryDetail = () => {
 
   const [sort, setSort] = useState("sort");
   const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState([]);
+  const [updateData, setUpdateData] = useState(false);
+
+  const getData = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      setLoading(true);
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      axios
+        .post(`${baseUrl}/GetSubcategories`, { category_Id: id }, { headers })
+        .then((response) => {
+          setResponse(response?.data);
+          console.log(response?.data);
+
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+          setError(error?.response?.data?.error);
+        });
+    } else {
+      setLoading(false);
+      navigate("/login/");
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [updateData]);
   return (
     <div className="w-full h-auto flex flex-col justify-start items-start gap-4">
       <Link
@@ -242,9 +287,13 @@ const CategoryDetail = () => {
           </div>
         </div>
         <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
-          {arr?.map((attraction) => {
-            return <AttractionCard attraction={attraction} />;
-          })}
+          {loading ? (
+            <CategorySkeleton />
+          ) : (
+            arr?.map((attraction) => {
+              return <AttractionCard attraction={attraction} />;
+            })
+          )}
         </div>
       </div>
     </div>

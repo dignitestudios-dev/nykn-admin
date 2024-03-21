@@ -16,15 +16,9 @@ const Home = () => {
         background: palette?.background,
       }}
     >
-      <div className="w-full  h-auto  flex-wrap  flex justify-start items-end gap-4">
-        <MainBanner />
-        <UsersCard />
-        <StoreCard />
-      </div>
-
       <div className="w-full  h-auto  flex-wrap  flex justify-start items-start gap-4">
         <TransactionGraph />
-        <div className="h-auto w-full lg:w-[38%]">
+        <div className="h-auto w-full ">
           <UsersTable />
         </div>
       </div>
