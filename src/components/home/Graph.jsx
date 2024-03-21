@@ -90,7 +90,7 @@ const Graph = () => {
         <XAxis dataKey="date" />
         <Legend />
 
-        <Line type="monotone" dataKey="paid" stroke="#3FB743" strokeWidth={2} />
+        <Line type="monotone" dataKey="paid" stroke="#407BA7" strokeWidth={2} />
       </LineChart>
     </ResponsiveContainer>
   );

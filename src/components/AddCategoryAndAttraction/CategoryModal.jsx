@@ -25,7 +25,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
       try {
         const base64String = await convertImageToBase64(file);
         setImage(base64String);
-        updateProfile(base64String);
+        // updateProfile(base64String);
 
         // console.log(base64String)
       } catch (error) {
