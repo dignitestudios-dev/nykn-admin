@@ -34,51 +34,61 @@ const RegisterUser = () => {
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState(false);
 
-  const createUser = () => {
-    //   if (email == "") {
-    //     setEmailError("Email is required.");
-    //     setTimeout(() => {
-    //       setEmailError(false);
-    //     }, 3000);
-    //   } else if (!validateEmail(email)) {
-    //     setEmailError("Email not in correct format.");
-    //     setTimeout(() => {
-    //       setEmailError(false);
-    //     }, 3000);
-    //   } else if (password == "") {
-    //     setPasswordError("Password is required.");
-    //     setTimeout(() => {
-    //       setPasswordError(false);
-    //     }, 3000);
-    //   } else if (password.length < 6) {
-    //     setPasswordError("Minimum password length is 6.");
-    //     setTimeout(() => {
-    //       setPasswordError(false);
-    //     }, 3000);
-    //   } else {
-    //     setLoading(true);
-    //     axios
-    //       .post(`${baseUrl}/admin-login`, {
-    //         email: email,
-    //         password: password,
-    //       })
-    //       .then(
-    //         (response) => {
-    //           Cookies.set("token", response?.data?.data?.token, { expires: 7 });
-    //           Cookies.set("isLoggedIn", true, { expires: 7 });
-    //           if (response?.data?.data?.token) {
-    //             navigate("/discover/");
-    //           }
-    //           setLoading(false);
-    //         },
-    //         (error) => {
-    //           setLoading(false);
-    //           setFormError(error?.response?.data?.error);
-    //         }
-    //       );
-    //   }
-
-    console.log("Create Users");
+  const createUser = (e) => {
+    e.preventDefault();
+    if (name == "") {
+      setNameError("Name cannot be left empty.");
+      setTimeout(() => {
+        setNameError(false);
+      }, 3000);
+    } else if (name.length < 4) {
+      setNameError("Name must contain atleast 4 characters.");
+      setTimeout(() => {
+        setNameError(false);
+      }, 3000);
+    } else if (email == "") {
+      setEmailError("Email is required.");
+      setTimeout(() => {
+        setEmailError(false);
+      }, 3000);
+    } else if (!validateEmail(email)) {
+      setEmailError("Email not in correct format.");
+      setTimeout(() => {
+        setEmailError(false);
+      }, 3000);
+    } else if (password == "") {
+      setPasswordError("Password is required.");
+      setTimeout(() => {
+        setPasswordError(false);
+      }, 3000);
+    } else if (password.length < 6) {
+      setPasswordError("Minimum password length is 6.");
+      setTimeout(() => {
+        setPasswordError(false);
+      }, 3000);
+    } else {
+      setLoading(true);
+      axios
+        .post(`${baseUrl}/auth/adminAddUser`, {
+          full_name: name,
+          email: email,
+          password: password,
+        })
+        .then(
+          (response) => {
+            Cookies.set("token", response?.data?.data?.token, { expires: 7 });
+            Cookies.set("isLoggedIn", true, { expires: 7 });
+            if (response?.data?.data?.token) {
+              navigate("/discover/");
+            }
+            setLoading(false);
+          },
+          (error) => {
+            setLoading(false);
+            setFormError(error?.response?.data?.error);
+          }
+        );
+    }
   };
   return (
     <div
@@ -116,7 +126,10 @@ const RegisterUser = () => {
                 </span>
               </div>
 
-              <div className="w-full h-auto mt-0 lg:mt-2 mb-4 flex flex-col  justify-start items-start">
+              <form
+                onSubmit={createUser}
+                className="w-full h-auto mt-0 lg:mt-2 mb-4 flex flex-col  justify-start items-start"
+              >
                 {formError && <FormError />}
                 <div className="w-full h-auto flex flex-col gap-[2px]">
                   <AuthInput
@@ -170,12 +183,8 @@ const RegisterUser = () => {
                   </span>
                 </div> */}
 
-                <AuthButton
-                  onClick={createUser}
-                  text={"Create"}
-                  loading={loading}
-                />
-              </div>
+                <AuthButton text={"Create"} loading={loading} />
+              </form>
             </div>
           </div>
           <div className="w-full lg:w-1/2 py-14 h-full  rounded-[23px] lg:rounded-r-[23px] flex flex-col gap-10 items-center justify-center">

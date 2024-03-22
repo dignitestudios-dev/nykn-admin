@@ -43,9 +43,13 @@ export const GlobalContextProvider = ({ children }) => {
   const [success, setSuccess] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [sidebarActive, setSidebarActive] = useState(true);
+  const [sidebarActive, setSidebarActive] = useState(false);
 
-  // Theme Toggle
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [userInput, setUserInput] = useState("United States");
+
+  // Theme Toggle:
   const [theme, setTheme] = useState("light");
   const [palette, setPalette] = useState({
     brand: "#407BA7",
@@ -138,6 +142,14 @@ export const GlobalContextProvider = ({ children }) => {
         labelAddRef,
         isLabelOpen,
         setIsLabelOpen,
+
+        // Maps State:
+        latitude,
+        setLatitude,
+        longitude,
+        setLongitude,
+        userInput,
+        setUserInput,
       }}
     >
       <div>{children}</div>

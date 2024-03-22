@@ -65,43 +65,53 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const token = Cookies.get("token");
-    if (token) {
-      setLoading(true);
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      axios
-        .post(
-          `${baseUrl}/Addcategory`,
-          {
-            category_title: title,
-            category_description: description,
-            category_price: price,
-            isPaid: isPaid,
-            imageBase64Data: image,
-          },
-          { headers }
-        )
-        .then(
-          (response) => {
-            setLoading(false);
-            updateData((prev) => !prev);
-            setImage(null);
-            setTitle("");
-            setDescription("");
-            setPrice("");
-            setIsOpen(false);
-          },
-          (error) => {
-            setError(error?.response?.data?.error);
-            console.log(error);
-            setLoading(false);
-          }
-        );
+    if (image == null) {
+      setError("Image not provided.");
+    } else if (title.length < 4) {
+      setError("Category title must contain atleast 4 alphabets.");
+    } else if (title == "") {
+      setError("Category title cannot be left empty.");
+    } else if (title.length > 40) {
+      setError("Category title cannot exceed more than 40 alphabets.");
     } else {
-      Cookies.remove("token");
-      navigate("/login");
+      const token = Cookies.get("token");
+      if (token) {
+        setLoading(true);
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        axios
+          .post(
+            `${baseUrl}/Addcategory`,
+            {
+              category_title: title,
+              category_description: description,
+              category_price: price,
+              isPaid: isPaid,
+              imageBase64Data: image,
+            },
+            { headers }
+          )
+          .then(
+            (response) => {
+              setLoading(false);
+              updateData((prev) => !prev);
+              setImage(null);
+              setTitle("");
+              setDescription("");
+              setPrice("");
+              setIsOpen(false);
+            },
+            (error) => {
+              setError(error?.response?.data?.error);
+              console.log(error);
+              setLoading(false);
+            }
+          );
+      } else {
+        Cookies.remove("token");
+        navigate("/login");
+      }
     }
   };
 
@@ -160,19 +170,20 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
             placeholder="Category Name"
           />
         </div>
-
-        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-          <input
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            type="text"
-            placeholder="Price"
-          />
-        </div>
+        {isPaid && (
+          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+            <input
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+              style={{
+                background: palette?.dark_contrast_background,
+              }}
+              type="text"
+              placeholder="Price"
+            />
+          </div>
+        )}
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <textarea
@@ -187,8 +198,12 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
           ></textarea>
         </div>
         <div className="w-full  flex h-auto justify-start items-start gap-2">
-          <div className="flex items-center ">
+          <div
+            onClick={() => setIsPaid(false)}
+            className=" cursor-pointer flex items-center "
+          >
             <input
+              checked={!isPaid}
               id="free"
               type="radio"
               value={false}
@@ -198,15 +213,18 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
             />
             <label
               htmlFor="free"
-              className="w-full ms-1 text-md font-medium text-gray-900 rounded "
+              className="cursor-pointer w-full ms-1 text-md font-medium text-gray-900 rounded "
             >
               Free
             </label>
           </div>
 
-          <div className="flex items-center ">
+          <div
+            onClick={() => setIsPaid(true)}
+            className="cursor-pointer flex items-center "
+          >
             <input
-              checked
+              checked={isPaid}
               id="paid"
               type="radio"
               value={true}
@@ -216,7 +234,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
             />
             <label
               htmlFor="paid"
-              className="w-full ms-1 text-md font-medium text-gray-900 rounded "
+              className="cursor-pointer w-full ms-1 text-md font-medium text-gray-900 rounded "
             >
               Paid
             </label>

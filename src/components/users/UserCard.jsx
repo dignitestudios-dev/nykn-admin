@@ -49,9 +49,7 @@ const UserCard = ({ user, setReload }) => {
         <img
           className="h-10 w-10 rounded-md"
           src={
-            user?.avatar !== null
-              ? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-              : "https://img.freepik.com/free-vector/3d-cartoon-young-woman-smiling-circle-frame-character-illustration-vector-design_40876-3100.jpg?w=740&t=st=1708694529~exp=1708695129~hmac=4816499f663fccaf89c3383e1ae7986e2baa830c38d19858d5723d900bd9a4ed"
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7GhCyNdACcNjy7_Y2r7CP6bxSXo2yM0yEfQ&usqp=CAU"
           }
           alt=""
         />

@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div
       className={`${
         sidebarActive ? "translate-x-0" : "-translate-x-full xl:translate-x-0"
-      }  transition-all duration-150 h-[calc(100vh)] z-[1000] py-2 pr-2 w-72 fixed top-0 left-0 xl:static shadow-lg xl:shadow-none`}
+      }  transition-all duration-150 h-[calc(100vh)] z-[1000] py-2 pr-2 w-72 fixed top-0 left-0  shadow-lg xl:shadow-none`}
       style={{
         background: palette?.dark_contrast_background,
       }}
