@@ -40,8 +40,8 @@ function GoogleMaps({ setLocation }) {
     const { latLng } = e;
     const latitude = latLng.lat();
     const longitude = latLng.lng();
-    setLatitude(latitude);
-    setLongitude(longitude);
+    setLatitude(latitude ? latitude : 0);
+    setLongitude(longitude ? longitude : 0);
 
     // Perform reverse geocoding
     axios
@@ -72,8 +72,8 @@ function GoogleMaps({ setLocation }) {
       )
       .then((response) => {
         const { lat, lng } = response.data.results[0].geometry.location;
-        setLatitude(lat);
-        setLongitude(lng);
+        setLatitude(lat ? lat : 0);
+        setLongitude(lng ? lng : 0);
         setSelectedLocation({
           latitude: lat,
           longitude: lng,
