@@ -1,26 +1,28 @@
+import React, { lazy } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
-import ChangePassword from "../pages/ChangePassword";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import PasswordUpdate from "../pages/PasswordUpdated";
-import Stores from "../pages/Stores";
-import UserDetail from "../pages/UserDetail";
-import Users from "../pages/Users";
-import VerifyEmail from "../pages/VerifyEmail";
-import VerifyOtp from "../pages/VerifyOtp";
+const ChangePassword = lazy(() => import("../pages/ChangePassword"));
+const Home = lazy(() => import("../pages/Home"));
+const Login = lazy(() => import("../pages/Login"));
+const PasswordUpdate = lazy(() => import("../pages/PasswordUpdated"));
+const UserDetail = lazy(() => import("../pages/UserDetail"));
+const Users = lazy(() => import("../pages/Users"));
+const VerifyEmail = lazy(() => import("../pages/VerifyEmail"));
+const VerifyOtp = lazy(() => import("../pages/VerifyOtp"));
 import { BiHomeAlt } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
 import { LiaStoreSolid } from "react-icons/lia";
 import RegisterUser from "../pages/RegisterUser";
 import { BiCategoryAlt } from "react-icons/bi";
-import Categories from "../pages/Categories";
-import CategoryDetail from "../pages/CategoryDetail";
-import CategoryAndAttractionCreation from "../pages/CategoryAndAttractionCreation";
-import EditAttraction from "../pages/EditAttraction";
+const Categories = lazy(() => import("../pages/Categories"));
+const CategoryDetail = lazy(() => import("../pages/CategoryDetail"));
+const CategoryAndAttractionCreation = lazy(() =>
+  import("../pages/CategoryAndAttractionCreation")
+);
+const EditAttraction = lazy(() => import("../pages/EditAttraction"));
 import { FiUserPlus } from "react-icons/fi";
-import Attractions from "../pages/Attractions";
+const Attractions = lazy(() => import("../pages/Attractions"));
 import { GoRocket } from "react-icons/go";
-import Notifications from "../pages/Notifications";
+const Notifications = lazy(() => import("../pages/Notifications"));
 
 export const loginRoutes = [
   {
