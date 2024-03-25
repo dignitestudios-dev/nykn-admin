@@ -64,46 +64,9 @@ const Navbar = ({ name }) => {
         >
           <HiMenuAlt2 className="text-2xl" />
         </button>
-        {/* <input
-          type="text"
-          className="w-40 md:w-52 h-10 rounded-full outline-none border-none px-4 text-sm"
-          placeholder="Search"
-          style={{
-            background: palette?.background,
-            color: palette?.color,
-          }}
-        />
-        <button
-          className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
-          style={{ background: palette?.brand, color: palette?.color }}
-        >
-          <IoSearch className="text-white" />
-        </button> */}
-
-        {/* <h1
-          className="text-lg md:text-xl font-bold"
-          style={{
-            color: palette?.color,
-          }}
-        >
-          {name}
-        </h1> */}
       </div>
 
       <div className="w-auto h-auto flex gap-3 justify-start items-center">
-        {/* <span
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsNotificationOpen((prev) => !prev);
-          }}
-          className="cursor-pointer"
-        >
-          <IoNotificationsOutline
-            className="text-xl"
-            style={{ color: palette?.light_contrast_color }}
-          />
-        </span> */}
-
         <div className="flex justify-start items-center gap-2">
           <span
             style={{ background: palette?.brand }}
@@ -118,17 +81,6 @@ const Navbar = ({ name }) => {
               className="w-full h-full  object-cover rounded-full"
             />
           </span>
-
-          {/* <UserBtnModal
-            isOpen={isProfileOpen}
-            setIsOpen={setIsProfileOpen}
-            userBtnRef={userBtnRef}
-          /> */}
-          {/* <NotificationModal
-            notificationRef={notificationRef}
-            isOpen={isNotificationOpen}
-            setIsOpen={setIsNotificationOpen}
-          /> */}
         </div>
       </div>
     </div>

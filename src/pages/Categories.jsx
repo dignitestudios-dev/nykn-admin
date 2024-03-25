@@ -28,6 +28,7 @@ const Categories = () => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState([]);
   const [updateData, setUpdateData] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const getData = () => {
     const token = Cookies.get("token");
@@ -57,6 +58,11 @@ const Categories = () => {
       navigate("/login/");
     }
   };
+
+  // Filter data based on user input in title or message
+  const filteredData = response?.filter((categories) =>
+    categories.category_title.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   useEffect(() => {
     getData();
@@ -101,6 +107,8 @@ const Categories = () => {
         <div className="relative w-[70%] lg:w-[90%]">
           <input
             type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
             placeholder="Search"
             style={{
@@ -175,13 +183,20 @@ const Categories = () => {
         </div>
       </div>
 
-      {loading
-        ? skeleton?.map((item) => {
-            return <CategorySkeleton key={item} />;
-          })
-        : response?.map((category) => {
-            return <CategoryCard category={category} key={category?._id} />;
-          })}
+      {loading ? (
+        skeleton?.map((item) => {
+          return <CategorySkeleton key={item} />;
+        })
+      ) : filteredData.length > 0 ? (
+        filteredData?.map((category) => {
+          return <CategoryCard category={category} key={category?._id} />;
+        })
+      ) : (
+        <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+          <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+          Nothing here
+        </span>
+      )}
     </div>
   );
 };

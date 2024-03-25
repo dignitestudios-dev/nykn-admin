@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import CategorySkeleton from "../components/Categories/CategorySkeleton";
+import AttractionCard from "../components/Categories/CategoryDetails/AttractionCard";
 
 const Attractions = () => {
   const navigate = useNavigate();
@@ -42,9 +43,10 @@ const Attractions = () => {
       };
 
       axios
-        .get(`${baseUrl}/GetAllCategory`, { headers })
+        .get(`${baseUrl}/GetAllSubcategorys`, { headers })
         .then((response) => {
-          setResponse(response?.data);
+          console.log(response?.data["subCategories"]);
+          setResponse(response?.data["subCategories"]);
 
           setLoading(false);
         })
@@ -58,6 +60,14 @@ const Attractions = () => {
       navigate("/login/");
     }
   };
+
+  const [searchInput, setSearchInput] = useState("");
+  // Filter data based on user input in title or message
+  const filteredData = response?.filter((attraction) =>
+    attraction.subCategory_title
+      .toLowerCase()
+      .includes(searchInput.toLowerCase())
+  );
 
   useEffect(() => {
     getData();
@@ -102,6 +112,8 @@ const Attractions = () => {
         <div className="relative w-[70%] lg:w-[90%]">
           <input
             type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
             placeholder="Search"
             style={{
@@ -190,13 +202,22 @@ const Attractions = () => {
         </div>
       </div>
 
-      {loading
-        ? skeleton?.map((item) => {
-            return <CategorySkeleton key={item} />;
-          })
-        : response?.map((category) => {
-            return <CategoryCard category={category} key={category?._id} />;
-          })}
+      {loading ? (
+        skeleton?.map((item) => {
+          return <CategorySkeleton key={item} />;
+        })
+      ) : filteredData.length > 0 ? (
+        filteredData?.map((attraction) => {
+          return (
+            <AttractionCard attraction={attraction} key={attraction?._id} />
+          );
+        })
+      ) : (
+        <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+          <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+          Nothing here
+        </span>
+      )}
     </div>
   );
 };

@@ -16,6 +16,8 @@ const Users = () => {
   const [userLoading, setUserLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
+  const [searchInput, setSearchInput] = useState("");
+
   const getUsers = () => {
     const token = Cookies.get("token");
 
@@ -44,6 +46,11 @@ const Users = () => {
     }
   };
 
+  // Filter data based on user input in title or message
+  const filteredData = users?.filter((user) =>
+    user.full_name.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -57,6 +64,8 @@ const Users = () => {
       <div className="relative w-full">
         <input
           type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
           placeholder="Search"
           style={{
@@ -73,10 +82,15 @@ const Users = () => {
       </div>
       {userLoading ? (
         <UserSkeleton />
-      ) : (
-        users?.map((user) => {
+      ) : filteredData.length > 0 ? (
+        filteredData?.map((user) => {
           return <UserCard key={user?.id} user={user} setReload={setReload} />;
         })
+      ) : (
+        <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+          <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+          Nothing here
+        </span>
       )}
     </div>
   );

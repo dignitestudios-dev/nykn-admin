@@ -33,20 +33,9 @@ const CategoryCard = ({ category }) => {
           </div>
 
           <div className="w-full md:w-auto flex justify-start items-center gap-2">
-            {category?.isPaid == false && (
-              <button className="w-[49.5%] md:w-24 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-green-400 text-white">
-                Make it Paid!
-              </button>
-            )}
-
-            {category?.isPaid == true && (
-              <button className="w-[49.5%] md:w-24 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-red-400 text-white">
-                Make it Free!
-              </button>
-            )}
             <Link
               to={`/categories/${category?._id}`}
-              className="w-[49.5%] md:w-24  h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center  text-white"
+              className="w-full md:w-24  h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center  text-white"
               style={{
                 background: palette?.brand,
               }}

@@ -43,7 +43,7 @@ const AttractionCard = ({ attraction }) => {
               <span>
                 <FaHeart className="text-red-600" />
               </span>
-              5
+              {attraction?.wishlist}
             </span>
             <Link
               to={`/attraction/${attraction?.id}`}

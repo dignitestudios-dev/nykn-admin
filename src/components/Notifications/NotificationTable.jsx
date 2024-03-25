@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { TiPlus } from "react-icons/ti";
 import NotificationTableHead from "./NotificationTableHead";
@@ -8,6 +8,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
 import Cookies from "js-cookie";
+import NotificationModal from "./NotificationModal";
+import Loader from "../global/Loader";
 
 const NotificationTable = () => {
   const { palette, baseUrl } = useContext(GlobalContext);
@@ -15,6 +17,10 @@ const NotificationTable = () => {
   const [loading, setLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
+
+  const notificationAddRef = useRef();
+  const [updateData, setUpdateData] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const getData = () => {
     const token = Cookies.get("token");
@@ -66,6 +72,10 @@ const NotificationTable = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    getData();
+  }, [updateData]);
+
   const [reload, setReload] = useState(false);
   useEffect(() => {
     getData();
@@ -80,9 +90,17 @@ const NotificationTable = () => {
         <div className="w-full h-16 flex items-center  justify-start">
           <div className="text-2xl flex justify-start gap-1 items-center text-gray-900 font-semibold">
             <span>Push Notifications</span>
-            <span className="text-2xl text-gray-400">({50})</span>
+            <span className="text-2xl text-gray-400">({response?.length})</span>
           </div>
         </div>
+
+        {/* Category Add Modal */}
+        <NotificationModal
+          updateData={setUpdateData}
+          isOpen={isNotificationOpen}
+          setIsOpen={setIsNotificationOpen}
+          notificationAddRef={notificationAddRef}
+        />
 
         <div className="w-full h-auto flex justify-between items-center">
           <div className="w-40 h-10 md:w-60 md:h-10 relative">
@@ -101,22 +119,23 @@ const NotificationTable = () => {
             </button>
           </div>
 
-          <Link
-            to="/dashboard/notifications/createnotifications/"
-            className="w-auto h-8 px-2 rounded-xl md:h-10 flex  text-white justify-center items-center gap-[1px] transition-all duration-200 hover:opacity-90 shadow-sm "
+          <button
+            onClick={() => setIsNotificationOpen(true)}
+            className="w-auto h-8 px-2 rounded-full md:h-10 flex  text-white justify-center items-center gap-[1px] transition-all duration-200 hover:opacity-90 shadow-sm "
             style={{ background: palette.brand }}
           >
-            <TiPlus />
             <span className="text-xs md:text-md font-medium">
               Create Notification
             </span>
-          </Link>
+          </button>
         </div>
       </div>
 
       <div className="w-full flex flex-col py-4 lg:px-2 justify-start items-start">
         <div className="relative overflow-x-auto w-full h-auto overflow-y-auto">
-          {filteredData?.length > 0 ? (
+          {loading ? (
+            <Loader />
+          ) : filteredData?.length > 0 ? (
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
               <NotificationTableHead sortDate={sortDate} />
               {filteredData.map((notification, key) => {
