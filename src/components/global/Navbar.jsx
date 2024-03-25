@@ -52,7 +52,6 @@ const Navbar = ({ name }) => {
       }  flex  z-50 justify-between  items-center gap-4 sticky top-0 left-0`}
       style={{
         background: palette?.dark_contrast_background,
-        boxShadow: `${palette?.dark_contrast_background} 1.95px 1.95px 2.6px`,
       }}
     >
       <div className="w-auto relative flex justify-start items-center gap-2">

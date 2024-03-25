@@ -25,6 +25,7 @@ const AttractionContainer = () => {
     latitude,
     baseUrl,
     setError,
+    setSuccess,
   } = useContext(GlobalContext);
 
   const [response, setResponse] = useState([]);
@@ -165,7 +166,10 @@ const AttractionContainer = () => {
               subCategory_title: attractionTitle,
               category_Id: categoryId,
               description: description,
-              location: [latitude, longitude],
+              location: {
+                type: "Point",
+                coordinates: [longitude, latitude],
+              },
               timings: timings,
               labels: labels,
               cover_image: images[0],
@@ -176,6 +180,14 @@ const AttractionContainer = () => {
           .then(
             (response) => {
               console.log(response);
+              setSuccess("Attraction added successfully.");
+              setAttractionTitle("");
+              setDescription("");
+              setCategoryId("");
+              setUserInput("");
+              setLabels([]);
+              setImages([]);
+              setTimings("");
               setLoading(false);
             },
             (error) => {
@@ -291,39 +303,41 @@ const AttractionContainer = () => {
           ></textarea>
         </div>
 
-        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-          <input
-            value={timings}
-            onChange={(e) => setTimings(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            type="datetime-local"
-            placeholder="Timings"
-          />
-        </div>
-        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-          <input
-            onChange={handleInputChange}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            type="text"
-            placeholder="Label"
-          />
-          <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
-            {labels?.slice(0, -1)?.map((word, key) => {
-              return (
-                <span
-                  className="w-auto h-7 px-2 flex justify-center items-center text-[10px] rounded-full font-normal bg-blue-500 text-white"
-                  key={key}
-                >
-                  {word}
-                </span>
-              );
-            })}
+        <div className="w-full h-auto flex gap-2 justify-start items-start">
+          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+            <input
+              value={timings}
+              onChange={(e) => setTimings(e.target.value)}
+              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+              style={{
+                background: palette?.dark_contrast_background,
+              }}
+              type="datetime-local"
+              placeholder="Timings"
+            />
+          </div>
+          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+            <input
+              onChange={handleInputChange}
+              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+              style={{
+                background: palette?.dark_contrast_background,
+              }}
+              type="text"
+              placeholder="Label"
+            />
+            <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
+              {labels?.slice(0, -1)?.map((word, key) => {
+                return (
+                  <span
+                    className="w-auto h-7 px-2 flex justify-center items-center text-[10px] rounded-full font-normal bg-blue-500 text-white"
+                    key={key}
+                  >
+                    {word}
+                  </span>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -355,7 +369,7 @@ const AttractionContainer = () => {
           style={{
             background: palette?.brand,
           }}
-          className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+          className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full flex justify-center items-center"
         >
           {loading ? <BtnLoader /> : "Add Attraction"}
         </button>

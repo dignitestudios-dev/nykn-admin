@@ -12,9 +12,9 @@ const Success = () => {
   });
   return (
     <div
-      className={`fixed top-14 left-0 transition-all duration-150 w-full h-12 bg-green-500 text-white z-20 text-xs lg:text-sm ${
-        success ? "flex translate-y-0" : "-translate-y-32"
-      } px-2 items-center justify-start gap-3`}
+      className={`fixed bottom-2 right-2 transition-all duration-150 w-96  h-auto min-h-16 rounded-lg uppercase bg-green-500 text-white z-[100000] text-sm lg:text-sm font-medium ${
+        success ? "flex translate-y-0 animate-bounce" : "-translate-y-32"
+      } px-4 items-center justify-start gap-3`}
     >
       <MdErrorOutline className="text-lg" />
       {success}

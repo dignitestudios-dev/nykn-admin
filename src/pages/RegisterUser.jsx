@@ -22,6 +22,7 @@ const RegisterUser = () => {
     setPasswordError,
     baseUrl,
     palette,
+    setSuccess,
   } = useContext(GlobalContext);
 
   const navigate = useNavigate();
@@ -36,58 +37,72 @@ const RegisterUser = () => {
 
   const createUser = (e) => {
     e.preventDefault();
-    if (name == "") {
-      setNameError("Name cannot be left empty.");
-      setTimeout(() => {
-        setNameError(false);
-      }, 3000);
-    } else if (name.length < 4) {
-      setNameError("Name must contain atleast 4 characters.");
-      setTimeout(() => {
-        setNameError(false);
-      }, 3000);
-    } else if (email == "") {
-      setEmailError("Email is required.");
-      setTimeout(() => {
-        setEmailError(false);
-      }, 3000);
-    } else if (!validateEmail(email)) {
-      setEmailError("Email not in correct format.");
-      setTimeout(() => {
-        setEmailError(false);
-      }, 3000);
-    } else if (password == "") {
-      setPasswordError("Password is required.");
-      setTimeout(() => {
-        setPasswordError(false);
-      }, 3000);
-    } else if (password.length < 6) {
-      setPasswordError("Minimum password length is 6.");
-      setTimeout(() => {
-        setPasswordError(false);
-      }, 3000);
-    } else {
-      setLoading(true);
-      axios
-        .post(`${baseUrl}/auth/adminAddUser`, {
-          full_name: name,
-          email: email,
-          password: password,
-        })
-        .then(
-          (response) => {
-            Cookies.set("token", response?.data?.data?.token, { expires: 7 });
-            Cookies.set("isLoggedIn", true, { expires: 7 });
-            if (response?.data?.data?.token) {
-              navigate("/discover/");
+    const token = Cookies.get("token");
+    if (token) {
+      if (name == "") {
+        setNameError("Name cannot be left empty.");
+        setTimeout(() => {
+          setNameError(false);
+        }, 3000);
+      } else if (name.length < 4) {
+        setNameError("Name must contain atleast 4 characters.");
+        setTimeout(() => {
+          setNameError(false);
+        }, 3000);
+      } else if (email == "") {
+        setEmailError("Email is required.");
+        setTimeout(() => {
+          setEmailError(false);
+        }, 3000);
+      } else if (!validateEmail(email)) {
+        setEmailError("Email not in correct format.");
+        setTimeout(() => {
+          setEmailError(false);
+        }, 3000);
+      } else if (password == "") {
+        setPasswordError("Password is required.");
+        setTimeout(() => {
+          setPasswordError(false);
+        }, 3000);
+      } else if (password.length < 6) {
+        setPasswordError("Minimum password length is 6.");
+        setTimeout(() => {
+          setPasswordError(false);
+        }, 3000);
+      } else {
+        setLoading(true);
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+        axios
+          .post(
+            `${baseUrl}/auth/adminAddUser`,
+            {
+              full_name: name,
+              email: email,
+              password: password,
+            },
+            { headers }
+          )
+          .then(
+            (response) => {
+              setLoading(false);
+              setSuccess("User Created Successfully.");
+              setEmail("");
+              setName("");
+              setPassword("");
+            },
+            (error) => {
+              setLoading(false);
+              setFormError(error?.response?.data?.error);
             }
-            setLoading(false);
-          },
-          (error) => {
-            setLoading(false);
-            setFormError(error?.response?.data?.error);
-          }
-        );
+          );
+      }
+    } else {
+      Cookies.remove("token");
+      navigate("/login");
     }
   };
   return (

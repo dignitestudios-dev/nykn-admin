@@ -110,8 +110,8 @@ function GoogleMaps({ setLocation }) {
           {/* Render a marker for the user */}
           <Marker
             position={{
-              lat: selectedLocation.latitude,
-              lng: selectedLocation.longitude,
+              lat: 0,
+              lng: 0,
             }}
           ></Marker>
         </GoogleMap>

@@ -20,6 +20,7 @@ import EditAttraction from "../pages/EditAttraction";
 import { FiUserPlus } from "react-icons/fi";
 import Attractions from "../pages/Attractions";
 import { GoRocket } from "react-icons/go";
+import Notifications from "../pages/Notifications";
 
 export const loginRoutes = [
   {
@@ -96,6 +97,11 @@ export const normalRoutes = [
     url: "/attraction/create",
     page: <CategoryAndAttractionCreation />,
   },
+  {
+    name: "Notifications",
+    url: "/notifications",
+    page: <Notifications />,
+  },
 ];
 
 export const sidebarArr = [
@@ -127,6 +133,11 @@ export const sidebarArr = [
   {
     name: "Attractions",
     url: "/attractions",
+    icon: <GoRocket className="text-xl" />,
+  },
+  {
+    name: "Notifications",
+    url: "/notifications",
     icon: <GoRocket className="text-xl" />,
   },
 

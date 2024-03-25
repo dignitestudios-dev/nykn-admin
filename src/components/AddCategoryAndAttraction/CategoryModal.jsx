@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
   const navigate = useNavigate();
-  const { palette, theme, baseUrl, setError } = useContext(GlobalContext);
+  const { palette, theme, baseUrl, setError, setSuccess } =
+    useContext(GlobalContext);
   // Image:
   const [image, setImage] = useState(null);
 
@@ -86,7 +87,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
             {
               category_title: title,
               category_description: description,
-              category_price: price,
+              category_price: isPaid ? price : 0,
               isPaid: isPaid,
               imageBase64Data: image,
             },
@@ -96,6 +97,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
             (response) => {
               setLoading(false);
               updateData((prev) => !prev);
+              setSuccess("Category Added Successfully.");
               setImage(null);
               setTitle("");
               setDescription("");
