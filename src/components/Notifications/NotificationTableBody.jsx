@@ -36,7 +36,7 @@ const NotificationTableBody = ({ notification, setReload }) => {
     return usDateFormat;
   }
   return (
-    <tbody className="border ">
+    <tbody className=" ">
       <tr
         className=" border-b "
         style={{ background: palette.dark_contrast_background }}

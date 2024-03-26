@@ -64,6 +64,17 @@ const CategoryDetail = () => {
       .includes(searchInput.toLowerCase())
   );
 
+  const sortedData = filteredData?.sort((a, b) => {
+    if (sort === "name") {
+      return a.subCategory_title.localeCompare(b.subCategory_title);
+    } else if (sort === "likes") {
+      return b.wishlist - a.wishlist;
+    } else if (sort === "date") {
+      return new Date(b.timings) - new Date(a.timings);
+    }
+    return 0; // Default case
+  });
+
   useEffect(() => {
     getData();
   }, []);
@@ -191,8 +202,8 @@ const CategoryDetail = () => {
         <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
           {loading ? (
             <CategorySkeleton />
-          ) : filteredData.length > 0 ? (
-            filteredData?.map((attraction) => {
+          ) : sortedData.length > 0 ? (
+            sortedData?.map((attraction) => {
               return <AttractionCard attraction={attraction} />;
             })
           ) : (

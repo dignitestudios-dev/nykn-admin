@@ -9,7 +9,7 @@ const NotificationTableHead = ({ sortStatus, sortDate }) => {
       className="text-md text-gray-700 sticky top-0 left-0 uppercase   "
       style={{ background: palette.dark_contrast_background }}
     >
-      <tr>
+      <tr className="border-b">
         <th scope="col" className="px-6 py-3">
           Title
         </th>

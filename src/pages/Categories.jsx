@@ -60,8 +60,16 @@ const Categories = () => {
   };
 
   // Filter data based on user input in title or message
-  const filteredData = response?.filter((categories) =>
-    categories.category_title.toLowerCase().includes(searchInput.toLowerCase())
+  const filteredData = response?.filter(
+    (categories) =>
+      categories.category_title
+        .toLowerCase()
+        .includes(searchInput.toLowerCase()) &&
+      (filter === "free"
+        ? !categories.isPaid
+        : filter === "paid"
+        ? categories.isPaid
+        : true)
   );
 
   useEffect(() => {
@@ -152,6 +160,19 @@ const Categories = () => {
                 } 0px 2px 8px 0px`,
               }}
             >
+              <button
+                onClick={() => {
+                  setFilter("All");
+                  setIsFilterOpen(false);
+                }}
+                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                style={{
+                  background: palette?.light_contrast_background,
+                  color: palette?.color,
+                }}
+              >
+                All
+              </button>
               <button
                 onClick={() => {
                   setFilter("paid");
