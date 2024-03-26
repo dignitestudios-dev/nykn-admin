@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useContext, useEffect, useState, PureComponent } from "react";
 import {
   LineChart,
   Line,
@@ -9,6 +9,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { GlobalContext } from "../../context/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -74,12 +78,48 @@ const data = [
 ];
 
 const Graph = () => {
+  const { palette, theme, baseUrl, setIsLoggedIn } = useContext(GlobalContext);
+
+  const navigate = useNavigate();
+  const [stats, setStats] = useState([]);
+  const [statsLoading, setStatsLoading] = useState(false);
+
+  const getUsers = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      setStatsLoading(true);
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios.get(`${baseUrl}/getTotalCategoryPrices`, { headers }).then(
+        (response) => {
+          setStats(response?.data);
+          setStatsLoading(false);
+        },
+        (error) => {
+          setStatsLoading(false);
+          if (error?.response?.status == 401) {
+            setIsLoggedIn(false);
+            Cookies.remove("token");
+            navigate("/login");
+          }
+        }
+      );
+    } else {
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
         width={700}
         height={300}
-        data={data}
+        data={[stats]}
         margin={{
           top: 5,
           right: 30,
@@ -87,10 +127,16 @@ const Graph = () => {
           bottom: 5,
         }}
       >
-        <XAxis dataKey="date" />
-        <Legend />
+        <XAxis dataKey="currentMonthName" />
+        {/* <Legend /> */}
+        <Tooltip />
 
-        <Line type="monotone" dataKey="paid" stroke="#407BA7" strokeWidth={2} />
+        <Line
+          type="monotone"
+          dataKey="totalCategoryPrices"
+          stroke="#407BA7"
+          strokeWidth={2}
+        />
       </LineChart>
     </ResponsiveContainer>
   );

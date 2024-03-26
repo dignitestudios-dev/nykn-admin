@@ -113,7 +113,7 @@ const UsersTable = () => {
               >
                 {users?.slice(0, 5)?.map((user) => {
                   return (
-                    <tr key={user?.id}>
+                    <tr key={user?._id}>
                       <td className="px-3 py-2 whitespace-nowrap">
                         <img
                           className="h-10 w-10 rounded-full"

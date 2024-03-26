@@ -1,56 +1,68 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UserCategoryCard from "../components/users/UserDetails/UserCategoryCard";
 import { GlobalContext } from "../context/GlobalContext";
 import UserInfo from "../components/users/UserDetails/UserInfo";
 import { IoSearch } from "react-icons/io5";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const UserDetail = () => {
   const { id } = useParams();
-  const { theme, palette } = useContext(GlobalContext);
-  const arr = [
-    {
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      isPaid: false,
-      isUnlocked: true,
-    },
-    {
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      isPaid: false,
-      isUnlocked: false,
-    },
-    {
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      isPaid: true,
-      isUnlocked: true,
-    },
-    {
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      isPaid: false,
-      isUnlocked: false,
-    },
-    {
-      name: "Category Name",
-      description: "Category Description goes here",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-      isPaid: true,
-      isUnlocked: true,
-    },
-  ];
+  const { palette, theme, baseUrl, setError } = useContext(GlobalContext);
+
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState([]);
+  const [updateData, setUpdateData] = useState(false);
+
+  const getData = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      setLoading(true);
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      axios
+        .post(
+          `${baseUrl}/GetAllSubcategories`,
+          { category_Id: id },
+          { headers }
+        )
+        .then((response) => {
+          setResponse(response?.data?.subCategories);
+
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error?.response?.data?.error);
+        });
+    } else {
+      setLoading(false);
+      navigate("/login/");
+    }
+  };
+
+  const [searchInput, setSearchInput] = useState("");
+  // Filter data based on user input in title or message
+  const filteredData = response?.filter((attraction) =>
+    attraction.subCategory_title
+      .toLowerCase()
+      .includes(searchInput.toLowerCase())
+  );
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [updateData]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState("free");
@@ -136,8 +148,8 @@ const UserDetail = () => {
         </div>
       </div>
       <div className="w-full h-auto flex flex-wrap justify-start items-start gap-2 ">
-        {arr?.map((item) => {
-          return <UserCategoryCard key={item} category={item} />;
+        {filteredData?.map((item, key) => {
+          return <UserCategoryCard key={key} category={item} />;
         })}
       </div>
     </div>

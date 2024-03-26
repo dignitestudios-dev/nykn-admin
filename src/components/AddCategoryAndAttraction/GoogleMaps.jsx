@@ -64,6 +64,28 @@ function GoogleMaps({ setLocation }) {
       });
   };
 
+  useEffect(() => {
+    // Perform reverse geocoding
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET}`
+      )
+      .then((response) => {
+        const address = response.data.results[1].formatted_address;
+        setUserInput(address);
+        setSelectedLocation({ latitude, longitude, address });
+      })
+      .catch((error) => {
+        console.error("Error fetching address:", error);
+        setLocation("Address not available");
+        setSelectedLocation({
+          latitude,
+          longitude,
+          address: "Address not available",
+        });
+      });
+  }, [latitude, longitude]);
+
   const handleSetAddress = () => {
     // Perform geocoding for the entered address
     axios

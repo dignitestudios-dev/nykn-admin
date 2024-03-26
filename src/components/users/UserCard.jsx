@@ -65,7 +65,7 @@ const UserCard = ({ user, setReload }) => {
       <div className="w-full h-auto flex flex-row justify-end items-center gap-2">
         <div className="w-full h-auto flex justify-start items-center gap-2">
           <Link
-            to={`/users/${user?.id}`}
+            to={`/users/${user?._id}`}
             className={`  text-white text-sm w-full h-8 rounded-full transition-all duration-200 hover:opacity-90 font-medium  flex items-center justify-center`}
             style={{
               background: palette?.brand,

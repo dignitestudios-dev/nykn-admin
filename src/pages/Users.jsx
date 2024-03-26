@@ -84,7 +84,7 @@ const Users = () => {
         <UserSkeleton />
       ) : filteredData.length > 0 ? (
         filteredData?.map((user) => {
-          return <UserCard key={user?.id} user={user} setReload={setReload} />;
+          return <UserCard key={user?._id} user={user} setReload={setReload} />;
         })
       ) : (
         <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">

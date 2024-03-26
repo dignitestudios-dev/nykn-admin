@@ -25,6 +25,8 @@ const EditAttraction = () => {
     setUserInput,
     longitude,
     latitude,
+    setLatitude,
+    setLongitude,
     baseUrl,
     setError,
     setSuccess,
@@ -48,7 +50,6 @@ const EditAttraction = () => {
           setCategories(response?.data);
         })
         .catch((error) => {
-          console.log(error);
           setError(error?.response?.data?.error);
         });
     } else {
@@ -190,6 +191,8 @@ const EditAttraction = () => {
     setAttractionImages(attraction?.subCategory_images);
     setTimings(attraction?.timings);
     setDescription(attraction?.description);
+    setLongitude(attraction?.location?.coordinates[0]);
+    setLatitude(attraction?.location?.coordinates[1]);
   }, [attraction]);
 
   const handleImage = () => {
@@ -267,22 +270,39 @@ const EditAttraction = () => {
         </div>
         <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
           {/* Image component */}
-          {images.map((image, key) => {
-            return (
-              <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
-                <img
-                  src={`data:image/webp;base64,${image && image}`}
-                  className="w-full h-full rounded-md object-cover"
-                />
-                <button
-                  onClick={() => handleRemoveImage(key)}
-                  className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
-                >
-                  <MdClose className="text-xs text-white" />
-                </button>
-              </div>
-            );
-          })}
+          {images?.length > 0
+            ? images.map((image, key) => {
+                return (
+                  <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
+                    <img
+                      src={`data:image/webp;base64,${image && image}`}
+                      className="w-full h-full rounded-md object-cover"
+                    />
+                    <button
+                      onClick={() => handleRemoveImage(key)}
+                      className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
+                    >
+                      <MdClose className="text-xs text-white" />
+                    </button>
+                  </div>
+                );
+              })
+            : attractionImages.map((image, key) => {
+                return (
+                  <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
+                    <img
+                      src={`${image && image}`}
+                      className="w-full h-full rounded-md object-cover"
+                    />
+                    <button
+                      onClick={() => handleRemoveImage(key)}
+                      className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
+                    >
+                      <MdClose className="text-xs text-white" />
+                    </button>
+                  </div>
+                );
+              })}
         </div>
 
         <div className="w-full h-auto flex  gap-1 justify-start items-start">

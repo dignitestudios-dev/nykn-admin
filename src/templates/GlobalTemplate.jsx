@@ -63,18 +63,22 @@ const GlobalTemplate = ({ page, name }) => {
     const token = Cookies.get("token");
 
     if (token) {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": true,
-      };
-      axios.get(`${baseUrl}/validate`, { headers }).then(
-        (response) => {
-          setIsLoggedIn(response?.data?.data?.is_token_validate);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      axios
+        .post(`${baseUrl}/validateToken`, {
+          token: token,
+        })
+        .then(
+          (response) => {
+            if (response.data.valid == true) {
+              navigate("/discover");
+            } else {
+              navigate("/login");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     } else {
       navigate("/login");
     }
