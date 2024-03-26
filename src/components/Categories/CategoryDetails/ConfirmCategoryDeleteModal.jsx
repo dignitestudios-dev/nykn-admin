@@ -1,14 +1,57 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import { GlobalContext } from "../../../context/GlobalContext";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const ConfirmCategoryDeleteModal = ({ isOpen, setIsOpen }) => {
+const ConfirmCategoryDeleteModal = ({ isOpen, setIsOpen, id }) => {
   const deleteCategoryRef = useRef();
-  const { palette, theme } = useContext(GlobalContext);
+  const { palette, theme, baseUrl, setSuccess, setError } =
+    useContext(GlobalContext);
 
   const toggleModal = (e) => {
     if (!deleteCategoryRef.current.contains(e.target)) {
       setIsOpen(false);
+    }
+  };
+
+  const [loading, setLoading] = useState(false);
+
+  const deleteAttraction = (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");
+
+    if (token) {
+      setLoading(true);
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      setLoading(true);
+      axios
+        .put(
+          `${baseUrl}/DeleteSubCategory`,
+          {
+            subCategoryId: id,
+          },
+          { headers }
+        )
+        .then(
+          (response) => {
+            setSuccess("Attraction deleted successfully.");
+            navigate("/attractions");
+            setLoading(false);
+          },
+          (error) => {
+            setLoading(false);
+            setError(error?.response?.data?.error);
+          }
+        );
+    } else {
+      Cookies.remove("token");
+      navigate("/login");
     }
   };
 
@@ -38,10 +81,14 @@ const ConfirmCategoryDeleteModal = ({ isOpen, setIsOpen }) => {
         </span>
 
         <div className="flex justify-center mt-4 items-start w-full gap-2">
-          <button className="w-20 h-8  transition-all bg-red-500 duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full">
+          <button
+            onClick={deleteAttraction}
+            className="w-20 h-8  transition-all bg-red-500 duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+          >
             Yes
           </button>
           <button
+            onClick={() => setIsOpen(false)}
             className="w-20 h-8  transition-all  duration-150 hover:opacity-90  outline-none border-non text-md font-medium rounded-full"
             style={{
               color: palette?.color,

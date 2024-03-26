@@ -1,19 +1,22 @@
-import React, { useContext, useRef, useState } from "react";
-import { GlobalContext } from "../../../context/GlobalContext";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
+import Cookies from "js-cookie";
+import BtnLoader from "../../global/BtnLoader";
+import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../../context/GlobalContext";
 
-const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
-  const updateCategoryRef = useRef();
-  const { palette, theme, baseUrl } = useContext(GlobalContext);
-
-  const toggleModal = (e) => {
-    if (!updateCategoryRef.current.contains(e.target)) {
-      setIsOpen(false);
-    }
-  };
-
+const UpdateCategoryModal = ({
+  isOpen,
+  setIsOpen,
+  categoryUpdateRef,
+  id,
+  category,
+}) => {
+  const navigate = useNavigate();
+  const { palette, theme, baseUrl, setError, setSuccess } =
+    useContext(GlobalContext);
   // Image:
   const [image, setImage] = useState(null);
 
@@ -55,6 +58,12 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
     });
   };
 
+  const toggleModal = (e) => {
+    if (!categoryUpdateRef.current.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -63,49 +72,65 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const token = Cookies.get("token");
-    if (token) {
-      setLoading(true);
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      axios
-        .post(
-          `${baseUrl}/updateCategory`,
-          {
-            category_title: title,
-            category_description: description,
-            category_price: price,
-            isPaid: isPaid,
-            imageBase64Data: image,
-          },
-          { headers }
-        )
-        .then(
-          (response) => {
-            setLoading(false);
-            updateData((prev) => !prev);
-            setImage(null);
-            setTitle("");
-            setDescription("");
-            setPrice("");
-            setIsOpen(false);
-          },
-          (error) => {
-            setError(error?.response?.data?.error);
-            setLoading(false);
-          }
-        );
+    if (image == null) {
+      setError("Image not provided.");
+    } else if (title.length < 4) {
+      setError("Category title must contain atleast 4 alphabets.");
+    } else if (title == "") {
+      setError("Category title cannot be left empty.");
+    } else if (title.length > 40) {
+      setError("Category title cannot exceed more than 40 alphabets.");
     } else {
-      Cookies.remove("token");
-      navigate("/login");
+      const token = Cookies.get("token");
+      if (token) {
+        setLoading(true);
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        axios
+          .post(
+            `${baseUrl}/updateCategory`,
+            {
+              categoryId: id,
+              category_title: title,
+              category_description: description,
+              category_price: isPaid ? price : 0,
+              isPaid: isPaid,
+              imageBase64Data: image,
+            },
+            { headers }
+          )
+          .then(
+            (response) => {
+              setLoading(false);
+              setSuccess("Category Updated Successfully.");
+              navigate(`/categories/${id}`);
+              setIsOpen(false);
+            },
+            (error) => {
+              setError(error?.response?.data?.error);
+              console.log(error);
+              setLoading(false);
+            }
+          );
+      } else {
+        Cookies.remove("token");
+        navigate("/login");
+      }
     }
   };
+
+  useEffect(() => {
+    setDescription(category?.category_description);
+    setTitle(category?.category_title);
+    setPrice(category?.category_price);
+    setIsPaid(category?.isPaid);
+  }, []);
 
   return (
     <div
       onClick={toggleModal}
-      id="category-update-modal"
+      id="category-add-modal"
       className={`fixed top-0 left-0 ${
         theme == "dark" ? "bg-[#fff]/[0.2]" : "bg-[#000]/[0.2]"
       }  z-[1000] w-screen h-screen ${
@@ -114,7 +139,7 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
     >
       <form
         onSubmit={handleSubmit}
-        ref={updateCategoryRef}
+        ref={categoryUpdateRef}
         className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
         style={{ background: palette?.background, color: palette?.color }}
       >
@@ -140,6 +165,11 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
               src={`data:image/webp;base64,${image && image}`}
               className="w-full h-full rounded-xl object-scaledown"
             />
+          ) : category?.category_image ? (
+            <img
+              src={`${category?.category_image && category?.category_image}`}
+              className="w-full h-full rounded-xl object-scaledown"
+            />
           ) : (
             <LuImagePlus className="text-xl font-medium" />
           )}
@@ -157,19 +187,20 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
             placeholder="Category Name"
           />
         </div>
-
-        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-          <input
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            type="text"
-            placeholder="Price"
-          />
-        </div>
+        {isPaid && (
+          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+            <input
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+              style={{
+                background: palette?.dark_contrast_background,
+              }}
+              type="text"
+              placeholder="Price"
+            />
+          </div>
+        )}
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <textarea
@@ -184,8 +215,12 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
           ></textarea>
         </div>
         <div className="w-full  flex h-auto justify-start items-start gap-2">
-          <div className="flex items-center ">
+          <div
+            onClick={() => setIsPaid(false)}
+            className=" cursor-pointer flex items-center "
+          >
             <input
+              checked={!isPaid}
               id="free"
               type="radio"
               value={false}
@@ -195,15 +230,18 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
             />
             <label
               htmlFor="free"
-              className="w-full ms-1 text-md font-medium text-gray-900 rounded "
+              className="cursor-pointer w-full ms-1 text-md font-medium text-gray-900 rounded "
             >
               Free
             </label>
           </div>
 
-          <div className="flex items-center ">
+          <div
+            onClick={() => setIsPaid(true)}
+            className="cursor-pointer flex items-center "
+          >
             <input
-              checked
+              checked={isPaid}
               id="paid"
               type="radio"
               value={true}
@@ -213,7 +251,7 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
             />
             <label
               htmlFor="paid"
-              className="w-full ms-1 text-md font-medium text-gray-900 rounded "
+              className="cursor-pointer w-full ms-1 text-md font-medium text-gray-900 rounded "
             >
               Paid
             </label>
@@ -222,7 +260,6 @@ const UpdateCategoryModal = ({ isOpen, setIsOpen }) => {
 
         <button
           type="submit"
-          // disabled={loading}
           style={{
             background: palette?.brand,
           }}

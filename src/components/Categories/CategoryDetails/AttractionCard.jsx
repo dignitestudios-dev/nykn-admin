@@ -46,7 +46,7 @@ const AttractionCard = ({ attraction }) => {
               {attraction?.wishlist}
             </span>
             <Link
-              to={`/attraction/${attraction?.id}`}
+              to={`/attraction/${attraction?._id}`}
               className="w-full md:w-24  h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center  text-white"
               style={{
                 background: palette?.brand,
