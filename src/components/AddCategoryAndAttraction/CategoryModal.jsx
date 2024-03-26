@@ -106,7 +106,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
             },
             (error) => {
               setError(error?.response?.data?.error);
-              console.log(error);
+
               setLoading(false);
             }
           );

@@ -82,7 +82,7 @@ const VerifyOtp = () => {
           },
           (error) => {
             setLoading(false);
-            console.log(error);
+
             setFormError(error?.response?.data?.error);
           }
         );

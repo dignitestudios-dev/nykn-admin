@@ -52,7 +52,7 @@ const Attractions = () => {
         })
         .catch((error) => {
           setLoading(false);
-          console.log(error);
+
           setError(error?.response?.data?.error);
         });
     } else {

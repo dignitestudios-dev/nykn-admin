@@ -42,7 +42,7 @@ const CategoryDetail = () => {
           { headers }
         )
         .then((response) => {
-          setResponse(response?.data?.subCategories);
+          setResponse(response?.data);
 
           setLoading(false);
         })
@@ -82,6 +82,7 @@ const CategoryDetail = () => {
   useEffect(() => {
     getData();
   }, [updateData]);
+
   return (
     <div className="w-full h-auto flex flex-col justify-start items-start gap-4">
       <Link

@@ -109,7 +109,7 @@ const UpdateCategoryModal = ({
             },
             (error) => {
               setError(error?.response?.data?.error);
-              console.log(error);
+
               setLoading(false);
             }
           );

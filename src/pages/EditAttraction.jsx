@@ -131,7 +131,7 @@ const EditAttraction = () => {
           )
           .then(
             (response) => {
-              setSuccess("Attraction added successfully.");
+              setSuccess("Attraction updated successfully.");
               navigate("/attractions");
               setLoading(false);
             },
@@ -172,7 +172,6 @@ const EditAttraction = () => {
           setAttraction(response?.data);
         })
         .catch((error) => {
-          console.log(error);
           setError(error?.response?.data?.error);
         });
     } else {
@@ -287,7 +286,8 @@ const EditAttraction = () => {
                   </div>
                 );
               })
-            : attractionImages.map((image, key) => {
+            : attractionImages &&
+              attractionImages.map((image, key) => {
                 return (
                   <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
                     <img
