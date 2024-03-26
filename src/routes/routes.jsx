@@ -23,6 +23,7 @@ import { FiUserPlus } from "react-icons/fi";
 const Attractions = lazy(() => import("../pages/Attractions"));
 import { GoRocket } from "react-icons/go";
 const Notifications = lazy(() => import("../pages/Notifications"));
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 export const loginRoutes = [
   {
@@ -140,7 +141,7 @@ export const sidebarArr = [
   {
     name: "Notifications",
     url: "/notifications",
-    icon: <GoRocket className="text-xl" />,
+    icon: <IoMdNotificationsOutline className="text-xl" />,
   },
 
   // {

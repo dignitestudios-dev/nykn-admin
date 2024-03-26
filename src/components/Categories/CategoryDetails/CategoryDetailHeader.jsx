@@ -94,7 +94,7 @@ const CategoryDetailHeader = () => {
               $
             </span>
             <span className="font-bold" style={{ color: palette?.color }}>
-              50
+              {response?.category_price}
             </span>
           </div>
         </div>
