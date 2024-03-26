@@ -60,17 +60,19 @@ const Categories = () => {
   };
 
   // Filter data based on user input in title or message
-  const filteredData = response?.filter(
-    (categories) =>
-      categories.category_title
-        .toLowerCase()
-        .includes(searchInput.toLowerCase()) &&
-      (filter === "free"
-        ? !categories.isPaid
-        : filter === "paid"
-        ? categories.isPaid
-        : true)
-  );
+  const filteredData =
+    response?.length > 0 &&
+    response?.filter(
+      (categories) =>
+        categories.category_title
+          .toLowerCase()
+          .includes(searchInput.toLowerCase()) &&
+        (filter === "free"
+          ? !categories.isPaid
+          : filter === "paid"
+          ? categories.isPaid
+          : true)
+    );
 
   useEffect(() => {
     getData();

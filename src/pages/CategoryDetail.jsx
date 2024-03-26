@@ -58,22 +58,26 @@ const CategoryDetail = () => {
 
   const [searchInput, setSearchInput] = useState("");
   // Filter data based on user input in title or message
-  const filteredData = response?.filter((attraction) =>
-    attraction.subCategory_title
-      .toLowerCase()
-      .includes(searchInput.toLowerCase())
-  );
+  const filteredData =
+    response?.length > 0 &&
+    response?.filter((attraction) =>
+      attraction.subCategory_title
+        .toLowerCase()
+        .includes(searchInput.toLowerCase())
+    );
 
-  const sortedData = filteredData?.sort((a, b) => {
-    if (sort === "name") {
-      return a.subCategory_title.localeCompare(b.subCategory_title);
-    } else if (sort === "likes") {
-      return b.wishlist - a.wishlist;
-    } else if (sort === "date") {
-      return new Date(b.timings) - new Date(a.timings);
-    }
-    return 0; // Default case
-  });
+  const sortedData =
+    filteredData &&
+    filteredData?.sort((a, b) => {
+      if (sort === "name") {
+        return a.subCategory_title.localeCompare(b.subCategory_title);
+      } else if (sort === "likes") {
+        return b.wishlist - a.wishlist;
+      } else if (sort === "date") {
+        return new Date(b.timings) - new Date(a.timings);
+      }
+      return 0; // Default case
+    });
 
   useEffect(() => {
     getData();
