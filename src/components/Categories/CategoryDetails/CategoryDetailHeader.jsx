@@ -93,14 +93,16 @@ const CategoryDetailHeader = () => {
           <span className="text-[#9b9c9b] text-wrap text-sm font-medium">
             {response?.category_description}
           </span>
-          <div className="flex text-sm justify-start items-start">
-            <span className="font-bold" style={{ color: palette?.brand }}>
-              $
-            </span>
-            <span className="font-bold" style={{ color: palette?.color }}>
-              {response?.category_price}
-            </span>
-          </div>
+          {response?.isPaid && (
+            <div className="flex text-sm justify-start items-start">
+              <span className="font-bold" style={{ color: palette?.brand }}>
+                $
+              </span>
+              <span className="font-bold" style={{ color: palette?.color }}>
+                {response?.category_price}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="w-auto h-full flex  ml-auto justify-start items-end gap-2">

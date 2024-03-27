@@ -23,6 +23,7 @@ const RegisterUser = () => {
     baseUrl,
     palette,
     setSuccess,
+    navigateToLink,
   } = useContext(GlobalContext);
 
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const RegisterUser = () => {
             (response) => {
               setLoading(false);
               setSuccess("User Created Successfully.");
-              navigate("/users");
+              navigateToLink("/users", "Users");
             },
             (error) => {
               setLoading(false);

@@ -21,6 +21,7 @@ const Attractions = () => {
     categoryAddRef,
     setIsCategoryOpen,
     baseUrl,
+    navigateToLink,
     setError,
   } = useContext(GlobalContext);
 
@@ -104,15 +105,15 @@ const Attractions = () => {
         >
           Attractions
         </h1>
-        <Link
-          to="/attraction/create"
+        <button
+          onClick={() => navigateToLink("/attraction/create", "Attractions")}
           style={{
             background: palette?.brand,
           }}
           className="w-32 h-8  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full flex justify-center items-center"
         >
           Add Attraction
-        </Link>
+        </button>
       </div>
 
       {/* Category Add Modal */}
