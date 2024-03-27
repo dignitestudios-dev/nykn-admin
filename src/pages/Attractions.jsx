@@ -222,7 +222,7 @@ const Attractions = () => {
           return <CategorySkeleton key={item} />;
         })
       ) : sortedData.length > 0 ? (
-        sortedData?.map((attraction) => {
+        sortedData?.reverse()?.map((attraction) => {
           return (
             <AttractionCard attraction={attraction} key={attraction?._id} />
           );

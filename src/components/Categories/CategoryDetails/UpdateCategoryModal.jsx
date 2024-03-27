@@ -13,6 +13,7 @@ const UpdateCategoryModal = ({
   categoryUpdateRef,
   id,
   category,
+  updateData,
 }) => {
   const navigate = useNavigate();
   const { palette, theme, baseUrl, setError, setSuccess } =
@@ -64,6 +65,27 @@ const UpdateCategoryModal = ({
     }
   };
 
+  async function fetchAndConvertToBase64(url) {
+    try {
+      // Fetch the image
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      // Convert the blob to base64
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.onerror = reject;
+        setImage(reader.readAsDataURL(blob));
+      });
+    } catch (error) {
+      console.error("Error fetching or converting the image:", error);
+      return null;
+    }
+  }
+
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -105,6 +127,7 @@ const UpdateCategoryModal = ({
               setLoading(false);
               setSuccess("Category Updated Successfully.");
               navigate(`/categories/${id}`);
+              updateData((prev) => !prev);
               setIsOpen(false);
             },
             (error) => {
@@ -125,7 +148,7 @@ const UpdateCategoryModal = ({
     setTitle(category?.category_title);
     setPrice(category?.category_price);
     setIsPaid(category?.isPaid);
-  }, []);
+  }, [category]);
 
   return (
     <div
@@ -162,12 +185,8 @@ const UpdateCategoryModal = ({
           />
           {image ? (
             <img
+              id="update-image"
               src={`data:image/webp;base64,${image && image}`}
-              className="w-full h-full rounded-xl object-scaledown"
-            />
-          ) : category?.category_image ? (
-            <img
-              src={`${category?.category_image && category?.category_image}`}
               className="w-full h-full rounded-xl object-scaledown"
             />
           ) : (

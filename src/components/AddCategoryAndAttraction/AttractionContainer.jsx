@@ -16,9 +16,7 @@ const AttractionContainer = () => {
     categoryAddRef,
     isCategoryOpen,
     setIsCategoryOpen,
-    isLabelOpen,
-    setIsLabelOpen,
-    labelAddRef,
+    setActiveLink,
     userInput,
     setUserInput,
     longitude,
@@ -181,13 +179,8 @@ const AttractionContainer = () => {
             (response) => {
               console.log(response);
               setSuccess("Attraction added successfully.");
-              setAttractionTitle("");
-              setDescription("");
-              setCategoryId("");
-              setUserInput("");
-              setLabels([]);
-              setImages([]);
-              setTimings("");
+              navigate("/attractions");
+              setActiveLink("Attractions");
               setLoading(false);
             },
             (error) => {

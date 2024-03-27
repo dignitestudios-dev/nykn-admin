@@ -47,9 +47,11 @@ const Users = () => {
   };
 
   // Filter data based on user input in title or message
-  const filteredData = users?.filter((user) =>
-    user.full_name.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  const filteredData =
+    users?.length > 0 &&
+    users?.filter((user) =>
+      user.full_name.toLowerCase().includes(searchInput.toLowerCase())
+    );
 
   useEffect(() => {
     getUsers();
@@ -83,7 +85,7 @@ const Users = () => {
       {userLoading ? (
         <UserSkeleton />
       ) : filteredData.length > 0 ? (
-        filteredData?.map((user) => {
+        filteredData?.reverse()?.map((user) => {
           return <UserCard key={user?._id} user={user} setReload={setReload} />;
         })
       ) : (

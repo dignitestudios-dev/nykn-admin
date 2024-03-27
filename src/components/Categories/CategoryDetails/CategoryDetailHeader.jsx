@@ -56,6 +56,10 @@ const CategoryDetailHeader = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    getData();
+  }, [updateData]);
+
   return (
     <div
       className="w-full h-auto flex flex-col justify-start items-center p-3 rounded-xl gap-3 "
@@ -115,6 +119,7 @@ const CategoryDetailHeader = () => {
           isOpen={isCategoryUpdateOpen}
           setIsOpen={setIsCategoryUpdateOpen}
           categoryUpdateRef={categoryUpdateRef}
+          updateData={setUpdateData}
           id={id}
           category={response}
         />

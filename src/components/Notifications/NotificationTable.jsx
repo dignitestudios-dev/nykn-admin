@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
 import { TiPlus } from "react-icons/ti";
 import NotificationTableHead from "./NotificationTableHead";
 import NotificationTableBody from "./NotificationTableBody";
@@ -103,19 +103,23 @@ const NotificationTable = () => {
         />
 
         <div className="w-full h-auto flex justify-between items-center">
-          <div className="w-40 h-10 md:w-60 md:h-10 relative">
+          <div className="w-48 relative">
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full h-full rounded-xl bg-gray-100 border border-gray-400 outline-none focus:ring-2 focus:ring-blue-500   px-3"
+              className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
               placeholder="Search"
+              style={{
+                background: palette?.dark_contrast_background,
+                color: palette?.color,
+              }}
             />
             <button
-              className="w-10 h-[80%]  text-white outline-none border-none  flex items-center justify-center absolute top-1 right-1 rounded-lg"
-              style={{ background: palette.brand }}
+              className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
+              style={{ background: palette?.brand, color: palette?.color }}
             >
-              <IoSearchOutline className="text-2xl" />
+              <IoSearch className="text-white" />
             </button>
           </div>
 
@@ -138,7 +142,7 @@ const NotificationTable = () => {
           ) : filteredData?.length > 0 ? (
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
               <NotificationTableHead sortDate={sortDate} />
-              {filteredData.map((notification, key) => {
+              {filteredData?.reverse()?.map((notification, key) => {
                 return (
                   <NotificationTableBody
                     key={key}

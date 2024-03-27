@@ -5,8 +5,8 @@ const Loader = () => {
   return (
     <div className="relative overflow-x-auto w-full h-[60vh] flex justify-center items-center ">
       <svg
-        width="80"
-        height="80"
+        width="60"
+        height="60"
         fill="#407BA7"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

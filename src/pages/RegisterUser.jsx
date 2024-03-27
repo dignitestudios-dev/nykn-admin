@@ -90,9 +90,7 @@ const RegisterUser = () => {
             (response) => {
               setLoading(false);
               setSuccess("User Created Successfully.");
-              setEmail("");
-              setName("");
-              setPassword("");
+              navigate("/users");
             },
             (error) => {
               setLoading(false);

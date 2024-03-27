@@ -64,28 +64,6 @@ function GoogleMaps({ setLocation }) {
       });
   };
 
-  useEffect(() => {
-    // Perform reverse geocoding
-    axios
-      .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET}`
-      )
-      .then((response) => {
-        const address = response.data.results[1].formatted_address;
-        setUserInput(address);
-        setSelectedLocation({ latitude, longitude, address });
-      })
-      .catch((error) => {
-        console.error("Error fetching address:", error);
-        setLocation("Address not available");
-        setSelectedLocation({
-          latitude,
-          longitude,
-          address: "Address not available",
-        });
-      });
-  }, [latitude, longitude]);
-
   const handleSetAddress = () => {
     // Perform geocoding for the entered address
     axios
@@ -106,6 +84,11 @@ function GoogleMaps({ setLocation }) {
         console.error("Error fetching location:", error);
       });
   };
+  const customIconSvg = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="48px" height="48px">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10c-1.63 0-3-1.37-3-3s1.37-3 3-3 3 1.37 3 3-1.37 3-3 3z"/>
+  </svg>
+`;
 
   useEffect(() => {
     handleSetAddress();
@@ -132,8 +115,8 @@ function GoogleMaps({ setLocation }) {
           {/* Render a marker for the user */}
           <Marker
             position={{
-              lat: 0,
-              lng: 0,
+              lat: latitude,
+              lng: longitude,
             }}
           ></Marker>
         </GoogleMap>

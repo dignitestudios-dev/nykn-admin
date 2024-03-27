@@ -24,7 +24,7 @@ const UsersTable = () => {
         Authorization: `Bearer ${token}`,
         "ngrok-skip-browser-warning": true,
       };
-      axios.get(`${baseUrl}/auth/getAllUser`, { headers }).then(
+      axios.get(`${baseUrl}/getAllUsersWithData`, { headers }).then(
         (response) => {
           setUsers(response?.data);
           setUserLoading(false);
@@ -111,41 +111,48 @@ const UsersTable = () => {
                   color: palette?.dark_contrast_color,
                 }}
               >
-                {users?.slice(0, 5)?.map((user) => {
-                  return (
-                    <tr key={user?._id}>
-                      <td className="px-3 py-2 whitespace-nowrap">
-                        <img
-                          className="h-10 w-10 rounded-full"
-                          src={
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7GhCyNdACcNjy7_Y2r7CP6bxSXo2yM0yEfQ&usqp=CAU"
-                          }
-                          alt=""
-                        />
-                      </td>
+                {users
+                  ?.slice(0, 5)
+                  ?.reverse()
+                  ?.map((user) => {
+                    return (
+                      <tr key={user?._id}>
+                        <td className="px-3 py-2 whitespace-nowrap">
+                          <img
+                            className="h-10 w-10 rounded-full"
+                            src={
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7GhCyNdACcNjy7_Y2r7CP6bxSXo2yM0yEfQ&usqp=CAU"
+                            }
+                            alt=""
+                          />
+                        </td>
 
-                      <td className="px-2 py-2 text-[10px] lg:text-[12px] whitespace-nowrap">
-                        {user?.full_name}
-                      </td>
+                        <td className="px-2 py-2 text-[10px] lg:text-[12px] whitespace-nowrap">
+                          {user?.full_name}
+                        </td>
 
-                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] lg:text-[12px] font-medium">
-                        {user?.email}
-                      </td>
-                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
-                        <span className="w-auto flex justify-start items-center gap-1">
-                          <span className="text-lg">0</span>
-                          <MdPaid className="text-blue-500 text-lg" />
-                        </span>
-                      </td>
-                      <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
-                        <span className="w-auto flex justify-start items-center gap-1">
-                          <span className="text-lg">0</span>
-                          <FaHeart className="text-red-500 text-lg" />
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
+                        <td className="px-2 py-2  whitespace-nowrap   text-[10px] lg:text-[12px] font-medium">
+                          {user?.email}
+                        </td>
+                        <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
+                          <span className="w-auto flex justify-start items-center gap-1">
+                            <span className="text-lg">
+                              {user?.totalCategoriesBought}
+                            </span>
+                            <MdPaid className="text-blue-500 text-lg" />
+                          </span>
+                        </td>
+                        <td className="px-2 py-2  whitespace-nowrap   text-[10px] font-medium">
+                          <span className="w-auto flex justify-start items-center gap-1">
+                            <span className="text-lg">
+                              {user?.totalSubcategoriesInWishlist}
+                            </span>
+                            <FaHeart className="text-red-500 text-lg" />
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

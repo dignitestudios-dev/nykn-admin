@@ -9,7 +9,7 @@ const ConfirmDeleteAttraction = ({ isOpen, setIsOpen, id }) => {
   const navigate = useNavigate();
 
   const deleteAttractionRef = useRef();
-  const { palette, theme, baseUrl, setSuccess, setError } =
+  const { palette, theme, baseUrl, setSuccess, setError, setActiveLink } =
     useContext(GlobalContext);
 
   const toggleModal = (e) => {
@@ -39,8 +39,10 @@ const ConfirmDeleteAttraction = ({ isOpen, setIsOpen, id }) => {
         })
         .then(
           (response) => {
+            setIsOpen(false);
             setSuccess("Attraction deleted successfully.");
             navigate("/attractions");
+            setActiveLink("Attractions");
           },
           (error) => {
             setError(error?.response?.data?.error);

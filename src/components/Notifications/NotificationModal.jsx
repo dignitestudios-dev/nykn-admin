@@ -29,53 +29,40 @@ const NotificationModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title.length < 4) {
-      setError("Notification title must contain atleast 4 alphabets.");
-    } else if (title == "") {
-      setError("Category title cannot be left empty.");
-    } else if (title.length > 40) {
-      setError("Notification title cannot exceed more than 40 alphabets.");
-    } else if (message.length < 10) {
-      setError("Notification message must contain atleast 10 alphabets.");
-    } else if (message == "") {
-      setError("Category message cannot be left empty.");
-    } else if (message.length > 100) {
-      setError("Notification title cannot exceed more than 100 alphabets.");
-    } else {
-      const token = Cookies.get("token");
-      if (token) {
-        setLoading(true);
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-        axios
-          .post(
-            `${baseUrl}/createNotification`,
-            {
-              title: title,
-              message: message,
-            },
-            { headers }
-          )
-          .then(
-            (response) => {
-              setLoading(false);
-              updateData((prev) => !prev);
-              setSuccess("Notification Created Successfully.");
-              setTitle("");
-              setMessage("");
-              setIsOpen(false);
-            },
-            (error) => {
-              setError(error?.response?.data?.error);
 
-              setLoading(false);
-            }
-          );
-      } else {
-        Cookies.remove("token");
-        navigate("/login");
-      }
+    const token = Cookies.get("token");
+    if (token) {
+      setLoading(true);
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .post(
+          `${baseUrl}/createNotification`,
+          {
+            title: title,
+            message: message,
+          },
+          { headers }
+        )
+        .then(
+          (response) => {
+            setLoading(false);
+            updateData((prev) => !prev);
+            setSuccess("Notification Created Successfully.");
+            setTitle("");
+            setMessage("");
+            setIsOpen(false);
+          },
+          (error) => {
+            setError(error?.response?.data?.error);
+
+            setLoading(false);
+          }
+        );
+    } else {
+      Cookies.remove("token");
+      navigate("/login");
     }
   };
 

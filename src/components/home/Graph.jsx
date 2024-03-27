@@ -94,7 +94,7 @@ const Graph = () => {
       };
       axios.get(`${baseUrl}/getTotalCategoryPrices`, { headers }).then(
         (response) => {
-          setStats(response?.data);
+          setStats(response?.data?.totalSalesByMonth);
           setStatsLoading(false);
         },
         (error) => {
@@ -119,7 +119,7 @@ const Graph = () => {
       <LineChart
         width={700}
         height={300}
-        data={[stats]}
+        data={stats}
         margin={{
           top: 5,
           right: 30,
@@ -127,13 +127,13 @@ const Graph = () => {
           bottom: 5,
         }}
       >
-        <XAxis dataKey="currentMonthName" />
+        <XAxis dataKey="month" />
         {/* <Legend /> */}
         <Tooltip />
 
         <Line
           type="monotone"
-          dataKey="totalCategoryPrices"
+          dataKey="totalSales"
           stroke="#407BA7"
           strokeWidth={2}
         />

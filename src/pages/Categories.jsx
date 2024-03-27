@@ -211,7 +211,7 @@ const Categories = () => {
           return <CategorySkeleton key={item} />;
         })
       ) : filteredData.length > 0 ? (
-        filteredData?.map((category) => {
+        filteredData?.reverse()?.map((category) => {
           return <CategoryCard category={category} key={category?._id} />;
         })
       ) : (

@@ -1,12 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserCategoryCard from "../components/users/UserDetails/UserCategoryCard";
 import { GlobalContext } from "../context/GlobalContext";
 import UserInfo from "../components/users/UserDetails/UserInfo";
 import { IoSearch } from "react-icons/io5";
+import { IoMdArrowBack } from "react-icons/io";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Loader from "../components/global/Loader";
+import AttractionCard from "../components/Categories/CategoryDetails/AttractionCard";
+import UserWishlistCard from "../components/users/UserDetails/UserWishlistCard";
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -14,7 +18,8 @@ const UserDetail = () => {
 
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState([]);
-  const [updateData, setUpdateData] = useState(false);
+  const [wishlist, setWishlist] = useState([]);
+  const [user, setUser] = useState({});
 
   const getData = () => {
     const token = Cookies.get("token");
@@ -28,14 +33,11 @@ const UserDetail = () => {
       };
 
       axios
-        .post(
-          `${baseUrl}/GetAllSubcategories`,
-          { category_Id: id },
-          { headers }
-        )
+        .post(`${baseUrl}/getUserById`, { userId: id }, { headers })
         .then((response) => {
-          setResponse(response?.data?.subCategories);
-
+          setResponse(response?.data?.categorizedData);
+          setWishlist(response?.data?.userWishlist);
+          setUser(response?.data?.user);
           setLoading(false);
         })
         .catch((error) => {
@@ -50,29 +52,37 @@ const UserDetail = () => {
 
   const [searchInput, setSearchInput] = useState("");
   // Filter data based on user input in title or message
-  const filteredData = response?.filter((attraction) =>
-    attraction.subCategory_title
-      .toLowerCase()
-      .includes(searchInput.toLowerCase())
+  let filteredData = response?.filter((category) =>
+    category.category_title.toLowerCase().includes(searchInput.toLowerCase())
   );
 
   useEffect(() => {
     getData();
   }, []);
 
+  const [updateData, setUpdateData] = useState(false);
   useEffect(() => {
     getData();
   }, [updateData]);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [status, setStatus] = useState("free");
-
   return (
     <div className="w-full h-auto flex flex-col justify-start items-start gap-6">
-      <UserInfo />
+      <Link
+        to={-1}
+        style={{
+          background: palette?.brand,
+        }}
+        className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-8 h-8 hover:opacity-90 text-white"
+      >
+        <IoMdArrowBack />
+      </Link>
+      <UserInfo user={user} />
+      <h1 className="text-3xl font-bold">Categories</h1>
       <div className="w-full flex justify-start items-start gap-2">
-        <div className="relative w-[70%] lg:w-[90%]">
+        <div className="relative w-full">
           <input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             type="text"
             className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
             placeholder="Search"
@@ -88,69 +98,42 @@ const UserDetail = () => {
             <IoSearch className="text-white" />
           </button>
         </div>
-        <div className="w-[30%] lg:w-[10%] relative">
-          <button
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="w-full h-10 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-            style={{
-              background: palette?.dark_contrast_background,
-              color: palette?.color,
-            }}
-          >
-            {status}
-            <span
-              style={{
-                background: palette?.brand,
-              }}
-              className="w-5 h-5 text-white rounded-full flex items-center justify-center"
-            >
-              <MdKeyboardArrowDown />
-            </span>
-          </button>
-          {isOpen && (
-            <div
-              className="w-full h-auto flex flex-col justify-start items-start gap-2 shadow-md absolute top-12 p-2 rounded-3xl"
-              style={{
-                background: palette?.dark_contrast_background,
-                boxShadow: `${
-                  theme == "dark" ? "#1e1e1e" : "rgba(99, 99, 99, 0.2)"
-                } 0px 2px 8px 0px`,
-              }}
-            >
-              <button
-                onClick={() => {
-                  setStatus("paid");
-                  setIsOpen(false);
-                }}
-                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-                style={{
-                  background: palette?.light_contrast_background,
-                  color: palette?.color,
-                }}
-              >
-                Paid
-              </button>
-              <button
-                onClick={() => {
-                  setStatus("free");
-                  setIsOpen(false);
-                }}
-                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-                style={{
-                  background: palette?.light_contrast_background,
-                  color: palette?.color,
-                }}
-              >
-                Free
-              </button>
-            </div>
-          )}
-        </div>
       </div>
       <div className="w-full h-auto flex flex-wrap justify-start items-start gap-2 ">
-        {filteredData?.map((item, key) => {
-          return <UserCategoryCard key={key} category={item} />;
-        })}
+        {loading ? (
+          <Loader />
+        ) : filteredData?.length > 0 ? (
+          filteredData?.map((item, key) => {
+            return (
+              <UserCategoryCard
+                key={key}
+                category={item}
+                updateData={setUpdateData}
+              />
+            );
+          })
+        ) : (
+          <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+            <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+            Nothing here
+          </span>
+        )}
+      </div>
+
+      <h1 className="text-3xl font-bold">Wishlist</h1>
+      <div className="w-full h-auto flex flex-wrap justify-start items-start gap-2 ">
+        {loading ? (
+          <Loader />
+        ) : wishlist?.length > 0 ? (
+          wishlist?.map((item, key) => {
+            return <UserWishlistCard key={key} attraction={item} />;
+          })
+        ) : (
+          <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+            <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+            Nothing here
+          </span>
+        )}
       </div>
     </div>
   );

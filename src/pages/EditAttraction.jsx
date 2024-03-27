@@ -18,9 +18,7 @@ const EditAttraction = () => {
     categoryAddRef,
     isCategoryOpen,
     setIsCategoryOpen,
-    isLabelOpen,
-    setIsLabelOpen,
-    labelAddRef,
+    setActiveLink,
     userInput,
     setUserInput,
     longitude,
@@ -133,6 +131,7 @@ const EditAttraction = () => {
             (response) => {
               setSuccess("Attraction updated successfully.");
               navigate("/attractions");
+              setActiveLink("Attractions");
               setLoading(false);
             },
             (error) => {
@@ -190,8 +189,6 @@ const EditAttraction = () => {
     setAttractionImages(attraction?.subCategory_images);
     setTimings(attraction?.timings);
     setDescription(attraction?.description);
-    setLongitude(attraction?.location?.coordinates[0]);
-    setLatitude(attraction?.location?.coordinates[1]);
   }, [attraction]);
 
   const handleImage = () => {
@@ -249,6 +246,15 @@ const EditAttraction = () => {
           color: palette?.color,
         }}
       >
+        <Link
+          to={-1}
+          style={{
+            background: palette?.brand,
+          }}
+          className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-8 h-8 hover:opacity-90 text-white"
+        >
+          <IoMdArrowBack />
+        </Link>
         <span className="text-2xl font-bold">Edit Attraction</span>
         <div
           onClick={handleImage}
@@ -269,40 +275,23 @@ const EditAttraction = () => {
         </div>
         <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
           {/* Image component */}
-          {images?.length > 0
-            ? images.map((image, key) => {
-                return (
-                  <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
-                    <img
-                      src={`data:image/webp;base64,${image && image}`}
-                      className="w-full h-full rounded-md object-cover"
-                    />
-                    <button
-                      onClick={() => handleRemoveImage(key)}
-                      className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
-                    >
-                      <MdClose className="text-xs text-white" />
-                    </button>
-                  </div>
-                );
-              })
-            : attractionImages &&
-              attractionImages.map((image, key) => {
-                return (
-                  <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
-                    <img
-                      src={`${image && image}`}
-                      className="w-full h-full rounded-md object-cover"
-                    />
-                    <button
-                      onClick={() => handleRemoveImage(key)}
-                      className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
-                    >
-                      <MdClose className="text-xs text-white" />
-                    </button>
-                  </div>
-                );
-              })}
+          {images?.length > 0 &&
+            images.map((image, key) => {
+              return (
+                <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
+                  <img
+                    src={`data:image/webp;base64,${image && image}`}
+                    className="w-full h-full rounded-md object-cover"
+                  />
+                  <button
+                    onClick={() => handleRemoveImage(key)}
+                    className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
+                  >
+                    <MdClose className="text-xs text-white" />
+                  </button>
+                </div>
+              );
+            })}
         </div>
 
         <div className="w-full h-auto flex  gap-1 justify-start items-start">

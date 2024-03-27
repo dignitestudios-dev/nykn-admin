@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../../context/GlobalContext";
-import UpdateUserModal from "./UpdateUserModal";
 
-const UserInfo = () => {
+const UserInfo = ({ user }) => {
   const { palette } = useContext(GlobalContext);
-  const [isUserUpdateOpen, setIsUserUpdateOpen] = useState(false);
   return (
     <div
       className="w-full h-auto flex justify-start items-center p-3 rounded-xl gap-3 "
@@ -21,7 +19,7 @@ const UserInfo = () => {
         <img
           className="h-full w-full rounded-full"
           src={
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7GhCyNdACcNjy7_Y2r7CP6bxSXo2yM0yEfQ&usqp=CAU"
           }
           alt=""
         />
@@ -34,26 +32,12 @@ const UserInfo = () => {
             color: palette?.color,
           }}
         >
-          User Name
+          {user?.full_name}
         </h1>
         <span className="text-[#9b9c9b] text-wrap text-sm font-medium">
-          Useremail@gmail.com
+          {user?.email}
         </span>
       </div>
-
-      <button
-        onClick={() => setIsUserUpdateOpen(true)}
-        className="w-20 h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center text-white"
-        style={{
-          background: palette?.brand,
-        }}
-      >
-        Edit
-      </button>
-      <UpdateUserModal
-        isOpen={isUserUpdateOpen}
-        setIsOpen={setIsUserUpdateOpen}
-      />
     </div>
   );
 };

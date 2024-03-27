@@ -40,6 +40,7 @@ const ConfirmCategoryDeleteModal = ({ isOpen, setIsOpen, id }) => {
         )
         .then(
           (response) => {
+            setIsOpen(false);
             setSuccess("Attraction deleted successfully.");
             navigate("/attractions");
             setLoading(false);

@@ -45,9 +45,9 @@ export const GlobalContextProvider = ({ children }) => {
   const [passwordError, setPasswordError] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
 
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [userInput, setUserInput] = useState("United States");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [userInput, setUserInput] = useState("Nashville, USA");
 
   // Theme Toggle:
   const [theme, setTheme] = useState("light");

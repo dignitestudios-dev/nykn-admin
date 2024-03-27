@@ -102,6 +102,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
               setTitle("");
               setDescription("");
               setPrice("");
+              // navigate("/categories");
               setIsOpen(false);
             },
             (error) => {
