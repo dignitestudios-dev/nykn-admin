@@ -11,7 +11,7 @@ const UserCategoryCard = ({ category, updateData }) => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
-  const updateStatus = (e) => {
+  const updateStatus = (e, status) => {
     e.preventDefault();
     const token = Cookies.get("token");
     if (token) {
@@ -27,6 +27,7 @@ const UserCategoryCard = ({ category, updateData }) => {
           {
             userId: id,
             categoryId: category?._id,
+            status: status,
           },
           { headers }
         )
@@ -77,19 +78,19 @@ const UserCategoryCard = ({ category, updateData }) => {
           </span>
         )}
 
-        {category?.status == "Locked" &&
+        {category?.status == "Unlocked" &&
           category?.paymentStatus == "Unpaid" && (
             <button
-              onClick={updateStatus}
+              onClick={(e) => updateStatus(e, "Locked")}
               className="w-full h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-gray-700 text-white"
             >
               {loading ? <BtnLoader /> : "Lock"}
             </button>
           )}
 
-        {category?.status == "Unlocked" && (
+        {category?.status == "Locked" && (
           <button
-            onClick={updateStatus}
+            onClick={(e) => updateStatus(e, "Unlocked")}
             className="w-full h-7 text-xs ml-auto font-medium rounded-full flex items-center justify-center bg-green-400 text-white"
           >
             {loading ? <BtnLoader /> : "Unlock"}
