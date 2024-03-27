@@ -137,7 +137,7 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
         <span className="text-2xl font-bold">Add Category</span>
         <div
           onClick={handleProfileImg}
-          className="w-full h-24 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
+          className="w-full h-28 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
           style={{
             background: palette?.dark_contrast_background,
             color: palette?.light_contrast_color,

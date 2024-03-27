@@ -75,10 +75,10 @@ const Attractions = () => {
   const sortedData =
     filteredData &&
     filteredData?.sort((a, b) => {
-      if (sort === "name") {
+      if (sort === "alphabetical") {
         return a.subCategory_title.localeCompare(b.subCategory_title);
-      } else if (sort === "likes") {
-        return b.wishlist - a.wishlist;
+      } else if (sort === "wishlist") {
+        return a.wishlist - b.wishlist;
       } else if (sort === "date") {
         return new Date(b.timings) - new Date(a.timings);
       }
@@ -125,7 +125,7 @@ const Attractions = () => {
       />
 
       <div className="w-full flex justify-start items-start gap-2">
-        <div className="relative w-[70%] lg:w-[90%]">
+        <div className="relative w-[70%] lg:w-[85%]">
           <input
             type="text"
             value={searchInput}
@@ -144,7 +144,7 @@ const Attractions = () => {
             <IoSearch className="text-white" />
           </button>
         </div>
-        <div className="w-[30%] lg:w-[10%] relative">
+        <div className="w-[30%] lg:w-[15%] relative">
           <button
             onClick={() => setIsSortOpen((prev) => !prev)}
             className="w-full h-10 rounded-full text-sm pl-3 pr-1 flex justify-between items-center font-medium capitalize"
@@ -175,7 +175,7 @@ const Attractions = () => {
             >
               <button
                 onClick={() => {
-                  setSort("date");
+                  setSort("alphabetical");
                   setIsSortOpen(false);
                 }}
                 className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
@@ -184,25 +184,12 @@ const Attractions = () => {
                   color: palette?.color,
                 }}
               >
-                Date
-              </button>
-              <button
-                onClick={() => {
-                  setSort("name");
-                  setIsSortOpen(false);
-                }}
-                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
-                style={{
-                  background: palette?.light_contrast_background,
-                  color: palette?.color,
-                }}
-              >
-                Name
+                Alphabetical
               </button>
 
               <button
                 onClick={() => {
-                  setSort("likes");
+                  setSort("wishlist");
                   setIsSortOpen(false);
                 }}
                 className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
@@ -211,7 +198,7 @@ const Attractions = () => {
                   color: palette?.color,
                 }}
               >
-                Likes
+                Wishlist
               </button>
             </div>
           )}

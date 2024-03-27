@@ -124,7 +124,7 @@ const AttractionContainer = () => {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     // Split the input value on spaces
-    const wordsArray = inputValue.split(" ");
+    const wordsArray = inputValue.split(",");
     // Update the state with the new array of words
     setLabels(wordsArray);
   };
@@ -208,7 +208,7 @@ const AttractionContainer = () => {
         <span className="text-2xl font-bold">Add Attraction</span>
         <div
           onClick={handleImage}
-          className="w-full h-16 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
+          className="w-20 h-20 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
           style={{
             background: palette?.dark_contrast_background,
             color: palette?.light_contrast_color,

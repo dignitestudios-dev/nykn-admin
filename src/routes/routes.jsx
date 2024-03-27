@@ -114,11 +114,6 @@ export const sidebarArr = [
     icon: <BiHomeAlt className="text-xl" />,
   },
   {
-    name: "Add Attraction",
-    url: "/attraction/create",
-    icon: <FaRegPlusSquare className="text-xl" />,
-  },
-  {
     name: "Users",
     url: "/users",
     icon: <FiUsers className="text-xl" />,

@@ -92,13 +92,13 @@ const UsersTable = () => {
                     scope="col"
                     className="px-2 py-3 text-left text-xs font-medium  uppercase tracking-wider"
                   >
-                    Categories Bought
+                    Paid Categories
                   </th>
                   <th
                     scope="col"
                     className="px-2 py-3 text-left text-xs font-medium  uppercase tracking-wider"
                   >
-                    Attractions Liked
+                    Wishlist Items
                   </th>
                 </tr>
               </thead>
