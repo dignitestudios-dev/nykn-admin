@@ -1,14 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
+import axios from "axios";
+import Cookies from "js-cookie";
+import BtnLoader from "../global/BtnLoader";
 
-const LabelModal = ({ isOpen, setIsOpen, labelAddRef }) => {
-  const { palette, theme } = useContext(GlobalContext);
+const LabelModal = ({ isOpen, setIsOpen, labelAddRef, updateData }) => {
+  const { palette, theme, setError, setSuccess, baseUrl } =
+    useContext(GlobalContext);
   const [words, setWords] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     // Split the input value on spaces
-    const wordsArray = inputValue.split(" ");
+    const wordsArray = inputValue.split(",");
     // Update the state with the new array of words
     setWords(wordsArray);
   };
@@ -16,6 +21,48 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef }) => {
   const toggleModal = (e) => {
     if (!labelAddRef.current.contains(e.target)) {
       setIsOpen(false);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (words.length == 0) {
+      setError("Labels not provided.");
+    } else {
+      const token = Cookies.get("token");
+      if (token) {
+        setLoading(true);
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        axios
+          .post(
+            `${baseUrl}/addLabel`,
+            {
+              labels: words.splice(0, words?.length - 1),
+            },
+            { headers }
+          )
+          .then(
+            (response) => {
+              setLoading(false);
+              updateData((prev) => !prev);
+              setWords([]);
+              document.getElementById("label-form").reset();
+              setSuccess("Labels Added Successfully.");
+              // navigate("/categories");
+              setIsOpen(false);
+            },
+            (error) => {
+              setError(error?.response?.data?.error);
+
+              setLoading(false);
+            }
+          );
+      } else {
+        Cookies.remove("token");
+        navigate("/login");
+      }
     }
   };
 
@@ -36,7 +83,10 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef }) => {
       >
         <span className="text-2xl font-bold">Add Label</span>
 
-        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+        <form
+          id="label-form"
+          className="w-full h-auto flex flex-col gap-1 justify-start items-start"
+        >
           <input
             onChange={handleInputChange}
             className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
@@ -46,7 +96,7 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef }) => {
             type="text"
             placeholder="Label"
           />
-        </div>
+        </form>
         <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
           {words?.slice(0, -1)?.map((word, key) => {
             return (
@@ -61,12 +111,13 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef }) => {
         </div>
 
         <button
+          onClick={handleSubmit}
           style={{
             background: palette?.brand,
           }}
-          className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+          className="w-full h-10 flex justify-center items-center  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
         >
-          Add Label
+          {loading ? <BtnLoader /> : "Add Label"}
         </button>
       </div>
     </div>

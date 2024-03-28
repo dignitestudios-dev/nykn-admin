@@ -46,7 +46,6 @@ const Attractions = () => {
       axios
         .get(`${baseUrl}/GetAllSubcategorys`, { headers })
         .then((response) => {
-          console.log(response?.data["subCategories"]);
           setResponse(response?.data["subCategories"]);
 
           setLoading(false);

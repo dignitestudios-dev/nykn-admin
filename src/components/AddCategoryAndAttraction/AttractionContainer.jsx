@@ -24,9 +24,13 @@ const AttractionContainer = () => {
     baseUrl,
     setError,
     setSuccess,
+    labelAddRef,
+    isLabelOpen,
+    setIsLabelOpen,
   } = useContext(GlobalContext);
 
   const [response, setResponse] = useState([]);
+  const [responseLabels, setResponseLabels] = useState([]);
   const [updateData, setUpdateData] = useState(false);
 
   const getData = () => {
@@ -43,7 +47,12 @@ const AttractionContainer = () => {
       axios
         .get(`${baseUrl}/GetAllCategory`, { headers })
         .then((response) => {
-          setResponse(response?.data);
+          setResponse(response?.data?.categories);
+          setResponseLabels(
+            response?.data?.allLabels[0]?.labels
+              ? response?.data?.allLabels[0]?.labels
+              : []
+          );
 
           setLoading(false);
         })
@@ -122,13 +131,15 @@ const AttractionContainer = () => {
   const [labels, setLabels] = useState([]);
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    // Split the input value on spaces
-    const wordsArray = inputValue.split(",");
-    // Update the state with the new array of words
-    setLabels(wordsArray);
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value
+    );
+    selectedOptions.forEach((label) => {
+      if (!labels.includes(label)) {
+        setLabels((prevLabels) => [...prevLabels, label]);
+      }
+    });
   };
-
   const addAttraction = (e) => {
     e.preventDefault();
     const token = Cookies.get("token");
@@ -309,37 +320,56 @@ const AttractionContainer = () => {
               placeholder="Timings"
             />
           </div>
-          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-            <input
+        </div>
+        <div className="w-full flex flex-col justify-start items-start gap-1">
+          <div className="w-full h-auto flex  gap-1 justify-start items-start">
+            <select
               onChange={handleInputChange}
-              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+              className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm outline-none border-none px-4"
               style={{
                 background: palette?.dark_contrast_background,
               }}
               type="text"
               placeholder="Label"
-            />
-            <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
-              {labels?.slice(0, -1)?.map((word, key) => {
-                return (
-                  <span
-                    className="w-auto h-7 px-2 flex justify-center items-center text-[10px] rounded-full font-normal bg-blue-500 text-white"
-                    key={key}
-                  >
-                    {word}
-                  </span>
-                );
-              })}
-            </div>
+            >
+              {responseLabels?.map((item) => (
+                <option key={item?.name} value={item?.name}>
+                  {item?.name}
+                </option>
+              ))}
+            </select>
+
+            <button
+              type="button"
+              onClick={() => setIsLabelOpen(true)}
+              style={{
+                background: palette?.brand,
+              }}
+              className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+            >
+              Add Label
+            </button>
+          </div>
+          <div className="w-full flex justify-start items-start gap-2">
+            {labels?.map((word, key) => {
+              return (
+                <span
+                  className="w-auto h-7 px-2 flex justify-center items-center text-[10px] rounded-full font-normal bg-blue-500 text-white"
+                  key={key}
+                >
+                  {word}
+                </span>
+              );
+            })}
           </div>
         </div>
-
         {/* Label Modal */}
-        {/* <LabelModal
-        isOpen={isLabelOpen}
-        setIsOpen={setIsLabelOpen}
-        labelAddRef={labelAddRef}
-      /> */}
+        <LabelModal
+          isOpen={isLabelOpen}
+          setIsOpen={setIsLabelOpen}
+          labelAddRef={labelAddRef}
+          updateData={setUpdateData}
+        />
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
           <input
