@@ -44,7 +44,7 @@ const Categories = () => {
       axios
         .get(`${baseUrl}/GetAllCategory`, { headers })
         .then((response) => {
-          setResponse(response?.data);
+          setResponse(response?.data?.categories);
 
           setLoading(false);
         })

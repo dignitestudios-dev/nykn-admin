@@ -147,14 +147,6 @@ const AttractionContainer = () => {
       setError("You must add atleast one image of the attraction.");
     } else if (categoryId == "") {
       setError("You must select a category to associate attraction with it.");
-    } else if (attractionTitle.length < 4) {
-      setError("Attraction Title must contain atleast 4 alphaets.");
-    } else if (description == "") {
-      setError("Attraction description cannot be left empty.");
-    } else if (description.length > 150) {
-      setError(
-        "Attraction description cannot contain more than 150 alphabets."
-      );
     } else if (labels.length < 1) {
       setError("Attraction must contain atleast one label.");
     } else {

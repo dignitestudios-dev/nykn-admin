@@ -97,20 +97,8 @@ const EditAttraction = () => {
   const updateAttraction = (e) => {
     e.preventDefault();
     const token = Cookies.get("token");
-    if (images.length < 1) {
-      setError("You must add atleast one image of the attraction.");
-    } else if (categoryId == "") {
+    if (categoryId == "") {
       setError("You must select a category to associate attraction with it.");
-    } else if (attractionTitle.length < 4) {
-      setError("Attraction Title must contain atleast 4 alphaets.");
-    } else if (description == "") {
-      setError("Attraction description cannot be left empty.");
-    } else if (description.length > 150) {
-      setError(
-        "Attraction description cannot contain more than 150 alphabets."
-      );
-    } else if (labels.length < 1) {
-      setError("Attraction must contain atleast one label.");
     } else {
       if (token) {
         setLoading(true);
@@ -135,8 +123,8 @@ const EditAttraction = () => {
               },
               timings: timings,
               labels: labels,
-              cover_image: images[0],
-              subCategory_images: images,
+              cover_image: images?.length > 0 ? images[0] : null,
+              subCategory_images: images?.length > 0 ? images : null,
             },
             { headers }
           )
@@ -294,6 +282,23 @@ const EditAttraction = () => {
                 <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
                   <img
                     src={`data:image/webp;base64,${image && image}`}
+                    className="w-full h-full rounded-md object-cover"
+                  />
+                  <button
+                    onClick={() => handleRemoveImage(key)}
+                    className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
+                  >
+                    <MdClose className="text-xs text-white" />
+                  </button>
+                </div>
+              );
+            })}
+          {attractionImages?.length > 0 &&
+            attractionImages.map((image, key) => {
+              return (
+                <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
+                  <img
+                    src={`${image && image}`}
                     className="w-full h-full rounded-md object-cover"
                   />
                   <button
