@@ -82,6 +82,7 @@ const EditAttraction = () => {
   const [timings, setTimings] = useState(new Date());
   const [labels, setLabels] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState("");
 
   const handleInputChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions).map(
@@ -190,6 +191,7 @@ const EditAttraction = () => {
     setAttractionImages(attraction?.subCategory_images);
     setTimings(attraction?.timings);
     setDescription(attraction?.description);
+    setPrice(attraction?.price);
   }, [attraction]);
 
   const handleImage = () => {
@@ -339,7 +341,7 @@ const EditAttraction = () => {
           </button>
         </div>
 
-        <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+        <div className="w-full h-auto grid grid-cols-2 gap-1 justify-start items-start">
           <input
             value={attractionTitle}
             onChange={(e) => setAttractionTitle(e.target.value)}
@@ -350,6 +352,18 @@ const EditAttraction = () => {
             type="text"
             placeholder="Attraction Name"
           />
+          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
+            <input
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+              style={{
+                background: palette?.dark_contrast_background,
+              }}
+              type="text"
+              placeholder="Price"
+            />
+          </div>
         </div>
 
         <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
