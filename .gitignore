@@ -13,6 +13,7 @@ env
 dist
 dist-ssr
 *.local
+ecosystem.config.cjs
 
 # Editor directories and files
 .vscode/*
