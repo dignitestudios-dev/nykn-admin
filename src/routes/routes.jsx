@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { FaRegPlusSquare } from "react-icons/fa";
+import { FaLock, FaRegPlusSquare } from "react-icons/fa";
 const ChangePassword = lazy(() => import("../pages/ChangePassword"));
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -9,7 +9,7 @@ const Users = lazy(() => import("../pages/Users"));
 const VerifyEmail = lazy(() => import("../pages/VerifyEmail"));
 const VerifyOtp = lazy(() => import("../pages/VerifyOtp"));
 import { BiHomeAlt } from "react-icons/bi";
-import { FiUsers } from "react-icons/fi";
+import { FiLock, FiUsers } from "react-icons/fi";
 import { LiaStoreSolid } from "react-icons/lia";
 import RegisterUser from "../pages/RegisterUser";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -24,6 +24,7 @@ const Attractions = lazy(() => import("../pages/Attractions"));
 import { GoRocket } from "react-icons/go";
 const Notifications = lazy(() => import("../pages/Notifications"));
 import { IoMdNotificationsOutline } from "react-icons/io";
+import ChangePasswordInternal from "../pages/ChangePasswordInternal";
 
 export const loginRoutes = [
   {
@@ -59,6 +60,11 @@ export const normalRoutes = [
     name: "Create User",
     url: "/create-user/",
     page: <RegisterUser />,
+  },
+  {
+    name: "Change Password",
+    url: "/change-password-internal/",
+    page: <ChangePasswordInternal />,
   },
   {
     name: "Discover",
@@ -122,6 +128,11 @@ export const sidebarArr = [
     name: "Create User",
     url: "/create-user/",
     icon: <FiUserPlus className="text-xl" />,
+  },
+  {
+    name: "Change Password",
+    url: "/change-password-internal/",
+    icon: <FiLock className="text-xl" />,
   },
   {
     name: "Categories",
