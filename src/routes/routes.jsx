@@ -129,11 +129,7 @@ export const sidebarArr = [
     url: "/create-user/",
     icon: <FiUserPlus className="text-xl" />,
   },
-  {
-    name: "Change Password",
-    url: "/change-password-internal/",
-    icon: <FiLock className="text-xl" />,
-  },
+
   {
     name: "Categories",
     url: "/categories",
@@ -148,6 +144,11 @@ export const sidebarArr = [
     name: "Notifications",
     url: "/notifications",
     icon: <IoMdNotificationsOutline className="text-xl" />,
+  },
+  {
+    name: "Change Admin Password",
+    url: "/change-password-internal/",
+    icon: <FiLock className="text-xl" />,
   },
 
   // {

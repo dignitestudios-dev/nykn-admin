@@ -178,7 +178,7 @@ const ChangePasswordInternal = () => {
                   </span>
                 </div> */}
 
-                <AuthButton text={"Create"} loading={loading} />
+                <AuthButton text={"Update"} loading={loading} />
               </form>
             </div>
           </div>
