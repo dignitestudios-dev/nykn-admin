@@ -161,6 +161,7 @@ const EditAttraction = () => {
               setSuccess("Attraction updated successfully.");
               navigate("/attractions");
               setActiveLink("Attractions");
+              setUserInput("");
               setLoading(false);
             },
             (error) => {

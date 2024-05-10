@@ -213,6 +213,8 @@ const AttractionContainer = () => {
               console.log(response);
               setSuccess("Attraction added successfully.");
               navigate("/attractions");
+              setUserInput("");
+
               setActiveLink("Attractions");
               setLoading(false);
             },
