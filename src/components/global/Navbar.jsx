@@ -47,7 +47,7 @@ const Navbar = ({ name }) => {
 
   return (
     <div
-      className={`w-full h-14 ${
+      className={`w-full h-14 z-50 ${
         sidebarActive ? "pl-2 pr-2" : "pl-2 pr-2"
       }  flex  z-50 justify-between  items-center gap-4 sticky top-0 left-0`}
       style={{

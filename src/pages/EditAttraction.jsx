@@ -83,6 +83,10 @@ const EditAttraction = () => {
   const [labels, setLabels] = useState([]);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState("");
+  const [fromDay, setFromDay] = useState("");
+  const [toDay, setToDay] = useState("");
+  const [fromTime, setFromTime] = useState("");
+  const [toTime, setToTime] = useState("");
 
   const handleInputChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions).map(
@@ -94,6 +98,26 @@ const EditAttraction = () => {
       }
     });
   };
+
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [daysOfWeek, setDaysOfWeek] = useState([
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ]);
+
+  function convertTimeTo12HourFormat(time) {
+    const [hours, minutes] = time.split(":");
+    const isPM = parseInt(hours) >= 12;
+    let convertedHours = ((parseInt(hours) + 11) % 12) + 1;
+    convertedHours =
+      convertedHours < 10 ? "0" + convertedHours : convertedHours;
+    return `${convertedHours}:${minutes} ${isPM ? "PM" : "AM"}`;
+  }
 
   const updateAttraction = (e) => {
     e.preventDefault();
@@ -122,7 +146,10 @@ const EditAttraction = () => {
                 type: "Point",
                 coordinates: [longitude, latitude],
               },
-              timings: timings,
+              fromDay: fromDay,
+              toDay: toDay,
+              fromTime: convertTimeTo12HourFormat(fromTime),
+              toTime: convertTimeTo12HourFormat(toTime),
               labels: labels,
               cover_image: images?.length > 0 ? images[0] : null,
               subCategory_images: images?.length > 0 ? images : null,
@@ -192,6 +219,11 @@ const EditAttraction = () => {
     setTimings(attraction?.timings);
     setDescription(attraction?.description);
     setPrice(attraction?.price);
+    setFromDay(attraction?.fromDay);
+    setToDay(attraction?.toDay);
+    setFromTime(attraction?.fromTime);
+    setToTime(attraction?.toTime);
+    setUserInput(attraction?.address);
   }, [attraction]);
 
   const handleImage = () => {
@@ -380,18 +412,66 @@ const EditAttraction = () => {
         </div>
 
         <div className="w-full h-auto flex gap-2 justify-start items-start">
-          <div className="w-full h-auto flex flex-col gap-1 justify-start items-start">
-            <input
-              value={timings}
-              onChange={(e) => setTimings(e.target.value)}
-              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-              style={{
-                background: palette?.dark_contrast_background,
-              }}
-              type="datetime-local"
-              placeholder="Timings"
-            />
+          <div className="w-full h-auto flex  gap-1 justify-start items-start">
+            <div className="w-1/2 flex flex-col justify-start items-start gap-1">
+              <label className="text-sm font-medium text-black ml-2">
+                From Time
+              </label>
+              <input
+                value={fromTime}
+                onChange={(e) => setFromTime(e.target.value)}
+                className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+                style={{
+                  background: palette?.dark_contrast_background,
+                }}
+                type="time"
+                placeholder="Timings"
+              />
+            </div>
+            <div className="w-1/2 flex flex-col justify-start items-start gap-1">
+              <label className="text-sm font-medium text-black ml-2">
+                To Time
+              </label>
+              <input
+                value={toTime}
+                onChange={(e) => setToTime(e.target.value)}
+                className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
+                style={{
+                  background: palette?.dark_contrast_background,
+                }}
+                type="time"
+                placeholder="Timings"
+              />
+            </div>
           </div>
+        </div>
+
+        <div className="w-full flex justify-start items-center gap-2">
+          <select
+            style={{
+              background: palette?.dark_contrast_background,
+            }}
+            className="w-1/2 h-10 rounded-full text-sm  outline-none border-none px-4"
+            onChange={(e) => setFromDay(e.target.value)}
+          >
+            <option value="">From</option>
+            {daysOfWeek.map((day) => {
+              return <option value={day}>{day}</option>;
+            })}
+          </select>
+
+          <select
+            style={{
+              background: palette?.dark_contrast_background,
+            }}
+            className="w-1/2 h-10 rounded-full text-sm  outline-none border-none px-4"
+            onChange={(e) => setToDay(e.target.value)}
+          >
+            <option value="">To </option>
+            {daysOfWeek.map((day) => {
+              return <option value={day}>{day}</option>;
+            })}
+          </select>
         </div>
         <div className="w-full flex flex-col justify-start items-start gap-1">
           <div className="w-full h-auto flex  gap-1 justify-start items-start">
