@@ -150,6 +150,7 @@ const EditAttraction = () => {
               toDay: toDay,
               fromTime: convertTimeTo12HourFormat(fromTime),
               toTime: convertTimeTo12HourFormat(toTime),
+              address: userInput,
               labels: labels,
               cover_image: images?.length > 0 ? images[0] : null,
               subCategory_images: images?.length > 0 ? images : null,
