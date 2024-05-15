@@ -114,6 +114,7 @@ const UpdateCategoryModal = ({
   };
 
   useEffect(() => {
+    setImage(category?.category_image);
     setDescription(category?.category_description);
     setTitle(category?.category_title);
     setPrice(category?.category_price);
