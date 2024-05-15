@@ -7,11 +7,10 @@ import { FaHeart } from "react-icons/fa";
 const AttractionCard = ({ attraction }) => {
   const { palette } = useContext(GlobalContext);
   return (
-    <div className="w-full lg:w-[calc(50%-0.25rem)] h-auto flex flex-col justify-start items-start gap-2">
+    <div className="w-full bg-white border border-[#eaeaea] shadow rounded-full h-auto flex flex-col justify-start items-start gap-2">
       <div
         className="w-full  h-auto p-2  flex flex-col gap-6 justify-between items-start rounded-xl md:rounded-full  "
         style={{
-          background: `${palette?.dark_contrast_background}`,
           color: palette?.dark_contrast_color,
         }}
       >

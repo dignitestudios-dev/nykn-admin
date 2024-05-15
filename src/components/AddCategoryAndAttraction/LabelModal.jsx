@@ -70,15 +70,13 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef, updateData }) => {
     <div
       onClick={toggleModal}
       id="label-add-modal"
-      className={`fixed top-0 left-0 ${
-        theme == "dark" ? "bg-[#fff]/[0.2]" : "bg-[#000]/[0.2]"
-      }  z-[1000] w-screen h-screen ${
-        isOpen ? "flex" : "hidden"
-      } items-center justify-center`}
+      className={`fixed top-0 left-0  transition-all duration-500 z-[1000] w-screen h-screen ${
+        isOpen ? "scale-1" : "scale-0"
+      } flex items-center justify-center`}
     >
       <div
         ref={labelAddRef}
-        className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
+        className="w-96 h-auto rounded-3xl shadow bg-white border border-[#eaeaea] flex flex-col gap-2 justify-start items-center  p-4"
         style={{ background: palette?.background, color: palette?.color }}
       >
         <span className="text-2xl font-bold">Add Label</span>
@@ -89,10 +87,7 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef, updateData }) => {
         >
           <input
             onChange={handleInputChange}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-12  rounded-full text-sm  outline-none border border-[#eaeaea] shadow bg-white px-4"
             type="text"
             placeholder="Label"
           />
@@ -101,7 +96,8 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef, updateData }) => {
           {words?.slice(0, -1)?.map((word, key) => {
             return (
               <span
-                className="w-auto h-6 px-1 flex justify-center items-center text-[9.5px] rounded-full font-normal bg-blue-500 text-white"
+                style={{ background: palette?.brand }}
+                className="w-auto h-6 px-1 flex justify-center items-center text-[9.5px] rounded-full font-normal  text-white"
                 key={key}
               >
                 {word}
@@ -115,7 +111,7 @@ const LabelModal = ({ isOpen, setIsOpen, labelAddRef, updateData }) => {
           style={{
             background: palette?.brand,
           }}
-          className="w-full h-10 flex justify-center items-center  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+          className="w-full h-12 flex justify-center items-center  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
         >
           {loading ? <BtnLoader /> : "Add Label"}
         </button>

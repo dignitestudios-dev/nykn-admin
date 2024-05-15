@@ -4,12 +4,7 @@ import { GlobalContext } from "../../../context/GlobalContext";
 const UserInfo = ({ user }) => {
   const { palette } = useContext(GlobalContext);
   return (
-    <div
-      className="w-full h-auto flex justify-start items-center p-3 rounded-xl gap-3 "
-      style={{
-        background: palette?.dark_contrast_background,
-      }}
-    >
+    <div className="w-full bg-white border border-[#eaeaea] shadow h-auto flex justify-start items-center p-3 rounded-full gap-3 ">
       <span
         className="rounded-full w-16 h-16 p-1 flex justify-center items-center"
         style={{

@@ -10,12 +10,7 @@ import UsersTable from "../components/home/UsersTable";
 const Home = () => {
   const { palette } = useContext(GlobalContext);
   return (
-    <div
-      className="w-full h-auto   flex flex-col gap-6 items-start justify-start text-4xl font-bold text-orange-500"
-      style={{
-        background: palette?.background,
-      }}
-    >
+    <div className="w-full h-auto   flex flex-col gap-6 items-start justify-start text-4xl font-bold text-orange-500">
       <div className="w-full  h-auto  flex-wrap  flex justify-start items-start gap-4">
         <TransactionGraph />
         <div className="h-auto w-full ">

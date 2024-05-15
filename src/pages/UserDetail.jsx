@@ -72,67 +72,80 @@ const UserDetail = () => {
         style={{
           background: palette?.brand,
         }}
-        className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-8 h-8 hover:opacity-90 text-white"
+        className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-10 h-10 hover:opacity-90 text-white"
       >
         <IoMdArrowBack />
       </Link>
       <UserInfo user={user} />
       <h1 className="text-3xl font-bold">Categories</h1>
       <div className="w-full flex justify-start items-start gap-2">
-        <div className="relative w-full">
+        <div className="relative bg-white border border-[#eaeaea] shadow rounded-full w-full">
           <input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             type="text"
-            className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
+            className="w-full h-12 rounded-full outline-none border-none px-4 text-sm"
             placeholder="Search"
             style={{
-              background: palette?.dark_contrast_background,
               color: palette?.color,
             }}
           />
           <button
-            className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
+            className="w-8 h-8 rounded-full flex items-center justify-center absolute top-2 right-2 "
             style={{ background: palette?.brand, color: palette?.color }}
           >
             <IoSearch className="text-white" />
           </button>
         </div>
       </div>
-      <div className="w-full h-auto flex flex-wrap justify-start items-start gap-2 ">
+      <div className="w-full h-auto  ">
         {loading ? (
           <Loader />
         ) : filteredData?.length > 0 ? (
-          filteredData?.map((item, key) => {
-            return (
-              <UserCategoryCard
-                key={key}
-                category={item}
-                updateData={setUpdateData}
-              />
-            );
-          })
+          <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            {filteredData?.map((item, key) => {
+              return (
+                <UserCategoryCard
+                  key={key}
+                  category={item}
+                  updateData={setUpdateData}
+                />
+              );
+            })}
+          </div>
         ) : (
-          <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
-            <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
-            Nothing here
-          </span>
+          <div className="w-full flex justify-center items-center">
+            <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+              <img
+                src="/nothinghere.jpg"
+                className="w-full md:w-1/2 lg:w-1/4"
+              />
+              Nothing here
+            </span>
+          </div>
         )}
       </div>
 
       <h1 className="text-3xl font-bold">Wishlist</h1>
-      <div className="w-full h-auto flex flex-wrap justify-start items-start gap-2 ">
+      <div className="w-full h-auto ">
         {loading ? (
           <Loader />
         ) : wishlist?.length > 0 ? (
-          wishlist?.map((item, key) => {
-            return <UserWishlistCard key={key} attraction={item} />;
-          })
+          <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 ">
+            {wishlist?.map((item, key) => {
+              return <UserWishlistCard key={key} attraction={item} />;
+            })}
+          </div>
         ) : (
-          <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
-            <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
-            Nothing here
-          </span>
+          <div className="w-full h-auto flex justify-center items-center">
+            <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+              <img
+                src="/nothinghere.jpg"
+                className="w-full md:w-1/2 lg:w-1/4"
+              />
+              Nothing here
+            </span>
+          </div>
         )}
       </div>
     </div>

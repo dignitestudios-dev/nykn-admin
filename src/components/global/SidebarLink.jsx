@@ -17,7 +17,7 @@ const SidebarLink = ({ icon, title, link, active }) => {
       onClick={() => navigateToLink(title, link)}
       className={`sidebar-link ${
         activeLink == title && "bg-[#407BA7]"
-      } w-full h-10 rounded-r-full cursor-pointer  gap-3 
+      } w-full h-12 rounded-full cursor-pointer  gap-3 
           px-5 flex items-center justify-start
        `}
       style={{

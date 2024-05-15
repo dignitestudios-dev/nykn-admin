@@ -4,8 +4,8 @@ const GlobalLoader = () => {
   return (
     <div className="fixed top-0 left-0 bg-white z-[1000] overflow-x-auto w-screen h-screen flex justify-center items-center ">
       <svg
-        width="100"
-        height="100"
+        width="80"
+        height="80"
         fill="#407BA7"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

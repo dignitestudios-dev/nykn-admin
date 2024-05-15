@@ -62,21 +62,20 @@ const Users = () => {
   }, [reload]);
 
   return (
-    <div className="w-full h-auto flex gap-2 justify-start  items-start p-2 flex-wrap">
-      <div className="relative w-full">
+    <div className="w-full h-auto flex flex-col gap-6 justify-start  items-start p-2 ">
+      <div className="relative w-full border border-[#eaeaea] shadow rounded-full">
         <input
           type="text"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
+          className="w-full h-12  rounded-full outline-none border-none px-4 text-sm"
           placeholder="Search"
           style={{
-            background: palette?.dark_contrast_background,
             color: palette?.color,
           }}
         />
         <button
-          className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
+          className="w-8 h-8 rounded-full flex items-center justify-center absolute top-2 right-2 "
           style={{ background: palette?.brand, color: palette?.color }}
         >
           <IoSearch className="text-white" />
@@ -85,14 +84,20 @@ const Users = () => {
       {userLoading ? (
         <UserSkeleton />
       ) : filteredData.length > 0 ? (
-        filteredData?.reverse()?.map((user) => {
-          return <UserCard key={user?._id} user={user} setReload={setReload} />;
-        })
+        <div className="w-full h-auto grid gap-3 grid-cols-1 md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 ">
+          {filteredData?.reverse()?.map((user) => {
+            return (
+              <UserCard key={user?._id} user={user} setReload={setReload} />
+            );
+          })}
+        </div>
       ) : (
-        <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
-          <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
-          Nothing here
-        </span>
+        <div className="w-full h-auto flex justify-center items-center">
+          <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+            <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+            Nothing here
+          </span>
+        </div>
       )}
     </div>
   );

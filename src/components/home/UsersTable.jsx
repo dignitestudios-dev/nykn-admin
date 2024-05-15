@@ -51,12 +51,7 @@ const UsersTable = () => {
     <div className="w-full h-auto max-h-full flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div
-            className="shadow overflow-hidden  sm:rounded-lg"
-            style={{
-              borderBottom: `2px solid ${palette?.dark_contrast_background}`,
-            }}
-          >
+          <div className="shadow border border-[#eaeaea] overflow-hidden  sm:rounded-lg">
             <table
               className={`min-w-full divide-y ${
                 theme == "dark" ? "divide-[#3d3d3d]" : "divide-gray-200"
@@ -64,7 +59,6 @@ const UsersTable = () => {
             >
               <thead
                 style={{
-                  background: palette?.dark_contrast_background,
                   color: palette?.dark_contrast_color,
                 }}
               >
@@ -107,7 +101,6 @@ const UsersTable = () => {
                   theme == "dark" ? "divide-[#3d3d3d]" : "divide-gray-200"
                 }`}
                 style={{
-                  background: palette?.dark_contrast_background,
                   color: palette?.dark_contrast_color,
                 }}
               >

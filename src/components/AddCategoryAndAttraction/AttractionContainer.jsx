@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import BtnLoader from "../global/BtnLoader";
 import GoogleMaps from "./GoogleMaps";
+import { CiImageOn } from "react-icons/ci";
+import { Datepicker } from "flowbite-react";
+import { FaCross } from "react-icons/fa";
 
 const AttractionContainer = () => {
   const {
@@ -134,15 +137,10 @@ const AttractionContainer = () => {
   const [fromTime, setFromTime] = useState("");
   const [toTime, setToTime] = useState("");
 
-  const handleInputChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map(
-      (option) => option.value
-    );
-    selectedOptions.forEach((label) => {
-      if (!labels.includes(label)) {
-        setLabels((prevLabels) => [...prevLabels, label]);
-      }
-    });
+  const handleInputChange = (name) => {
+    if (!labels.includes(name)) {
+      setLabels((prevLabels) => [...prevLabels, name]);
+    }
   };
 
   const [selectedDays, setSelectedDays] = useState([]);
@@ -157,12 +155,16 @@ const AttractionContainer = () => {
   ]);
 
   function convertTimeTo12HourFormat(time) {
-    const [hours, minutes] = time.split(":");
-    const isPM = parseInt(hours) >= 12;
-    let convertedHours = ((parseInt(hours) + 11) % 12) + 1;
-    convertedHours =
-      convertedHours < 10 ? "0" + convertedHours : convertedHours;
-    return `${convertedHours}:${minutes} ${isPM ? "PM" : "AM"}`;
+    if (time) {
+      const [hours, minutes] = time.split(":");
+      const isPM = parseInt(hours) >= 12;
+      let convertedHours = ((parseInt(hours) + 11) % 12) + 1;
+      convertedHours =
+        convertedHours < 10 ? "0" + convertedHours : convertedHours;
+      return `${convertedHours}:${minutes} ${isPM ? "PM" : "AM"}`;
+    } else {
+      return ``;
+    }
   }
 
   const addAttraction = (e) => {
@@ -190,7 +192,7 @@ const AttractionContainer = () => {
             `${baseUrl}/AddSubCategory`,
             {
               subCategory_title: attractionTitle,
-              category_Id: categoryId,
+              category_Id: categoryId?.id,
               description: description,
               price: price,
               address: userInput,
@@ -230,89 +232,132 @@ const AttractionContainer = () => {
     }
   };
 
+  const ClickTime = () => {
+    const item = document.getElementById("fromTime");
+    item.click();
+  };
+
   return (
     <>
       <form
         onSubmit={addAttraction}
         id="add-new-attraction"
-        className="w-full   h-auto flex  flex-col gap-4 justify-start rounded-3xl items-center "
+        className="w-full   h-auto flex  flex-col gap-4 justify-start rounded-3xl items-start "
         style={{
           color: palette?.color,
         }}
       >
-        <span className="text-2xl font-bold">Add Attraction</span>
-        <div
-          onClick={handleImage}
-          className="w-20 h-20 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
-          style={{
-            background: palette?.dark_contrast_background,
-            color: palette?.light_contrast_color,
-          }}
-        >
-          <input
-            id="attraction-image-add"
-            className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
-            type="file"
-            accept="/image*"
-            onChange={(e) => handleImageChange(e)}
-          />
-          <LuImagePlus className="text-xl font-medium" />
-        </div>
-        <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
-          {/* Image component */}
-          {images.map((image, key) => {
-            return (
-              <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-gray-200 rounded-md">
-                <img
-                  src={`data:image/webp;base64,${image && image}`}
-                  className="w-full h-full rounded-md object-cover"
-                />
-                <button
-                  onClick={() => handleRemoveImage(key)}
-                  className="w-5 h-5 rounded-full bg-blue-500 absolute top-1 right-1 flex items-center justify-center shadow-md "
-                >
-                  <MdClose className="text-xs text-white" />
-                </button>
+        <span className="text-3xl font-bold">Add Attraction</span>
+        <div className="w-full flex flex-col bg-white border shadow border-[#eaeaea] rounded-xl gap-2 justify-start items-start p-5">
+          <div
+            onClick={handleImage}
+            className="w-full h-28 cursor-pointer  flex flex-col gap-1 justify-center items-center"
+            style={{
+              color: palette?.light_contrast_color,
+            }}
+          >
+            <input
+              id="attraction-image-add"
+              className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
+              type="file"
+              accept="/image*"
+              onChange={(e) => handleImageChange(e)}
+            />
+            <LuImagePlus className="text-3xl font-medium" />
+          </div>
+          <span className="w-full border-b-2 border-dashed border-[#eaeaea]"></span>
+
+          <div className="w-full h-auto flex flex-wrap gap-2  justify-start items-center ">
+            {/* Image component */}
+            {images.map((image, key) => {
+              return (
+                <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-white flex justify-center items-center border-[2px] border-[#eaeaea] p-2 rounded-md">
+                  <img
+                    src={`data:image/webp;base64,${image && image}`}
+                    className="w-full h-full rounded-md object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(key)}
+                    className="w-5 h-5 rounded-full  absolute top-1 right-1 flex items-center justify-center shadow-md "
+                    style={{ background: palette?.brand }}
+                  >
+                    <MdClose className="text-xs text-white" />
+                  </button>
+                </div>
+              );
+            })}
+            {images?.length < 1 && (
+              <div className="relative w-[23%] md:w-[13%] lg:w-20 h-20 bg-white flex justify-center items-center border-[2px] border-[#eaeaea] rounded-md">
+                <CiImageOn className="text-3xl text-[#7c7c7c]" />
               </div>
-            );
-          })}
+            )}
+            {images?.length > 1 && (
+              <div
+                onClick={handleImage}
+                className="relative cursor-pointer w-[23%] md:w-[13%] lg:w-20 h-20 bg-white flex justify-center items-center border-[2px] border-[#eaeaea] rounded-md"
+              >
+                <LuImagePlus className="text-2xl text-[#7c7c7c]" />
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="w-full h-auto flex  gap-1 justify-start items-start">
-          <select
-            onChange={(e) => setCategoryId(e.target.value)}
-            className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            type="text"
-            placeholder="Category"
-          >
-            <option value="">--Select--</option>
-            {response?.map((item) => {
-              return <option value={item?._id}>{item?.category_title}</option>;
-            })}
-          </select>
+        <div className="w-full h-auto flex  gap-1 justify-start  items-start">
+          <div className="w-[70%] lg:w-[90%] flex flex-col justify-start items-start gap-2">
+            <div
+              onClick={() => {
+                document
+                  .getElementById("category_container")
+                  .classList.toggle("hidden");
+              }}
+              className="cursor-pointer w-full h-12 shadow text-[#7c7c7c] rounded-full flex justify-start items-center text-sm  outline-none border px-4"
+              type="text"
+              placeholder="Category"
+            >
+              <span>{categoryId == "" ? "--Select--" : categoryId?.title}</span>
+            </div>
+            <div
+              id="category_container"
+              className="w-full hidden transition-all grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 duration-500 p-4 bg-white min-h-auto max-h-60 overflow-y-auto  shadow border border-[#eaeaea] rounded-2xl"
+            >
+              {response?.map((item) => {
+                return (
+                  <div
+                    className="w-full h-12  bg-white border border-[#eaeaea] shadow flex justify-start items-center px-4 hover:bg-[#407BA7] hover:text-white cursor-pointer rounded-full"
+                    onClick={() => {
+                      setCategoryId({
+                        id: item?._id,
+                        title: item?.category_title,
+                      });
+                      document
+                        .getElementById("category_container")
+                        .classList.toggle("hidden");
+                    }}
+                  >
+                    {item?.category_title}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <button
             type="button"
             onClick={() => setIsCategoryOpen(true)}
             style={{
               background: palette?.brand,
             }}
-            className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+            className="w-[30%] lg:w-[10%] h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
           >
             Add Category
           </button>
         </div>
 
-        <div className="w-full h-auto grid grid-cols-2 gap-1 justify-start items-start">
+        <div className="w-full h-auto grid grid-cols-2 gap-2 justify-start items-start">
           <input
             value={attractionTitle}
             onChange={(e) => setAttractionTitle(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-12  rounded-full text-sm  outline-none border border-[#eaeaea] bg-white shadow px-4"
             type="text"
             placeholder="Attraction Name"
           />
@@ -320,10 +365,7 @@ const AttractionContainer = () => {
             <input
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-              style={{
-                background: palette?.dark_contrast_background,
-              }}
+              className="w-full  h-12  rounded-full text-sm  outline-none border border-[#eaeaea] bg-white shadow px-4"
               type="text"
               placeholder="Price"
             />
@@ -334,10 +376,7 @@ const AttractionContainer = () => {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full h-32 resize-none rounded-xl text-sm  outline-none border-none py-2 px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-32 resize-none rounded-xl text-sm  outline-none border border-[#eaeaea] bg-white shadow py-2 px-4"
             type="text"
             placeholder="Description"
           ></textarea>
@@ -347,30 +386,31 @@ const AttractionContainer = () => {
           <div className="w-full h-auto flex  gap-1 justify-start items-start">
             <div className="w-1/2 flex flex-col justify-start items-start gap-1">
               <label className="text-sm font-medium text-black ml-2">
-                From Time
+                From Time{" "}
+                <span>
+                  ({fromTime !== "" && convertTimeTo12HourFormat(fromTime)})
+                </span>
               </label>
               <input
+                id="fromTime"
                 value={fromTime}
                 onChange={(e) => setFromTime(e.target.value)}
-                className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-                style={{
-                  background: palette?.dark_contrast_background,
-                }}
+                className="w-full h-12 rounded-full text-sm  outline-none border border-[#eaeaea] bg-white shadow px-4"
                 type="time"
                 placeholder="Timings"
               />
             </div>
             <div className="w-1/2 flex flex-col justify-start items-start gap-1">
               <label className="text-sm font-medium text-black ml-2">
-                To Time
+                To Time{" "}
+                <span>
+                  ({toTime !== "" && convertTimeTo12HourFormat(toTime)})
+                </span>
               </label>
               <input
                 value={toTime}
                 onChange={(e) => setToTime(e.target.value)}
-                className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-                style={{
-                  background: palette?.dark_contrast_background,
-                }}
+                className="w-full h-12 rounded-full text-sm  outline-none border border-[#eaeaea] bg-white shadow px-4"
                 type="time"
                 placeholder="Timings"
               />
@@ -378,50 +418,113 @@ const AttractionContainer = () => {
           </div>
         </div>
 
-        <div className="w-full flex justify-start items-center gap-2">
-          <select
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            className="w-1/2 h-10 rounded-full text-sm  outline-none border-none px-4"
-            onChange={(e) => setFromDay(e.target.value)}
-          >
-            <option value="">From</option>
-            {daysOfWeek.map((day) => {
-              return <option value={day}>{day}</option>;
-            })}
-          </select>
+        <div className="w-full flex justify-start items-start gap-2">
+          <div className="w-1/2 flex flex-col justify-start items-start gap-2">
+            <div
+              onClick={() => {
+                document
+                  .getElementById("fromTime_container")
+                  .classList.toggle("hidden");
+              }}
+              className="cursor-pointer w-full h-12 shadow text-[#7c7c7c] rounded-full flex justify-start items-center text-sm  outline-none border px-4"
+              type="text"
+              placeholder="Category"
+            >
+              <span>{fromDay == "" ? "--From Day--" : fromDay}</span>
+            </div>
+            <div
+              id="fromTime_container"
+              className="w-full hidden transition-all grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 duration-500 p-4 bg-white min-h-auto max-h-60 overflow-y-auto  shadow border border-[#eaeaea] rounded-2xl"
+            >
+              {daysOfWeek?.map((item) => {
+                return (
+                  <div
+                    className="w-full h-12  bg-white border border-[#eaeaea] shadow flex justify-start items-center px-4 hover:bg-[#407BA7] hover:text-white cursor-pointer rounded-full"
+                    onClick={() => {
+                      setFromDay(item);
+                      document
+                        .getElementById("fromTime_container")
+                        .classList.toggle("hidden");
+                    }}
+                  >
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
-          <select
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
-            className="w-1/2 h-10 rounded-full text-sm  outline-none border-none px-4"
-            onChange={(e) => setToDay(e.target.value)}
-          >
-            <option value="">To </option>
-            {daysOfWeek.map((day) => {
-              return <option value={day}>{day}</option>;
-            })}
-          </select>
+          <div className="w-1/2 flex flex-col justify-start items-start gap-2">
+            <div
+              onClick={() => {
+                document
+                  .getElementById("toTime_container")
+                  .classList.toggle("hidden");
+              }}
+              className="cursor-pointer w-full h-12 shadow text-[#7c7c7c] rounded-full flex justify-start items-center text-sm  outline-none border px-4"
+              type="text"
+              placeholder="Category"
+            >
+              <span>{toDay == "" ? "--To Day--" : toDay}</span>
+            </div>
+            <div
+              id="toTime_container"
+              className="w-full hidden transition-all grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 duration-500 p-4 bg-white min-h-auto max-h-60 overflow-y-auto  shadow border border-[#eaeaea] rounded-2xl"
+            >
+              {daysOfWeek?.map((item) => {
+                return (
+                  <div
+                    className="w-full h-12  bg-white border border-[#eaeaea] shadow flex justify-start items-center px-4 hover:bg-[#407BA7] hover:text-white cursor-pointer rounded-full"
+                    onClick={() => {
+                      setToDay(item);
+                      document
+                        .getElementById("toTime_container")
+                        .classList.toggle("hidden");
+                    }}
+                  >
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
         <div className="w-full flex flex-col justify-start items-start gap-1">
           <div className="w-full h-auto flex  gap-1 justify-start items-start">
-            <select
-              onChange={handleInputChange}
-              className="w-[70%] lg:w-[90%] h-10 rounded-full text-sm outline-none border-none px-4"
-              style={{
-                background: palette?.dark_contrast_background,
-              }}
-              type="text"
-              placeholder="Label"
-            >
-              {responseLabels?.map((item) => (
-                <option key={item?.name} value={item?.name}>
-                  {item?.name}
-                </option>
-              ))}
-            </select>
+            <div className="w-[70%] lg:w-[90%] flex flex-col justify-start items-start gap-2">
+              <div
+                onClick={() => {
+                  document
+                    .getElementById("labels_container")
+                    .classList.toggle("hidden");
+                }}
+                className="cursor-pointer w-full h-12 shadow text-[#7c7c7c] rounded-full flex justify-start items-center text-sm  outline-none border px-4"
+                type="text"
+                placeholder="Category"
+              >
+                <span>{"--Select--"}</span>
+              </div>
+              <div
+                id="labels_container"
+                className="w-full hidden transition-all grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 duration-500 p-4 bg-white min-h-auto max-h-60 overflow-y-auto  shadow border border-[#eaeaea] rounded-2xl"
+              >
+                {responseLabels?.map((item) => {
+                  return (
+                    <div
+                      className="w-full h-12  bg-white border border-[#eaeaea] shadow flex justify-start items-center px-4 hover:bg-[#407BA7] hover:text-white cursor-pointer rounded-full"
+                      onClick={() => {
+                        handleInputChange(item?.name);
+                        document
+                          .getElementById("labels_container")
+                          .classList.toggle("hidden");
+                      }}
+                    >
+                      {item?.name}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
             <button
               type="button"
@@ -429,16 +532,17 @@ const AttractionContainer = () => {
               style={{
                 background: palette?.brand,
               }}
-              className="w-[30%] lg:w-[10%] h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
+              className="w-[30%] lg:w-[10%] h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-sm font-medium rounded-full"
             >
               Add Label
             </button>
           </div>
-          <div className="w-full flex justify-start items-start gap-2">
+          <div className="w-full mt-1 flex px-2 justify-start items-start gap-2">
             {labels?.map((word, key) => {
               return (
                 <span
-                  className="w-auto h-7 px-2 flex justify-center items-center text-[10px] rounded-full font-normal bg-blue-500 text-white"
+                  style={{ background: palette?.brand }}
+                  className="w-auto h-7 px-2 flex justify-center gap-3 items-center text-[10px] rounded-full font-normal  text-white"
                   key={key}
                 >
                   {word}
@@ -459,12 +563,9 @@ const AttractionContainer = () => {
           <input
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-12 rounded-full text-sm  outline-none border border-[#eaeaea] shadow px-4"
             type="text"
-            placeholder="Address"
+            placeholder="Type Address"
           />
         </div>
         <div className="w-full h-52 flex flex-col gap-1 justify-start items-start">
@@ -476,7 +577,7 @@ const AttractionContainer = () => {
           style={{
             background: palette?.brand,
           }}
-          className="w-full h-10  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full flex justify-center items-center"
+          className="w-full h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full flex justify-center items-center"
         >
           {loading ? <BtnLoader /> : "Add Attraction"}
         </button>

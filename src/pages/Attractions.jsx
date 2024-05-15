@@ -94,10 +94,10 @@ const Attractions = () => {
 
   const skeleton = [1, 2, 3, 4, 5, 6, 7];
   return (
-    <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
-      <div className="w-full my-3 flex justify-between items-center px-2">
+    <div className="w-full h-auto flex flex-col justify-start items-start gap-6">
+      <div className="w-full  flex justify-between items-center px-2">
         <h1
-          className="text-2xl font-bold"
+          className="text-3xl font-bold"
           style={{
             color: palette?.brand,
           }}
@@ -109,7 +109,7 @@ const Attractions = () => {
           style={{
             background: palette?.brand,
           }}
-          className="w-32 h-8  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full flex justify-center items-center"
+          className="w-32 h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full flex justify-center items-center"
         >
           Add Attraction
         </button>
@@ -124,31 +124,29 @@ const Attractions = () => {
       />
 
       <div className="w-full flex justify-start items-start gap-2">
-        <div className="relative w-[70%] lg:w-[85%]">
+        <div className="relative h-12 bg-white shadow border border-[#eaeaea] rounded-full w-[70%] lg:w-[85%]">
           <input
             type="text"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
+            className="w-full h-12 rounded-full outline-none border-none px-4 text-sm"
             placeholder="Search"
             style={{
-              background: palette?.dark_contrast_background,
               color: palette?.color,
             }}
           />
           <button
-            className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
+            className="w-8 h-8 rounded-full flex items-center justify-center absolute top-2 right-2 "
             style={{ background: palette?.brand, color: palette?.color }}
           >
             <IoSearch className="text-white" />
           </button>
         </div>
-        <div className="w-[30%] lg:w-[15%] relative">
+        <div className="w-[30%] lg:w-[15%] relative h-12 bg-white shadow border border-[#eaeaea] rounded-full">
           <button
             onClick={() => setIsSortOpen((prev) => !prev)}
-            className="w-full h-10 rounded-full text-sm pl-3 pr-1 flex justify-between items-center font-medium capitalize"
+            className="w-full h-12 rounded-full text-sm pl-3 pr-2 flex justify-between items-center font-medium capitalize"
             style={{
-              background: palette?.dark_contrast_background,
               color: palette?.color,
             }}
           >
@@ -163,23 +161,14 @@ const Attractions = () => {
             </span>
           </button>
           {isSortOpen && (
-            <div
-              className="w-full h-auto flex flex-col justify-start items-start gap-2 shadow-md absolute top-12 p-2 rounded-3xl"
-              style={{
-                background: palette?.dark_contrast_background,
-                boxShadow: `${
-                  theme == "dark" ? "#1e1e1e" : "rgba(99, 99, 99, 0.2)"
-                } 0px 2px 8px 0px`,
-              }}
-            >
+            <div className="w-full mt-1 bg-white h-auto flex flex-col justify-start items-start gap-2 shadow-md absolute top-12 p-2 rounded-3xl">
               <button
                 onClick={() => {
                   setSort("alphabetical");
                   setIsSortOpen(false);
                 }}
-                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                className="w-full h-10 bg-white hover:shadow border border-[#eaeaea] hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
                 style={{
-                  background: palette?.light_contrast_background,
                   color: palette?.color,
                 }}
               >
@@ -191,9 +180,8 @@ const Attractions = () => {
                   setSort("wishlist");
                   setIsSortOpen(false);
                 }}
-                className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                className="w-full h-10 bg-white hover:shadow border border-[#eaeaea] hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
                 style={{
-                  background: palette?.light_contrast_background,
                   color: palette?.color,
                 }}
               >
@@ -203,23 +191,28 @@ const Attractions = () => {
           )}
         </div>
       </div>
-
-      {loading ? (
-        skeleton?.map((item) => {
-          return <CategorySkeleton key={item} />;
-        })
-      ) : sortedData.length > 0 ? (
-        sortedData?.reverse()?.map((attraction) => {
-          return (
-            <AttractionCard attraction={attraction} key={attraction?._id} />
-          );
-        })
-      ) : (
-        <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
-          <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
-          Nothing here
-        </span>
-      )}
+      <div className="w-full h-auto">
+        {loading ? (
+          <div className="w-full h-auto grid gap-3 grid-cols-1 md:grid-cols-2  lg:grid-cols-2 ">
+            {skeleton?.map((item) => {
+              return <CategorySkeleton key={item} />;
+            })}
+          </div>
+        ) : sortedData.length > 0 ? (
+          <div className="w-full h-auto grid gap-3 grid-cols-1 md:grid-cols-2  lg:grid-cols-2 ">
+            {sortedData?.reverse()?.map((attraction) => {
+              return (
+                <AttractionCard attraction={attraction} key={attraction?._id} />
+              );
+            })}
+          </div>
+        ) : (
+          <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
+            <img src="/nothinghere.jpg" className="w-full md:w-1/2 lg:w-1/4" />
+            Nothing here
+          </span>
+        )}
+      </div>
     </div>
   );
 };

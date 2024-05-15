@@ -9,45 +9,32 @@ const AuthInput = ({ icon, state, setState, text, type, error }) => {
 
   return (
     <div
-      className={`w-full h-10 rounded-xl flex items-center justify-start  ${
+      className={`w-full bg-white h-14 rounded-full flex items-center justify-start  ${
         error && "error"
       } mt-5`}
-      style={{
-        background: palette?.dark_contrast_background,
-      }}
     >
       <span
-        className={`w-[12%] md:w-[8%]  text-lg h-full flex items-center rounded-l-xl justify-center `}
+        className={`w-[12%] md:w-[8%]  text-lg h-full flex items-center rounded-l-full justify-center `}
         style={{
-          border: error
-            ? `1px solid red`
-            : `1px solid ${palette?.light_contrast_background}`,
+          border: error ? `2px solid red` : `2px solid #eaeaea`,
           color: palette?.light_contrast_color,
-          background: palette?.dark_contrast_background,
         }}
       >
         {icon}
       </span>
       <div
-        className={` w-[88%] md:w-[92%]  h-full flex items-center justify-center    rounded-r-xl relative`}
+        className={` w-[88%] md:w-[92%]  h-full flex items-center justify-center    rounded-r-full relative`}
         style={{
-          borderRight: error
-            ? `1px solid red`
-            : `1px solid ${palette?.light_contrast_background}`,
-          borderTop: error
-            ? `1px solid red`
-            : `1px solid ${palette?.light_contrast_background}`,
-          borderBottom: error
-            ? `1px solid red`
-            : `1px solid ${palette?.light_contrast_background}`,
+          borderRight: error ? `2px solid red` : `2px solid #eaeaea`,
+          borderTop: error ? `2px solid red` : `2px solid #eaeaea`,
+          borderBottom: error ? `2px solid red` : `2px solid #eaeaea`,
         }}
       >
         <input
           type={isPassVisible ? "text" : type}
           placeholder={text}
-          className="w-full outline-none  rounded-r-xl  h-full px-3 text-sm font-medium "
+          className="w-full outline-none  rounded-r-full  h-full px-3 text-sm font-medium "
           style={{
-            background: palette?.dark_contrast_background,
             color: palette?.color,
           }}
           value={state}
@@ -57,7 +44,7 @@ const AuthInput = ({ icon, state, setState, text, type, error }) => {
           type="button"
           tabIndex={-1}
           onClick={() => setIsPassVisible((prev) => !prev)}
-          className="absolute top-[0.74rem] right-2"
+          className="absolute top-[1.2rem] right-3 bg-transparent"
           style={{
             color: palette?.light_contrast_color,
           }}

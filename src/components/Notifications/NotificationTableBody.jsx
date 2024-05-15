@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 
 const NotificationTableBody = ({ notification, setReload }) => {
-  const { palette } = useContext(GlobalContext);
+  const { palette, theme } = useContext(GlobalContext);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = () => {
@@ -36,28 +36,27 @@ const NotificationTableBody = ({ notification, setReload }) => {
     return usDateFormat;
   }
   return (
-    <tbody className=" ">
-      <tr
-        className=" border-b "
-        style={{ background: palette.dark_contrast_background }}
+    <tr className="  ">
+      <th
+        scope="row"
+        className="px-6 w-auto  py-3 font-medium text-gray-900 whitespace-nowrap"
       >
-        <th
-          scope="row"
-          className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap"
-        >
+        <div className="w-auto flex text-xs justify-start items-center">
           {notification?.title}
-        </th>
-        <th
-          scope="row"
-          className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap"
-        >
+        </div>
+      </th>
+      <th
+        scope="row"
+        className="px-6  w-auto  py-3 font-medium text-gray-900 whitespace-nowrap"
+      >
+        <div className="w-auto text-xs flex justify-start items-center">
           {notification?.message}
-        </th>
-        <td className="px-6 py-3">
-          {convertDateToUSFormat(notification?.createdAt)}
-        </td>
-      </tr>
-    </tbody>
+        </div>
+      </th>
+      <td className="px-6  w-auto text-xs  py-3">
+        {convertDateToUSFormat(notification?.createdAt)}
+      </td>
+    </tr>
   );
 };
 

@@ -107,8 +107,8 @@ function GoogleMaps({ setLocation }) {
           options={{
             styles: [
               {
-                featureType: "landscape",
-                elementType: "geometry",
+                // featureType: "landscape",
+                // elementType: "geometry",
                 stylers: [{ hue: "#8cd790" }, { saturation: 50 }],
               },
             ],

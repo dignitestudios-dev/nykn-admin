@@ -8,11 +8,9 @@ const TransactionGraph = () => {
   return (
     <div
       style={{
-        background: palette?.dark_contrast_background,
         color: palette?.dark_contrast_color,
-        borderBottom: `2px solid ${palette?.dark_contrast_background}`,
       }}
-      className="w-full shadow  min-h-[20.5rem] h-auto md:h-[20.5rem] p-2 rounded-md flex  justify-start items-start "
+      className="w-full shadow border border-[#eaeaea]  min-h-[20.5rem] h-auto md:h-[20.5rem] p-2 rounded-md flex  justify-start items-start "
     >
       <div className="w-full h-auto flex flex-col gap-4 justify-start  p-2 lg:p-4  items-start">
         <div className="w-full h-6 flex justify-center items-center  ">

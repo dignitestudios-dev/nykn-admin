@@ -51,7 +51,7 @@ const AuthTemplate = ({ page }) => {
 
       <div className="p-4  w-full h-auto flex items-center justify-center  ">
         <div
-          className="w-full min-h-[20rem] h-auto  rounded-3xl  flex flex-col lg:flex-row  justify-center items-start"
+          className="w-full min-h-[20rem] h-auto  rounded-3xl  flex flex-col lg:flex-row  justify-center items-center"
           style={{
             border: `2px solid ${palette?.brand}`,
           }}

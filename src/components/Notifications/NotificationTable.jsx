@@ -12,7 +12,7 @@ import NotificationModal from "./NotificationModal";
 import Loader from "../global/Loader";
 
 const NotificationTable = () => {
-  const { palette, baseUrl } = useContext(GlobalContext);
+  const { palette, baseUrl, theme } = useContext(GlobalContext);
   const [response, setResponse] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
@@ -82,14 +82,11 @@ const NotificationTable = () => {
   }, [reload]);
 
   return (
-    <div
-      className="w-full  rounded-xl flex flex-col justify-start px-2 md:px-6 h-auto shadow-sm items-start"
-      style={{ background: palette.background }}
-    >
+    <div className="w-full  flex flex-col justify-start px-2 md:px-6 h-auto items-start">
       <div className="w-full h-auto flex flex-col justify-start items-start gap-2 ">
         <div className="w-full h-16 flex items-center  justify-start">
-          <div className="text-2xl flex justify-start gap-1 items-center text-gray-900 font-semibold">
-            <span>Push Notifications</span>
+          <div className="text-3xl flex justify-start gap-1 items-center  font-bold">
+            <span style={{ color: palette?.brand }}>Push Notifications</span>
             <span className="text-2xl text-gray-400">({response?.length})</span>
           </div>
         </div>
@@ -103,20 +100,19 @@ const NotificationTable = () => {
         />
 
         <div className="w-full h-auto flex justify-between items-center">
-          <div className="w-48 relative">
+          <div className="w-64 relative bg-white rounded-full shadow border border-[#eaeaea]">
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
+              className="w-full h-12 rounded-full outline-none border-none px-4 text-sm"
               placeholder="Search"
               style={{
-                background: palette?.dark_contrast_background,
                 color: palette?.color,
               }}
             />
             <button
-              className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
+              className="w-8 h-8 rounded-full flex items-center justify-center absolute top-2 right-2 "
               style={{ background: palette?.brand, color: palette?.color }}
             >
               <IoSearch className="text-white" />
@@ -125,7 +121,7 @@ const NotificationTable = () => {
 
           <button
             onClick={() => setIsNotificationOpen(true)}
-            className="w-auto h-8 px-2 rounded-full md:h-10 flex  text-white justify-center items-center gap-[1px] transition-all duration-200 hover:opacity-90 shadow-sm "
+            className="w-auto h-12 px-4 rounded-full  flex  text-white justify-center items-center gap-[1px] transition-all duration-200 hover:opacity-90 shadow-sm "
             style={{ background: palette.brand }}
           >
             <span className="text-xs md:text-md font-medium">
@@ -140,18 +136,41 @@ const NotificationTable = () => {
           {loading ? (
             <Loader />
           ) : filteredData?.length > 0 ? (
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-              <NotificationTableHead sortDate={sortDate} />
-              {filteredData?.reverse()?.map((notification, key) => {
-                return (
-                  <NotificationTableBody
-                    key={key}
-                    notification={notification}
-                    setReload={setReload}
-                  />
-                );
-              })}
-            </table>
+            <div className="w-full h-auto max-h-full flex flex-col">
+              <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="shadow border border-[#eaeaea] overflow-hidden  sm:rounded-lg">
+                    <table
+                      className={`w-full divide-y ${
+                        theme == "dark" ? "divide-[#3d3d3d]" : "divide-gray-200"
+                      }`}
+                    >
+                      <NotificationTableHead sortDate={sortDate} />
+                      <tbody
+                        className={` divide-y ${
+                          theme == "dark"
+                            ? "divide-[#3d3d3d]"
+                            : "divide-gray-200"
+                        }`}
+                        style={{
+                          color: palette?.dark_contrast_color,
+                        }}
+                      >
+                        {filteredData?.reverse()?.map((notification, key) => {
+                          return (
+                            <NotificationTableBody
+                              key={key}
+                              notification={notification}
+                              setReload={setReload}
+                            />
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           ) : (
             <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
               <img

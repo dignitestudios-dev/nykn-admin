@@ -6,21 +6,29 @@ const NotificationTableHead = ({ sortStatus, sortDate }) => {
   const { palette } = useContext(GlobalContext);
   return (
     <thead
-      className="text-md text-gray-700 sticky top-0 left-0 uppercase   "
-      style={{ background: palette.dark_contrast_background }}
+      style={{
+        color: palette?.dark_contrast_color,
+      }}
     >
-      <tr className="border-b">
-        <th scope="col" className="px-6 py-3">
+      <tr>
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider"
+        >
           Title
         </th>
-        <th scope="col" className="px-6 py-3">
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider"
+        >
           Message
         </th>
-        <th onClick={sortDate} scope="col" className=" px-6 py-3">
-          <div className="flex cursor-pointer items-center justify-start gap-1">
-            <span>Date</span>
-            <BiSort />
-          </div>
+
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider"
+        >
+          Date
         </th>
       </tr>
     </thead>

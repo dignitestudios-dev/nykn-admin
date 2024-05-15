@@ -136,7 +136,8 @@ const Login = () => {
         <div className="w-full h-auto mt-1 flex justify-end items-center">
           <Link
             to="/verify-email"
-            className="text-xs font-semibold text-blue-500"
+            className="text-xs font-semibold "
+            style={{ color: palette?.brand }}
           >
             Forgot Password?
           </Link>

@@ -61,13 +61,8 @@ const CategoryDetailHeader = () => {
   }, [updateData]);
 
   return (
-    <div
-      className="w-full h-auto flex flex-col justify-start items-center p-3 rounded-xl gap-3 "
-      style={{
-        background: palette?.dark_contrast_background,
-      }}
-    >
-      <div className="w-full h-auto flex justify-start items-start gap-3">
+    <div className="w-full bg-white shadow border border-[#eaeaea] h-auto flex flex-col justify-start items-center p-3 rounded-full gap-3 ">
+      <div className="w-full h-auto flex justify-start items-center gap-3">
         <span
           className="rounded-full w-16 h-16 p-1 flex justify-center items-center"
           style={{
@@ -108,7 +103,7 @@ const CategoryDetailHeader = () => {
         <div className="w-auto h-full flex  ml-auto justify-start items-end gap-2">
           <button
             onClick={() => setIsCategoryUpdateOpen(true)}
-            className="w-20 h-7 text-xs font-medium rounded-full flex items-center justify-center text-white"
+            className="w-20 h-10 text-xs font-medium rounded-full flex items-center justify-center text-white"
             style={{
               background: palette?.brand,
             }}

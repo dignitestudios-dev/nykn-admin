@@ -70,16 +70,14 @@ const NotificationModal = ({
     <div
       onClick={toggleModal}
       id="notification-add-modal"
-      className={`fixed top-0 left-0 ${
-        theme == "dark" ? "bg-[#fff]/[0.2]" : "bg-[#000]/[0.2]"
-      }  z-[1000] w-screen h-screen ${
-        isOpen ? "flex" : "hidden"
-      } items-center justify-center`}
+      className={`fixed top-0 left-0 transition-all duration-500  z-[1000] w-screen h-screen ${
+        isOpen ? "scale-1" : "scale-0"
+      } flex items-center justify-center`}
     >
       <form
         onSubmit={handleSubmit}
         ref={notificationAddRef}
-        className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
+        className="w-96 h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
         style={{ background: palette?.background, color: palette?.color }}
       >
         <span className="text-2xl font-bold">Add Notification</span>
@@ -88,10 +86,7 @@ const NotificationModal = ({
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-12 rounded-full text-sm border border-[#eaeaea] shadow  outline-none  px-4"
             type="text"
             placeholder="Title"
           />
@@ -101,10 +96,7 @@ const NotificationModal = ({
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full h-32 resize-none rounded-xl text-sm  outline-none border-none py-2 px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-32 resize-none rounded-xl text-sm border border-[#eaeaea] shadow  outline-none  py-2 px-4"
             type="text"
             placeholder="Message"
           ></textarea>
@@ -116,7 +108,7 @@ const NotificationModal = ({
           style={{
             background: palette?.brand,
           }}
-          className="w-full h-10 flex justify-center items-center  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
+          className="w-full h-12 flex justify-center items-center  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-md font-medium rounded-full"
         >
           {loading ? <BtnLoader /> : "Add Notification"}
         </button>

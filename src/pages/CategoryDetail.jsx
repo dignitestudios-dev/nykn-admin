@@ -94,15 +94,15 @@ const CategoryDetail = () => {
         style={{
           background: palette?.brand,
         }}
-        className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-8 h-8 hover:opacity-90 text-white"
+        className="rounded-full flex mr-auto justify-center items-center text-xs font-medium w-10 h-10 hover:opacity-90 text-white"
       >
         <IoMdArrowBack />
       </Link>
       <CategoryDetailHeader />
-      <div className="w-full h-auto flex justify-start items-start flex-col gap-2">
+      <div className="w-full h-auto flex justify-start items-start flex-col gap-4">
         <div className="w-full flex justify-between items-center px-2">
           <h1
-            className="text-2xl font-bold"
+            className="text-3xl font-bold"
             style={{
               color: palette?.brand,
             }}
@@ -112,31 +112,29 @@ const CategoryDetail = () => {
         </div>
 
         <div className="w-full flex justify-start items-start gap-2">
-          <div className="relative w-[70%] lg:w-[85%]">
+          <div className="relative bg-white shadow border border-[#eaeaea]  rounded-full w-[70%] lg:w-[85%]">
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full h-10 rounded-full outline-none border-none px-4 text-sm"
+              className="w-full h-12 rounded-full outline-none border-none px-4 text-sm"
               placeholder="Search"
               style={{
-                background: palette?.dark_contrast_background,
                 color: palette?.color,
               }}
             />
             <button
-              className="w-8 h-8 rounded-full flex items-center justify-center absolute top-1 right-1 "
+              className="w-8 h-8 rounded-full flex items-center justify-center absolute top-2 right-2 "
               style={{ background: palette?.brand, color: palette?.color }}
             >
               <IoSearch className="text-white" />
             </button>
           </div>
-          <div className="w-[30%] lg:w-[15%] relative">
+          <div className="w-[30%] lg:w-[15%] bg-white shadow border border-[#eaeaea]  rounded-full relative">
             <button
               onClick={() => setIsSortOpen((prev) => !prev)}
-              className="w-full h-10 rounded-full text-sm pl-3 pr-1 flex justify-between items-center font-medium capitalize"
+              className="w-full h-12  text-sm pl-3 pr-2 flex justify-between items-center font-medium capitalize"
               style={{
-                background: palette?.dark_contrast_background,
                 color: palette?.color,
               }}
             >
@@ -151,23 +149,14 @@ const CategoryDetail = () => {
               </span>
             </button>
             {isSortOpen && (
-              <div
-                className="w-full h-auto flex flex-col justify-start items-start gap-2 shadow-md absolute top-12 p-2 rounded-3xl"
-                style={{
-                  background: palette?.dark_contrast_background,
-                  boxShadow: `${
-                    theme == "dark" ? "#1e1e1e" : "rgba(99, 99, 99, 0.2)"
-                  } 0px 2px 8px 0px`,
-                }}
-              >
+              <div className="w-full mt-1 h-auto bg-white flex flex-col justify-start items-start gap-2 shadow-md absolute top-12 p-2 rounded-3xl">
                 <button
                   onClick={() => {
                     setSort("alphabetical");
                     setIsSortOpen(false);
                   }}
-                  className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                  className="w-full h-10  hover:shadow bg-white border border-[#eaeaea]  rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
                   style={{
-                    background: palette?.light_contrast_background,
                     color: palette?.color,
                   }}
                 >
@@ -179,9 +168,8 @@ const CategoryDetail = () => {
                     setSort("wishlist");
                     setIsSortOpen(false);
                   }}
-                  className="w-full h-10 hover:opacity-90 rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
+                  className="w-full h-10  hover:shadow bg-white border border-[#eaeaea]  rounded-full text-sm px-3 flex justify-between items-center font-medium capitalize"
                   style={{
-                    background: palette?.light_contrast_background,
                     color: palette?.color,
                   }}
                 >
@@ -191,14 +179,16 @@ const CategoryDetail = () => {
             )}
           </div>
         </div>
-        <div className="w-full flex h-auto flex-wrap justify-start items-start gap-2">
-          {loading ? (
-            <CategorySkeleton />
-          ) : sortedData.length > 0 ? (
-            sortedData?.map((attraction) => {
+        {loading ? (
+          <CategorySkeleton />
+        ) : sortedData.length > 0 ? (
+          <div className="w-full grid grid-cols1 md:grid-cols-2 gap-2">
+            {sortedData?.map((attraction) => {
               return <AttractionCard attraction={attraction} />;
-            })
-          ) : (
+            })}
+          </div>
+        ) : (
+          <div className="w-full h-auto flex justify-center items-center">
             <span className="text-3xl font-bold flex flex-col w-full justify-center items-center h-auto py-4">
               <img
                 src="/nothinghere.jpg"
@@ -206,8 +196,8 @@ const CategoryDetail = () => {
               />
               Nothing here
             </span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -50,9 +50,8 @@ const UserCategoryCard = ({ category, updateData }) => {
 
   return (
     <div
-      className="w-full md:w-[49%] lg:w-[32.5%] xl:w-[24.5%] relative h-auto min-h-24 p-2  flex flex-col gap-2 justify-between items-start rounded-lg "
+      className="w-full bg-white shadow border border-[#eaeaea] relative h-auto min-h-24 p-2  flex flex-col gap-2 justify-between items-start rounded-lg "
       style={{
-        background: `${palette?.dark_contrast_background}`,
         color: palette?.dark_contrast_color,
       }}
     >

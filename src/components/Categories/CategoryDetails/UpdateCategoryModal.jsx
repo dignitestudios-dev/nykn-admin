@@ -124,24 +124,21 @@ const UpdateCategoryModal = ({
     <div
       onClick={toggleModal}
       id="category-add-modal"
-      className={`fixed top-0 left-0 ${
-        theme == "dark" ? "bg-[#fff]/[0.2]" : "bg-[#000]/[0.2]"
-      }  z-[1000] w-screen h-screen ${
-        isOpen ? "flex" : "hidden"
-      } items-center justify-center`}
+      className={`fixed transition-all duration-500 top-0 left-0  z-[1000] w-screen h-screen ${
+        isOpen ? "scale-1" : "scale-0"
+      } flex items-center justify-center`}
     >
       <form
         onSubmit={handleSubmit}
         ref={categoryUpdateRef}
-        className="w-96 h-auto rounded-3xl flex flex-col gap-2 justify-start items-center  p-4"
+        className="w-96 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-3xl h-auto  flex flex-col gap-2 justify-start items-center  p-4"
         style={{ background: palette?.background, color: palette?.color }}
       >
         <span className="text-2xl font-bold">Update Category</span>
         <div
           onClick={handleProfileImg}
-          className="w-full h-24 cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
+          className="w-full h-24 bg-white border shadow border-[#eaeaea] cursor-pointer rounded-xl flex flex-col gap-1 justify-center items-center"
           style={{
-            background: palette?.dark_contrast_background,
             color: palette?.light_contrast_color,
           }}
         >
@@ -157,13 +154,13 @@ const UpdateCategoryModal = ({
             <img
               id="update-image"
               src={`data:image/webp;base64,${image && image}`}
-              className="w-full h-full rounded-xl object-scaledown"
+              className="w-full h-full rounded-xl object-contain"
             />
           ) : category?.category_image ? (
             <img
               id="update-image"
               src={`${category?.category_image}`}
-              className="w-full h-full rounded-xl object-scaledown"
+              className="w-full h-full rounded-xl object-contain"
             />
           ) : (
             <LuImagePlus className="text-xl font-medium" />
@@ -174,10 +171,8 @@ const UpdateCategoryModal = ({
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-12 rounded-full text-sm  outline-none border border-[#eaeaea] shadow px-4"
+            style={{}}
             type="text"
             placeholder="Category Name"
           />
@@ -187,10 +182,8 @@ const UpdateCategoryModal = ({
             <input
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full h-10 rounded-full text-sm  outline-none border-none px-4"
-              style={{
-                background: palette?.dark_contrast_background,
-              }}
+              className="w-full h-12 border border-[#eaeaea] shadow rounded-full text-sm  outline-none  px-4"
+              style={{}}
               type="text"
               placeholder="Price"
             />
@@ -201,10 +194,8 @@ const UpdateCategoryModal = ({
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full h-32 resize-none rounded-xl text-sm  outline-none border-none py-2 px-4"
-            style={{
-              background: palette?.dark_contrast_background,
-            }}
+            className="w-full h-32 resize-none rounded-xl text-sm  outline-none border border-[#eaeaea] shadow py-2 px-4"
+            style={{}}
             type="text"
             placeholder="Category Description"
           ></textarea>
