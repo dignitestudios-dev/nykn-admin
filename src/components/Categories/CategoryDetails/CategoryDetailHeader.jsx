@@ -37,8 +37,6 @@ const CategoryDetailHeader = () => {
         )
         .then((response) => {
           setResponse(response?.data["category"]);
-          console.log(response?.data);
-
           setLoading(false);
         })
         .catch((error) => {

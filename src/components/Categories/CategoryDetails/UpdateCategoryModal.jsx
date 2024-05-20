@@ -76,37 +76,51 @@ const UpdateCategoryModal = ({
 
     const token = Cookies.get("token");
     if (token) {
-      setLoading(true);
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      axios
-        .post(
-          `${baseUrl}/updateCategory`,
-          {
-            categoryId: id,
-            category_title: title,
-            category_description: description,
-            category_price: isPaid ? price : 0,
-            isPaid: isPaid,
-            imageBase64Data: image ? image : null,
-          },
-          { headers }
-        )
-        .then(
-          (response) => {
-            setLoading(false);
-            setSuccess("Category Updated Successfully.");
-            navigate(`/categories/${id}`);
-            updateData((prev) => !prev);
-            setIsOpen(false);
-          },
-          (error) => {
-            setError(error?.response?.data?.error);
+      if (image == null) {
+        setError("Image not provided.");
+      } else if (title.length < 4) {
+        setError("Category title must contain atleast 4 alphabets.");
+      } else if (isPaid == true && price == "") {
+        setError("Category price cannot be left empty.");
+      } else if (title == "") {
+        setError("Category title cannot be left empty.");
+      } else if (title.length > 40) {
+        setError("Category title cannot exceed more than 40 alphabets.");
+      } else {
+        setLoading(true);
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        axios
+          .post(
+            `${baseUrl}/updateCategory`,
+            {
+              categoryId: id,
+              category_title: title,
+              category_description: description,
+              category_price: isPaid ? price : 0,
+              isPaid: isPaid,
+              imageBase64Data: image ? image : null,
+            },
+            { headers }
+          )
+          .then(
+            (response) => {
+              setLoading(false);
+              setSuccess("Category Updated Successfully.");
+              navigate(`/categories/${id}`);
+              updateData((prev) => {
+                !prev;
+              });
+              setIsOpen(false);
+            },
+            (error) => {
+              setError(error?.response?.data?.error);
 
-            setLoading(false);
-          }
-        );
+              setLoading(false);
+            }
+          );
+      }
     } else {
       Cookies.remove("token");
       navigate("/login");
@@ -114,10 +128,9 @@ const UpdateCategoryModal = ({
   };
 
   useEffect(() => {
-    setImage(category?.category_image);
     setDescription(category?.category_description);
     setTitle(category?.category_title);
-    setPrice(category?.category_price);
+    setPrice(category?.category_price !== "0" ? category?.category_price : "");
     setIsPaid(category?.isPaid);
   }, [category]);
 
@@ -151,10 +164,10 @@ const UpdateCategoryModal = ({
             accept="/image*"
             onChange={(e) => handleProfileChange(e)}
           />
-          {image ? (
+          {image !== null ? (
             <img
               id="update-image"
-              src={`data:image/webp;base64,${image && image}`}
+              src={`data:image/webp;base64,${image}`}
               className="w-full h-full rounded-xl object-contain"
             />
           ) : category?.category_image ? (
