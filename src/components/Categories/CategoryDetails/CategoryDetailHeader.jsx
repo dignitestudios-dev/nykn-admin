@@ -53,10 +53,14 @@ const CategoryDetailHeader = () => {
   useEffect(() => {
     getData();
   }, []);
+  const [image, setImage] = useState(false);
 
   useEffect(() => {
     getData();
   }, [updateData]);
+  useEffect(() => {
+    setImage(response?.category_image);
+  }, [response]);
 
   return (
     <div className="w-full bg-white shadow border border-[#eaeaea] h-auto flex flex-col justify-start items-center p-3 rounded-full gap-3 ">
@@ -69,7 +73,7 @@ const CategoryDetailHeader = () => {
         >
           <img
             className="h-full w-full rounded-full"
-            src={response?.category_image}
+            src={image ? image : response?.category_image}
             alt=""
           />
         </span>

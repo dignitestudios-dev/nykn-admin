@@ -19,7 +19,7 @@ const UpdateCategoryModal = ({
   const { palette, theme, baseUrl, setError, setSuccess } =
     useContext(GlobalContext);
   // Image:
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -128,12 +128,10 @@ const UpdateCategoryModal = ({
   };
 
   useEffect(() => {
-    setImage(category?.category_image);
     setDescription(category?.category_description);
     setTitle(category?.category_title);
     setPrice(category?.category_price !== "0" ? category?.category_price : "");
     setIsPaid(category?.isPaid);
-    updateData(category?.category_image);
   }, [category]);
 
   return (
@@ -169,7 +167,7 @@ const UpdateCategoryModal = ({
           {image ? (
             <img
               id="update-image"
-              src={`data:image/webp;base64,${image && image}`}
+              src={`data:image/webp;base64,${image}`}
               className="w-full h-full rounded-xl object-contain"
             />
           ) : category?.category_image ? (
