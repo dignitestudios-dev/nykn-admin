@@ -70,6 +70,8 @@ const CategoryModal = ({ isOpen, setIsOpen, categoryAddRef, updateData }) => {
       setError("Image not provided.");
     } else if (title.length < 4) {
       setError("Category title must contain atleast 4 alphabets.");
+    } else if (isPaid == true && price == "") {
+      setError("Category price cannot be left empty.");
     } else if (title == "") {
       setError("Category title cannot be left empty.");
     } else if (title.length > 40) {

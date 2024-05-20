@@ -132,16 +132,16 @@ const NotificationTable = () => {
       </div>
 
       <div className="w-full flex flex-col py-4 lg:px-2 justify-start items-start">
-        <div className="relative overflow-x-auto w-full h-auto overflow-y-auto">
+        <div className="relative overflow-x-auto w-full h-auto ">
           {loading ? (
             <Loader />
           ) : filteredData?.length > 0 ? (
-            <div className="w-full h-auto max-h-full flex flex-col">
+            <div className="w-full h-auto flex flex-col">
               <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow border border-[#eaeaea] overflow-hidden  sm:rounded-lg">
                     <table
-                      className={`w-full divide-y ${
+                      className={`w-full  divide-y ${
                         theme == "dark" ? "divide-[#3d3d3d]" : "divide-gray-200"
                       }`}
                     >

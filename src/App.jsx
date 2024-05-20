@@ -9,9 +9,6 @@ import { GlobalContext } from "./context/GlobalContext";
 import { useState } from "react";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import Terms from "./pages/Terms";
-import Privacy from "./pages/Privacy";
-import CookiesAndPolicy from "./pages/CookiesAndPolicy";
 import GlobalLoader from "./components/global/GlobalLoader";
 
 function App() {
@@ -22,9 +19,6 @@ function App() {
       <Suspense fallback={<GlobalLoader />}>
         <Routes>
           <Route path="/" element={<Splash />} />
-          <Route path="/terms-and-conditions" element={<Terms />} />
-          <Route path="/privacy-policy" element={<Privacy />} />
-          <Route path="/cookie-policy" element={<CookiesAndPolicy />} />
 
           {loginRoutes?.map((route, key) => {
             return (
