@@ -128,10 +128,12 @@ const UpdateCategoryModal = ({
   };
 
   useEffect(() => {
+    setImage(category?.category_image);
     setDescription(category?.category_description);
     setTitle(category?.category_title);
     setPrice(category?.category_price !== "0" ? category?.category_price : "");
     setIsPaid(category?.isPaid);
+    updateData(category?.category_image);
   }, [category]);
 
   return (
@@ -164,10 +166,10 @@ const UpdateCategoryModal = ({
             accept="/image*"
             onChange={(e) => handleProfileChange(e)}
           />
-          {image !== null ? (
+          {image ? (
             <img
               id="update-image"
-              src={`data:image/webp;base64,${image}`}
+              src={`data:image/webp;base64,${image && image}`}
               className="w-full h-full rounded-xl object-contain"
             />
           ) : category?.category_image ? (
