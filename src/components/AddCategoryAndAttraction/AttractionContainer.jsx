@@ -12,6 +12,7 @@ import GoogleMaps from "./GoogleMaps";
 import { CiImageOn } from "react-icons/ci";
 import { Datepicker } from "flowbite-react";
 import { FaCross } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
 
 const AttractionContainer = () => {
   const {
@@ -72,6 +73,7 @@ const AttractionContainer = () => {
 
   useEffect(() => {
     getData();
+    setUserInput("");
   }, []);
 
   useEffect(() => {
@@ -141,6 +143,11 @@ const AttractionContainer = () => {
     if (!labels.includes(name)) {
       setLabels((prevLabels) => [...prevLabels, name]);
     }
+  };
+  const handleLabelDelete = (labelToRemove) => {
+    setLabels((prevLabels) =>
+      prevLabels.filter((label) => label !== labelToRemove)
+    );
   };
 
   const [selectedDays, setSelectedDays] = useState([]);
@@ -260,10 +267,15 @@ const AttractionContainer = () => {
               id="attraction-image-add"
               className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
               type="file"
-              accept="/image*"
+              accept="image/png, image/jpeg"
               onChange={(e) => handleImageChange(e)}
             />
-            <LuImagePlus className="text-3xl font-medium" />
+            <div className="w-auto flex flex-col gap-2 justify-center items-center">
+              <LuImagePlus className="text-3xl font-medium" />
+              <span className="text-xs font-medium text-gray-600">
+                Please provide the Image in jpg or png format.
+              </span>
+            </div>
           </div>
           <span className="w-full border-b-2 border-dashed border-[#eaeaea]"></span>
 
@@ -540,13 +552,25 @@ const AttractionContainer = () => {
           <div className="w-full mt-1 flex px-2 justify-start items-start gap-2">
             {labels?.map((word, key) => {
               return (
-                <span
-                  style={{ background: palette?.brand }}
-                  className="w-auto h-7 px-2 flex justify-center gap-3 items-center text-[10px] rounded-full font-normal  text-white"
+                <div
                   key={key}
+                  className="flex justify-center items-center gap-1 px-2 rounded-full"
+                  style={{ background: palette?.brand }}
                 >
-                  {word}
-                </span>
+                  <span
+                    className="w-auto h-9 px-2 flex justify-center gap-3 items-center text-[10px] rounded-full font-normal  text-white"
+                    key={key}
+                  >
+                    {word}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleLabelDelete(word)}
+                    className="text-white text-sm"
+                  >
+                    <ImCancelCircle />
+                  </button>
+                </div>
               );
             })}
           </div>

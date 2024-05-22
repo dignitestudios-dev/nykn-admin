@@ -71,6 +71,10 @@ const UpdateCategoryModal = ({
   const [price, setPrice] = useState("");
   const [isPaid, setIsPaid] = useState(true);
 
+  const isInputValid = (input) => {
+    const regex = /^[0-9]+$/;
+    return regex.test(input);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -82,6 +86,8 @@ const UpdateCategoryModal = ({
         setError("Category title must contain atleast 4 alphabets.");
       } else if (isPaid == true && price == "") {
         setError("Category price cannot be left empty.");
+      } else if (!isInputValid(price)) {
+        setError("Price must be a number not an alphabet.");
       } else if (title == "") {
         setError("Category title cannot be left empty.");
       } else if (title.length > 40) {
@@ -161,7 +167,7 @@ const UpdateCategoryModal = ({
             id="cat-image-add"
             className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
             type="file"
-            accept="/image*"
+            accept="image/png, image/jpeg"
             onChange={(e) => handleProfileChange(e)}
           />
           {image ? (
@@ -177,7 +183,12 @@ const UpdateCategoryModal = ({
               className="w-full h-full rounded-xl object-contain"
             />
           ) : (
-            <LuImagePlus className="text-xl font-medium" />
+            <div className="w-auto flex flex-col gap-2 justify-center items-center">
+              <LuImagePlus className="text-2xl font-medium" />
+              <span className="text-[10px] font-medium text-gray-600">
+                Please provide the Image in jpg or png format.
+              </span>
+            </div>
           )}
         </div>
 

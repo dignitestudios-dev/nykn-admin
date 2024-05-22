@@ -13,6 +13,8 @@ import GoogleMaps from "../components/AddCategoryAndAttraction/GoogleMaps";
 import BtnLoader from "../components/global/BtnLoader";
 import LabelModal from "../components/AddCategoryAndAttraction/LabelModal";
 import { CiImageOn } from "react-icons/ci";
+import { ImCancelCircle } from "react-icons/im";
+
 
 const EditAttraction = () => {
   const {
@@ -93,6 +95,11 @@ const EditAttraction = () => {
     if (!labels.includes(name)) {
       setLabels((prevLabels) => [...prevLabels, name]);
     }
+  };
+  const handleLabelDelete = (labelToRemove) => {
+    setLabels((prevLabels) =>
+      prevLabels.filter((label) => label !== labelToRemove)
+    );
   };
 
   const [selectedDays, setSelectedDays] = useState([]);
@@ -313,11 +320,13 @@ const EditAttraction = () => {
             <input
               id="attraction-image-edit"
               className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
-              type="file"
-              accept="/image*"
+              type="file" accept="image/png, image/jpeg"
               onChange={(e) => handleImageChange(e)}
             />
+            <div className="w-auto flex flex-col gap-2 justify-center items-center">
             <LuImagePlus className="text-3xl font-medium" />
+            <span className="text-xs font-medium text-gray-600">Please provide the Image in jpg or png format.</span>
+            </div>
           </div>
           <span className="w-full border-b-2 border-dashed border-[#eaeaea]"></span>
 
@@ -608,12 +617,25 @@ const EditAttraction = () => {
           <div className="w-full flex justify-start items-start gap-2">
             {labels?.map((word, key) => {
               return (
-                <span
-                  className="w-auto h-7 px-2 flex justify-center items-center text-[10px] rounded-full font-normal bg-blue-500 text-white"
+                <div
                   key={key}
+                  className="flex justify-center items-center gap-1 px-2 rounded-full"
+                  style={{ background: palette?.brand }}
                 >
-                  {word}
-                </span>
+                  <span
+                    className="w-auto h-9 px-2 flex justify-center gap-3 items-center text-[10px] rounded-full font-normal  text-white"
+                    key={key}
+                  >
+                    {word}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleLabelDelete(word)}
+                    className="text-white text-sm"
+                  >
+                    <ImCancelCircle />
+                  </button>
+                </div>
               );
             })}
           </div>
