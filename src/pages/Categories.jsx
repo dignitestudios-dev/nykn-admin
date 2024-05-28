@@ -9,6 +9,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import CategorySkeleton from "../components/Categories/CategorySkeleton";
+import BulkPriceModal from "../components/AddCategoryAndAttraction/BulkPriceModal";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ const Categories = () => {
     setIsCategoryOpen,
     baseUrl,
     setError,
+    setIsBulkOpen,
+    isBulkOpen,
+    bulkpriceAddRef,
   } = useContext(GlobalContext);
 
   const [filter, setFilter] = useState("filter");
@@ -94,15 +98,26 @@ const Categories = () => {
         >
           Categories
         </h1>
-        <button
-          onClick={() => setIsCategoryOpen(true)}
-          style={{
-            background: palette?.brand,
-          }}
-          className="w-32 h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full"
-        >
-          Add Category
-        </button>
+        <div className="w-auto flex gap-2 justify-start items-center">
+          <button
+            onClick={() => setIsCategoryOpen(true)}
+            style={{
+              background: palette?.brand,
+            }}
+            className="w-32 h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full"
+          >
+            Add Category
+          </button>
+          <button
+            onClick={() => setIsBulkOpen(true)}
+            style={{
+              background: palette?.brand,
+            }}
+            className="w-32 h-12  transition-all duration-150 hover:opacity-90  outline-none border-none text-white text-xs font-medium rounded-full"
+          >
+            Set Bulk Pricings
+          </button>
+        </div>
       </div>
 
       {/* Category Add Modal */}
@@ -112,6 +127,15 @@ const Categories = () => {
         setIsOpen={setIsCategoryOpen}
         categoryAddRef={categoryAddRef}
       />
+
+      {isBulkOpen && (
+        <BulkPriceModal
+          isOpen={isBulkOpen}
+          setIsOpen={setIsBulkOpen}
+          bulkpriceRef={bulkpriceAddRef}
+        />
+      )}
+
       <div className="w-full h-auto flex flex-col justify-start items-start gap-6">
         <div className="w-full flex justify-start items-start gap-2">
           <div className="relative w-[70%] lg:w-[90%] border shadow border-[#eaeaea] rounded-full">

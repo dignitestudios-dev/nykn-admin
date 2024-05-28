@@ -88,6 +88,8 @@ export const GlobalContextProvider = ({ children }) => {
   // Category and Label Modal Container
   const categoryAddRef = useRef(null);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const bulkpriceAddRef = useRef(null);
+  const [isBulkOpen, setIsBulkOpen] = useState(false);
   const labelAddRef = useRef(null);
   const [isLabelOpen, setIsLabelOpen] = useState(false);
 
@@ -142,6 +144,9 @@ export const GlobalContextProvider = ({ children }) => {
         labelAddRef,
         isLabelOpen,
         setIsLabelOpen,
+        bulkpriceAddRef,
+        isBulkOpen,
+        setIsBulkOpen,
 
         // Maps State:
         latitude,

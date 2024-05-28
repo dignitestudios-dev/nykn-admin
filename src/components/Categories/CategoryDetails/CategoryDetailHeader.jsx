@@ -113,7 +113,6 @@ const CategoryDetailHeader = () => {
             Edit
           </button>
         </div>
-
         <UpdateCategoryModal
           isOpen={isCategoryUpdateOpen}
           setIsOpen={setIsCategoryUpdateOpen}
