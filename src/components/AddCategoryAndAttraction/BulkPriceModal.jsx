@@ -49,7 +49,7 @@ const BulkPriceModal = ({ isOpen, setIsOpen, bulkpriceRef }) => {
   }, []);
 
   const isInputValid = (input) => {
-    const regex = /^[0-9]+$/;
+    const regex = /^[0-9]+(\.[0-9]+)?$/;
     return regex.test(input);
   };
   const handleSubmit = (e) => {
