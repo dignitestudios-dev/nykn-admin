@@ -72,7 +72,7 @@ const UpdateCategoryModal = ({
   const [isPaid, setIsPaid] = useState(true);
 
   const isInputValid = (input) => {
-    const regex = /^[0-9]+$/;
+    const regex = /^[0-9]+(\.[0-9]+)?$/;
     return regex.test(input);
   };
   const handleSubmit = (e) => {
@@ -86,7 +86,7 @@ const UpdateCategoryModal = ({
         setError("Category title must contain atleast 4 alphabets.");
       } else if (isPaid == true && price == "") {
         setError("Category price cannot be left empty.");
-      } else if (!isInputValid(price)) {
+      } else if (isPaid == true && !isInputValid(price)) {
         setError("Price must be a number not an alphabet.");
       } else if (title == "") {
         setError("Category title cannot be left empty.");

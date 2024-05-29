@@ -161,6 +161,11 @@ const AttractionContainer = () => {
     "Saturday",
   ]);
 
+  const isInputValid = (input) => {
+    const regex = /^[0-9]+(\.[0-9]+)?$/;
+    return regex.test(input);
+  };
+
   function convertTimeTo12HourFormat(time) {
     if (time) {
       const [hours, minutes] = time.split(":");
@@ -181,6 +186,8 @@ const AttractionContainer = () => {
       setError("You must add atleast one image of the attraction.");
     } else if (categoryId == "") {
       setError("You must select a category to associate attraction with it.");
+    } else if (!isInputValid(price)) {
+      setError("Price must be a number not an alphabet.");
     } else if (labels.length < 1) {
       setError("Attraction must contain atleast one label.");
     } else {

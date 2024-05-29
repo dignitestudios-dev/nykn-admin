@@ -15,7 +15,6 @@ import LabelModal from "../components/AddCategoryAndAttraction/LabelModal";
 import { CiImageOn } from "react-icons/ci";
 import { ImCancelCircle } from "react-icons/im";
 
-
 const EditAttraction = () => {
   const {
     palette,
@@ -133,12 +132,18 @@ const EditAttraction = () => {
       return ``;
     }
   }
+  const isInputValid = (input) => {
+    const regex = /^[0-9]+(\.[0-9]+)?$/;
+    return regex.test(input);
+  };
 
   const updateAttraction = (e) => {
     e.preventDefault();
     const token = Cookies.get("token");
     if (categoryId == "") {
       setError("You must select a category to associate attraction with it.");
+    } else if (!isInputValid(price)) {
+      setError("Price must be a number not an alphabet.");
     } else {
       if (token) {
         setLoading(true);
@@ -320,12 +325,15 @@ const EditAttraction = () => {
             <input
               id="attraction-image-edit"
               className="w-full hidden h-10 rounded-full text-sm  outline-none border-none px-4"
-              type="file" accept="image/png, image/jpeg"
+              type="file"
+              accept="image/png, image/jpeg"
               onChange={(e) => handleImageChange(e)}
             />
             <div className="w-auto flex flex-col gap-2 justify-center items-center">
-            <LuImagePlus className="text-3xl font-medium" />
-            <span className="text-xs font-medium text-gray-600">Please provide the Image in jpg or png format.</span>
+              <LuImagePlus className="text-3xl font-medium" />
+              <span className="text-xs font-medium text-gray-600">
+                Please provide the Image in jpg or png format.
+              </span>
             </div>
           </div>
           <span className="w-full border-b-2 border-dashed border-[#eaeaea]"></span>
