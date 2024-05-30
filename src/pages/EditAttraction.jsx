@@ -142,7 +142,7 @@ const EditAttraction = () => {
     const token = Cookies.get("token");
     if (categoryId == "") {
       setError("You must select a category to associate attraction with it.");
-    } else if (!isInputValid(price)) {
+    } else if (price !== "" && !isInputValid(price)) {
       setError("Price must be a number not an alphabet.");
     } else {
       if (token) {
@@ -241,7 +241,7 @@ const EditAttraction = () => {
     setAttractionImages(attraction?.subCategory_images);
     setTimings(attraction?.timings);
     setDescription(attraction?.description);
-    setPrice(attraction?.price);
+    setPrice(attraction?.price == 0 ? "" : attraction?.price);
     setFromDay(attraction?.fromDay);
     setToDay(attraction?.toDay);
     setFromTime(attraction?.fromTime);

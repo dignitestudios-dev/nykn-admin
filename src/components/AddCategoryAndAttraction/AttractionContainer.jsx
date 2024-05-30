@@ -186,7 +186,7 @@ const AttractionContainer = () => {
       setError("You must add atleast one image of the attraction.");
     } else if (categoryId == "") {
       setError("You must select a category to associate attraction with it.");
-    } else if (!isInputValid(price)) {
+    } else if (price !== "" && !isInputValid(price)) {
       setError("Price must be a number not an alphabet.");
     } else if (labels.length < 1) {
       setError("Attraction must contain atleast one label.");
