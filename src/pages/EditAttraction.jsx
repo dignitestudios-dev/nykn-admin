@@ -231,6 +231,7 @@ const EditAttraction = () => {
   };
 
   useEffect(() => {
+    console.log(import.meta.env.VITE_GOOGLE_MAPS_SECRET);
     getAttraction();
   }, []);
 
