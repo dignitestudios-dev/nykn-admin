@@ -70,7 +70,9 @@ function GoogleMaps({ setLocation }) {
     // Perform geocoding for the entered address
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${userInput}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${userInput}&key=${
+          import.meta.env.VITE_GOOGLE_MAPS_SECRET
+        }`
       )
       .then((response) => {
         const { lat, lng } = response.data.results[0].geometry.location;
@@ -98,7 +100,7 @@ function GoogleMaps({ setLocation }) {
 
   return (
     <>
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_SECRET}>
+      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_SECRET}>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
