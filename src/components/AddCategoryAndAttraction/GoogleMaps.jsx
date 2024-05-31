@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import axios from "axios";
 import { GlobalContext } from "../../context/GlobalContext";
 
 function GoogleMaps({ setLocation }) {
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: `${import.meta.env.VITE_GOOGLE_MAPS_SECRET}`,
+  });
   const {
     setLatitude,
     setLongitude,
@@ -100,21 +108,21 @@ function GoogleMaps({ setLocation }) {
 
   return (
     <>
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_SECRET}>
+      {isLoaded && (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={15}
           onClick={(e) => handleMapClick(e)}
-          options={{
-            styles: [
-              {
-                // featureType: "landscape",
-                // elementType: "geometry",
-                stylers: [{ hue: "#8cd790" }, { saturation: 50 }],
-              },
-            ],
-          }}
+          // options={{
+          //   styles: [
+          //     {
+          //       // featureType: "landscape",
+          //       // elementType: "geometry",
+          //       stylers: [{ hue: "#8cd790" }, { saturation: 50 }],
+          //     },
+          //   ],
+          // }}
         >
           {/* Render a marker for the user */}
           <Marker
@@ -124,7 +132,7 @@ function GoogleMaps({ setLocation }) {
             }}
           ></Marker>
         </GoogleMap>
-      </LoadScript>
+      )}
     </>
   );
 }
