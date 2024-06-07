@@ -75,7 +75,7 @@ const Attractions = () => {
     filteredData &&
     filteredData?.sort((a, b) => {
       if (sort === "alphabetical") {
-        return a.subCategory_title.localeCompare(b.subCategory_title);
+        return b.subCategory_title.localeCompare(a.subCategory_title);
       } else if (sort === "wishlist") {
         return a.wishlist - b.wishlist;
       } else if (sort === "date") {
