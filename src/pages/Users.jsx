@@ -49,9 +49,7 @@ const Users = () => {
   // Filter data based on user input in title or message
   const filteredData =
     users?.length > 0 &&
-    users?.filter((user) =>
-      user.full_name.toLowerCase().includes(searchInput.toLowerCase())
-    );
+    users?.filter((user) => user.full_name.includes(searchInput));
 
   useEffect(() => {
     getUsers();
